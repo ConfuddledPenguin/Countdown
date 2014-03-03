@@ -26,7 +26,7 @@ public class Player {
 	
 	public void updateScore(int points) {
 		
-		score = score + points;
+		score =+ points;
 		
 	}	
 
