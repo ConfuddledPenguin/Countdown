@@ -9,3 +9,24 @@ Ended		-
 
 		Created initial files as well as a "read me" file and a github repo.
 		^ Tom
+
+	v0.0.1 - 4/03/2014 - Outline of classes
+
+		Created initial classes and began creating empty methods to be filled in
+		as we go along. Created a rough implementation of the input and launcher
+		classes to get the classes talking to each other.
+		^ Thomas
+
+	v0.1 - xx/xx/2014 - Complete Conundrum
+
+	v0.2 - xx/xx/2014 - Complete Word
+
+	v0.3 - xx/xx/2014 - Complete Number
+
+	v0.4 - xx/xx/2014 - Complete Full Game
+
+	v0.5 - xx/xx/2014 - Scoreboard
+
+	v0.6 - xx/xx/2014 - Saving and loading
+
+	v1.0 - xx/xx/2014 - Countdown complete
