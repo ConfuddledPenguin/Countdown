@@ -8,24 +8,16 @@ public class Conundrum extends Round {
 	public Conundrum(Dictionary dict, Player pOne, Player pTwo) {
 		super(dict, pOne, pTwo);
 		
+		play();
 	}
 	
 	public void play() {
 
 		System.out.println("Conundrum");
 		
-	}
+		String anagram = dict.getAnagram();
 
-	public String returnAnswer1() {
-
-		return answer1;
-	}
-	
-
-	public String returnAnswer2() {
-
-		return answer2;
-
+		
 	}
 
 }
