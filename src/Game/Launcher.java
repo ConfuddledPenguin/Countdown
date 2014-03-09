@@ -7,11 +7,14 @@ public class Launcher {
 
 	private Input i;
 	private Scoreboard s;
+	
+	private Dictionary dict;
 
 	public Launcher() {
 
 		i = new Input();
 		s = new Scoreboard();
+		dict = new Dictionary();
 		getCommand();
 
 	}
@@ -22,6 +25,8 @@ public class Launcher {
 
 		while(loop == true) {
 
+			System.out.println("----------------------------------------------------\n\n");
+			
 			System.out.println("\nWhat would you like to do?\n\n" +
 							"Play full game\t\t\t- 1\n" +
 							"Play single round:\n" +
@@ -46,7 +51,7 @@ public class Launcher {
 						n.play();
 						break;
 
-				case 4: Conundrum c = new Conundrum();
+				case 4: Conundrum c = new Conundrum(dict, playerOne, playerTwo);
 						c.play();
 						break;
 
@@ -57,9 +62,9 @@ public class Launcher {
 				case 6: loop = false;
 						break;
 
-				default:System.out.println("Something has gone horribly wrong");
-						loop = false;
-						break;
+				default:
+					System.err.println("Please enter a valid option");
+					break;
 
 			} //end switch
 
