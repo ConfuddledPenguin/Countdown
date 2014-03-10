@@ -30,6 +30,15 @@ Ended		-
 		compares against the real answer. For now it awards 10 points to the
 		winning player, 5 points each for a draw and no points for a win.
 
+		Changed the return type of getAnagram() in the Dictionary class from
+		String to String[] to allow it to return both the anagram and it's
+		solution.
+
+		Created a basic implementation of creating players at the start of the
+		game within the Launcher constructor. This is rather messy bus will be
+		enough for demonstrating the functionality of different parts of the
+		program for now.
+
 		The next step will be to add functionality to allow the players to
 		'buzz' in during the countdown as it is in the real game.
 		^ Thomas
