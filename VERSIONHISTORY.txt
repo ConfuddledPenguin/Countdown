@@ -17,6 +17,23 @@ Ended		-
 		classes to get the classes talking to each other.
 		^ Thomas
 
+	v0.0.2 - 10/03/2014 - Dictionary Creation
+
+		^ Tom
+
+	v0.0.3 - 10/03/2014 - Basic Conundrum
+
+		Added functionality to the conundrum class. Fetches an anagram and it's
+		solution from the dictionary then shows the players. It then pauses
+		while the players come up with a solution. Once the thirty seconds have
+		passed, it prompts the players to enter their answers which it then
+		compares against the real answer. For now it awards 10 points to the
+		winning player, 5 points each for a draw and no points for a win.
+
+		The next step will be to add functionality to allow the players to
+		'buzz' in during the countdown as it is in the real game.
+		^ Thomas
+
 	v0.1 - xx/xx/2014 - Complete Conundrum
 
 	v0.2 - xx/xx/2014 - Complete Word

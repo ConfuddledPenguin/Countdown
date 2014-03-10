@@ -57,14 +57,18 @@ public class Dictionary {
 	/**
 	 * Get an anagram
 	 * 
-	 * @return String
+	 * @return String[]
 	 */
-	public String getAnagram(){
+	public String[] getAnagram(){
+		
+		String[] output = new String[2];
 		
 		int size = nineLetterWords.size();
 		
 		Random r = new Random();
 		String word = nineLetterWords.get(r.nextInt(size));
+		
+		output[0] = word;
 		
 		ArrayList<Character> tempWord = new ArrayList<Character>();
 		
@@ -84,7 +88,9 @@ public class Dictionary {
 		
 		String returnWord = sb.toString();
 		
-		return returnWord;
+		output[1] = returnWord;
+		
+		return output;
 	}
 	
 	/**

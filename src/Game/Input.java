@@ -5,11 +5,13 @@ import java.util.Scanner;
 
 public class Input {
 	
-	public String getName() {
+	/* Takes in a String from the user.
+	 * Can be user for getting the players name
+	 * or the answer for the word round.
+	 */
+	public String getWord() {
 		
 		try {
-
-			System.out.println("Please enter your name: ");
 			
 			Scanner scan = new Scanner(System.in);
 			
@@ -25,13 +27,19 @@ public class Input {
 		
 	}
 	
-	public int getNumber() {
+	/* Takes in the users solution to the number round,
+	 * tokenises it and then returns it as a String.
+	 */
+	public String getSolution() {
 		
-		return 0;
+		return null;
 		
 	}
 	
-	public int getMode() {
+	/*Takes in an integer from the user
+	 * 
+	 */
+	public int getNumber() {
 		
 		try {
 
@@ -46,12 +54,6 @@ public class Input {
 			return 0;
 
 		}
-		
-	}
-	
-	public String getWord() {
-		
-		return null;
 		
 	}
 

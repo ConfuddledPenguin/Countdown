@@ -15,6 +15,12 @@ public class Launcher {
 		i = new Input();
 		s = new Scoreboard();
 		dict = new Dictionary();
+		
+		System.out.println("Player One enter name: ");
+		playerOne = new Player(i.getWord());
+		System.out.println("Player Tne enter name: ");
+		playerTwo = new Player(i.getWord());
+		
 		getCommand();
 
 	}
@@ -25,7 +31,7 @@ public class Launcher {
 
 		while(loop == true) {
 
-			System.out.println("----------------------------------------------------\n\n");
+			System.out.println("----------------------------------------------------\n");
 			
 			System.out.println("\nWhat would you like to do?\n\n" +
 							"Play full game\t\t\t- 1\n" +
@@ -36,7 +42,7 @@ public class Launcher {
 							"View Scoreboard\t\t\t- 5\n" +
 							"Quit\t\t\t\t- 6\n");
 
-			switch(i.getMode()) {
+			switch(i.getNumber()) {
 
 				case 0: break;
 
@@ -51,7 +57,7 @@ public class Launcher {
 						n.play();
 						break;
 
-				case 4: Conundrum c = new Conundrum(dict, playerOne, playerTwo);
+				case 4: Conundrum c = new Conundrum(dict, playerOne, playerTwo, i);
 						c.play();
 						break;
 
@@ -60,6 +66,8 @@ public class Launcher {
 						break;
 
 				case 6: loop = false;
+						System.out.print("Exiting");
+						System.exit(1);
 						break;
 
 				default:
