@@ -98,7 +98,6 @@ public class Dictionary {
 	 */
 	private void load(){
 
-		BufferedReader br;
 		
 		if (testing){
 			file = new File("smalldictionary.txt");
@@ -106,12 +105,12 @@ public class Dictionary {
 			file = new File("dictionary.txt");
 		}
 		
-		try {
+		try(BufferedReader br = new BufferedReader(new FileReader(file));) {
 			 
 			String CurrentLine;
 			words = new ArrayList<String>();
  
-			br = new BufferedReader(new FileReader(file));
+			
  
 			while ((CurrentLine = br.readLine()) != null) {
 				

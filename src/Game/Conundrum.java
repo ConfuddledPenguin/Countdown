@@ -1,6 +1,7 @@
 package Game;
 
 import java.util.Timer;
+import java.util.concurrent.Executors;
 
 public class Conundrum extends Round {
 	
@@ -29,7 +30,7 @@ public class Conundrum extends Round {
 		
 		System.out.println("The conundrum is: " + anagram + " " + answer); //answer just for testing
 		
-		timer.schedule(new TheTimer(), 5000);
+		timer.schedule(new TheTimer(), 10000);
 		
 		while (keyPress.equalsIgnoreCase("q") == false && keyPress.equalsIgnoreCase("p") == false) {
 			keyPress = i.getWord();
