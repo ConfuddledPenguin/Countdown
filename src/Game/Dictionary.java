@@ -42,7 +42,12 @@ public class Dictionary {
 		return bestWords;
 	}
 	
-	public ArrayList<String> getOtherwords(String letters){
+	/**
+	 * Gets all nine letter words that could be made from the anagram
+	 * @param letters
+	 * @return
+	 */
+	public ArrayList<String> getWords(String letters){
 		
 		ArrayList<Character> charList = new ArrayList<Character>();
 		ArrayList<String> possibleMatches = new ArrayList<String>();
