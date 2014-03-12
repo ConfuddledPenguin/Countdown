@@ -2,7 +2,9 @@ package Game;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class Dictionary {
@@ -11,6 +13,7 @@ public class Dictionary {
 	File file;
 	ArrayList<String> words;
 	ArrayList<String> nineLetterWords;
+	ArrayList<ArrayList<Character>> nineLetterWordsChars = new ArrayList<ArrayList<Character>>();
 	
 	/**
 	 * Constructor for the Dictionary class
@@ -39,6 +42,31 @@ public class Dictionary {
 		return bestWords;
 	}
 	
+	public ArrayList<String> getOtherwords(String letters){
+		
+		ArrayList<Character> charList = new ArrayList<Character>();
+		ArrayList<String> possibleMatches = new ArrayList<String>();
+
+		for (char ch : letters.toCharArray()) {
+		  charList.add(ch);
+		}
+		
+		Collections.sort(charList);
+		
+		for(ArrayList<Character> word: nineLetterWordsChars){
+			
+			Collections.sort(word);
+			
+			if (word.equals(charList)){
+
+				int index = nineLetterWordsChars.indexOf(word);
+				possibleMatches.add(nineLetterWords.get(index));
+			}
+		}
+		
+		return possibleMatches;
+	}
+	
 	/**
 	 * Check if a word is real according to dictionary
 	 * 
@@ -61,11 +89,13 @@ public class Dictionary {
 	 */
 	public String getAnagram(){
 		
+		//get a random word
 		int size = nineLetterWords.size();
 		
 		Random r = new Random();
 		String word = nineLetterWords.get(r.nextInt(size));
 		
+		//break the word into chars to shuffle
 		ArrayList<Character> tempWord = new ArrayList<Character>();
 		
 		for (int i = 0; i < 9; i++){
@@ -75,6 +105,7 @@ public class Dictionary {
 		
 		Collections.shuffle(tempWord);
 		
+		//put string back together for returning
 		StringBuilder sb = new StringBuilder(tempWord.size());
 		
 		for (char ch: tempWord){
@@ -137,7 +168,17 @@ public class Dictionary {
 			
 			if (word.length() == 9){
 				
+				//Add to list of nine letter words
 				nineLetterWords.add(word);
+				
+				//break into chars and add to list
+				ArrayList<Character> charList = new ArrayList<Character>();
+
+				for (char ch : word.toCharArray()) {
+				  charList.add(ch);
+				}
+				
+				nineLetterWordsChars.add(charList);
 			}
 		}
 	}
