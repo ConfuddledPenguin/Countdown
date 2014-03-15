@@ -9,11 +9,12 @@ import java.util.Random;
 
 public class Dictionary {
 	
-	boolean testing = false;
-	File file;
-	ArrayList<String> words;
-	ArrayList<String> nineLetterWords;
-	ArrayList<ArrayList<Character>> nineLetterWordsChars = new ArrayList<ArrayList<Character>>();
+	private boolean testing = false;
+	private File file;
+	private ArrayList<String> words;
+	private ArrayList<String> nineLetterWords;
+	private ArrayList<ArrayList<Character>> nineLetterWordsChars = new ArrayList<ArrayList<Character>>();
+	private Tree wordtree = new Tree();
 	
 	/**
 	 * Constructor for the Dictionary class
@@ -32,12 +33,10 @@ public class Dictionary {
 	 */
 	public ArrayList<String> getBestWords(String letters){
 		
-		ArrayList<String> bestWords = new ArrayList<String>();
+		ArrayList<String> bestWords;
 		int noLetters;
 		
-		//generate all possible combinations
-		//check if any of them are the best
-		//if so add to an arraylist
+		bestWords = wordtree.findbestWord(letters);
 		
 		return bestWords;
 	}
@@ -147,6 +146,8 @@ public class Dictionary {
 				
 				if (CurrentLine.length() <= 9){
 					words.add(CurrentLine);
+					wordtree.addWord(CurrentLine);
+//					System.out.println(CurrentLine);
 				}
 			}
  
@@ -188,4 +189,13 @@ public class Dictionary {
 		}
 	}
 
+    private static void perm1(String prefix, String s) {
+        int N = s.length();
+        if (N == 0) System.out.println(prefix);
+        else {
+            for (int i = 0; i < N; i++)
+               perm1(prefix + s.charAt(i), s.substring(0, i) + s.substring(i+1, N));
+        }
+
+    }
 }
