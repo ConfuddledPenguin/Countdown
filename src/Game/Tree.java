@@ -2,7 +2,6 @@ package Game;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Tree {
 	
@@ -20,7 +19,6 @@ public class Tree {
     
     public ArrayList<String> findbestWord(String lettersString){
     	
-//    	ArrayList<String> bestwords = new ArrayList<String>();
     	char[] letters = lettersString.toCharArray();
     	Arrays.sort(letters);
     	Node currentNode = root;
@@ -85,6 +83,5 @@ public class Tree {
     	} // close node search
     	
     	currentNode.words.add(wordString);
-//    	System.out.println("added: " + wordString);
     }
 }
