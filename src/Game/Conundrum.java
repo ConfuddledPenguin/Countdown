@@ -2,12 +2,15 @@ package Game;
 
 import java.util.ArrayList;
 import java.util.Timer;
-import java.util.concurrent.Executors;
+//import java.util.concurrent.Executor;
+//import java.util.concurrent.Executors;
 
 public class Conundrum extends Round {
 	
-	private String answer1;
-	private String answer2;
+	//stores the answer entered by the player
+	private String playerAnswer;
+	//Used to track which player has 'buzzed'
+	//true for player one and false for player 2
 	boolean player;
 	
 	Timer timer;
@@ -20,39 +23,35 @@ public class Conundrum extends Round {
 	
 	public void play() {
 
-		System.out.println("Conundrum Round");
+		System.out.println("Conundrum Round\n");
 		
 		String anagram = dict.getAnagram();
 		ArrayList<String> answer = dict.getBestWords(anagram);
 		
 		String keyPress = "";
 		
-		System.out.println("The conundrum is: " + anagram + " " + answer); //answer just for testing
+		//currently printing the answer for testing purposes
+		System.out.println("The conundrum is: " + anagram + ", Answer: " + answer + "\n");
 		
 		timer.schedule(new TheTimer(), 10000);
 		
-		while (keyPress.equalsIgnoreCase("q") == false && keyPress.equalsIgnoreCase("p") == false) {
+		while (keyPress.equalsIgnoreCase("1") == false && keyPress.equalsIgnoreCase("2") == false) {
+			
+			System.out.println("Player 1 press '1' to enter answer\nPlayer 2 press '2' to enter answer\n");
+			
 			keyPress = i.getWord();
 		       
-		       if(keyPress.equals("q")) {
+		       if(keyPress.equals("1")) {
 					
 		    	    timer.cancel();
-					System.out.println("Player 1 enter answer: ");
-					answer1 = i.getWord();
-					System.out.println("Your answer is: " + answer1);
-					player = true;
+		    	    player = true;
+					collectAnswer(player);
 					
-				} else if(keyPress.equals("p")) {
+				} else if(keyPress.equals("2")) {
 					
 					timer.cancel();
-					System.out.println("Player 2 enter answer: ");
-					answer1 = i.getWord();
-					System.out.println("Your answer is: " + answer1);
-					player = false;
-					
-				} else {
-					
-					System.out.println("Incorrect Input");
+		    	    player = false;
+		    	    collectAnswer(player);
 					
 				}
 		}
@@ -63,28 +62,24 @@ public class Conundrum extends Round {
 		 * 		if that is correct award points
 		 * 		else no points for anyone
 		 */
-		if(answer1.equals(answer)) {
+		if(playerAnswer.equals(answer)) {
 			
 			awardPoints(player);
 			
 		} else {
 			
+			System.out.println("Incorrect!");
+			
 			if (player){
-				System.out.println("Incorrect, player 2 enter answer: ");
-				answer2 = i.getWord();
-				System.out.println("Your answer is: " + answer2);
-			}else{
-				System.out.println("Incorrect, player 1 enter answer: ");
-				answer2 = i.getWord();
-				System.out.println("Your answer is: " + answer2);
+				collectAnswer(!player);
+			} else {
+				collectAnswer(player);
 			}
 			
-			if (answer2.equals(answer)){
-				
+			if (playerAnswer.equals(answer)){
 				awardPoints(!player);
-				
-			}else{
-				System.out.println("Both wrong. The answer was " + answer);
+			} else {
+				System.out.println("Both wrong. The answer was " + answer + "\n");
 			}
 			
 		}
@@ -93,13 +88,29 @@ public class Conundrum extends Round {
 	
 	private void awardPoints(boolean player){
 		
-		if (!player){
+		if (player){
 			System.out.println("Player 1 wins");
 			pOne.updateScore(10);
-		}else{
+		} else {
 			System.out.println("Player 2 wins");
 			pTwo.updateScore(10);
 		}
+	}
+	
+	private void collectAnswer(Boolean whatPlayer) {
+		
+		int playerNo;
+		
+		if(whatPlayer) {
+			playerNo = 1;
+		} else {
+			playerNo = 2;
+		}
+		
+		System.out.println("Player " + playerNo + " enter answer: ");
+		playerAnswer = i.getWord();
+		System.out.println("Your answer is: " + playerAnswer + "\n");
+		
 	}
 
 }

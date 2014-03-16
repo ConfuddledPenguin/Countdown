@@ -65,6 +65,14 @@ Ended		-
 		'buzz' in during the countdown as it is in the real game.
 		^ Thomas
 
+	v0.0.4 - 10/03/2014 - Working Timer
+
+		Added the functionality for users to 'buzz' in while the timer is
+		counting down using the Timer class. Still need to add the functionality
+		to exit the while loop in the conundrum class if the timer ends before
+		a player buzzes in.
+		^ Thomas
+
 	v0.1 - xx/xx/2014 - Complete Conundrum
 
 	v0.1.1 - 15/03/2014 - Finishing dictionary
