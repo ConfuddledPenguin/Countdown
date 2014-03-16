@@ -3,6 +3,12 @@ package Game;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * This class is a tree that has been build to allow quick matching of anagrams to words
+ * 
+ * @author Tom Maxwell
+ *
+ */
 public class Tree {
 	
 	public class Node {
@@ -17,6 +23,12 @@ public class Tree {
         root = new Node();
     }
     
+    /**
+     * Finds all the best words for a given string.
+     * 
+     * @param lettersString The jumbled string to be solved
+     * @return ArrayList<String> All the matches
+     */
     public ArrayList<String> findbestWord(String lettersString){
     	
     	char[] letters = lettersString.toCharArray();
@@ -49,6 +61,11 @@ public class Tree {
     	return currentNode.words;
     }
     
+    /**
+     * Adds the given word to the tree.
+     * 
+     * @param wordString The word to be added to the tree
+     */
     public void addWord(String wordString){
     	
     	Node currentNode = root;

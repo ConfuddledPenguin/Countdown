@@ -2,11 +2,15 @@ package Game;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
+/**
+ * The dictionary for countdown
+ * 
+ * @author Tom Maxwell
+ *
+ */
 public class Dictionary {
 	
 	private boolean testing = false;
@@ -28,13 +32,12 @@ public class Dictionary {
 	/**
 	 * Get the best word for the letters
 	 * 
-	 * @param letters
+	 * @param letters Random string to be solved
 	 * @return ArrayList<String>
 	 */
 	public ArrayList<String> getBestWords(String letters){
 		
 		ArrayList<String> bestWords;
-		int noLetters;
 		
 		bestWords = wordtree.findbestWord(letters);
 		
@@ -44,8 +47,10 @@ public class Dictionary {
 	/**
 	 * Gets all nine letter words that could be made from the anagram
 	 * @param letters
-	 * @return
+	 * @return ArrayList<String> All matches
+	 * @deprecated use {@link Dictionary#getBestWords(String letters)} instead
 	 */
+	@Deprecated
 	public ArrayList<String> getWords(String letters){
 		
 		ArrayList<Character> charList = new ArrayList<Character>();
@@ -147,7 +152,6 @@ public class Dictionary {
 				if (CurrentLine.length() <= 9){
 					words.add(CurrentLine);
 					wordtree.addWord(CurrentLine);
-//					System.out.println(CurrentLine);
 				}
 			}
  
@@ -189,13 +193,4 @@ public class Dictionary {
 		}
 	}
 
-    private static void perm1(String prefix, String s) {
-        int N = s.length();
-        if (N == 0) System.out.println(prefix);
-        else {
-            for (int i = 0; i < N; i++)
-               perm1(prefix + s.charAt(i), s.substring(0, i) + s.substring(i+1, N));
-        }
-
-    }
 }
