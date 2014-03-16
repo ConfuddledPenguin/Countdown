@@ -5,12 +5,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+/**
+ * The dictionary for countdown
+ * 
+ * @author Tom Maxwell
+ *
+ */
 public class Dictionary {
 	
-	boolean testing = false;
-	File file;
-	ArrayList<String> words;
-	ArrayList<String> nineLetterWords;
+	private boolean testing = false;
+	private File file;
+	private ArrayList<String> words;
+	private ArrayList<String> nineLetterWords;
+	private ArrayList<ArrayList<Character>> nineLetterWordsChars = new ArrayList<ArrayList<Character>>();
+	private Tree wordtree = new Tree();
 	
 	/**
 	 * Constructor for the Dictionary class
@@ -24,19 +32,48 @@ public class Dictionary {
 	/**
 	 * Get the best word for the letters
 	 * 
-	 * @param letters
+	 * @param letters Random string to be solved
 	 * @return ArrayList<String>
 	 */
 	public ArrayList<String> getBestWords(String letters){
 		
-		ArrayList<String> bestWords = new ArrayList<String>();
-		int noLetters;
+		ArrayList<String> bestWords;
 		
-		//generate all possible combinations
-		//check if any of them are the best
-		//if so add to an arraylist
+		bestWords = wordtree.findbestWord(letters);
 		
 		return bestWords;
+	}
+	
+	/**
+	 * Gets all nine letter words that could be made from the anagram
+	 * @param letters
+	 * @return ArrayList<String> All matches
+	 * @deprecated use {@link Dictionary#getBestWords(String letters)} instead
+	 */
+	@Deprecated
+	public ArrayList<String> getWords(String letters){
+		
+		ArrayList<Character> charList = new ArrayList<Character>();
+		ArrayList<String> possibleMatches = new ArrayList<String>();
+
+		for (char ch : letters.toCharArray()) {
+		  charList.add(ch);
+		}
+		
+		Collections.sort(charList);
+		
+		for(ArrayList<Character> word: nineLetterWordsChars){
+			
+			Collections.sort(word);
+			
+			if (word.equals(charList)){
+
+				int index = nineLetterWordsChars.indexOf(word);
+				possibleMatches.add(nineLetterWords.get(index));
+			}
+		}
+		
+		return possibleMatches;
 	}
 	
 	/**
@@ -59,17 +96,15 @@ public class Dictionary {
 	 * 
 	 * @return String[]
 	 */
-	public String[] getAnagram(){
+	public String getAnagram(){
 		
-		String[] output = new String[2];
-		
+		//get a random word
 		int size = nineLetterWords.size();
 		
 		Random r = new Random();
 		String word = nineLetterWords.get(r.nextInt(size));
 		
-		output[0] = word;
-		
+		//break the word into chars to shuffle
 		ArrayList<Character> tempWord = new ArrayList<Character>();
 		
 		for (int i = 0; i < 9; i++){
@@ -79,6 +114,7 @@ public class Dictionary {
 		
 		Collections.shuffle(tempWord);
 		
+		//put string back together for returning
 		StringBuilder sb = new StringBuilder(tempWord.size());
 		
 		for (char ch: tempWord){
@@ -88,9 +124,7 @@ public class Dictionary {
 		
 		String returnWord = sb.toString();
 		
-		output[1] = returnWord;
-		
-		return output;
+		return returnWord;
 	}
 	
 	/**
@@ -116,6 +150,7 @@ public class Dictionary {
 				
 				if (CurrentLine.length() <= 9){
 					words.add(CurrentLine);
+					wordtree.addWord(CurrentLine);
 				}
 			}
  
@@ -142,7 +177,17 @@ public class Dictionary {
 			
 			if (word.length() == 9){
 				
+				//Add to list of nine letter words
 				nineLetterWords.add(word);
+				
+				//break into chars and add to list
+				ArrayList<Character> charList = new ArrayList<Character>();
+
+				for (char ch : word.toCharArray()) {
+				  charList.add(ch);
+				}
+				
+				nineLetterWordsChars.add(charList);
 			}
 		}
 	}

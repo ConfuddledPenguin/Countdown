@@ -16,6 +16,28 @@ Ended		-
 		as we go along. Created a rough implementation of the input and launcher
 		classes to get the classes talking to each other.
 		^ Thomas
+		
+	v0.0.2 - 4/3/2014 - Started work on the dictionary
+	
+		This involved reading and storing of the dictionary in memory.
+		- Collecting all nine letter words together to make creating an 
+		anagram easier.
+		- Checking of strings past in to see if the exist in the provided
+		dictionary.
+		- Creating anagrams. This was done by breaking a nine letter long word
+		into a collection and then using Collections.Shuffle to mix it up. Then
+		a string builder was used to create a string that can be returned.
+		- Creating getWords to return all possible solutions to the anagram.
+		This checks against the nine letter words rather then the whole
+		dictionary so the input must be nine letters long.
+		- Spent some time thinking about how I will find and return the best
+		answers to a mix of letters.
+		- A boolean value exists to switch between testing an not. This
+		changes which dictionary is loaded into the program.
+		^ Tom
+
+		Started working on javaDoc. Setting it up and such.
+		^ Tom
 
 	v0.0.2 - 10/03/2014 - Dictionary Creation
 
@@ -44,6 +66,37 @@ Ended		-
 		^ Thomas
 
 	v0.1 - xx/xx/2014 - Complete Conundrum
+
+	v0.1.1 - 15/03/2014 - Finishing dictionary
+
+		Worked on finding a way to do find all the best matches. Thought through
+		a couple of idea's but non of them where overly attractive. Finally
+		settled on using a tree.
+		
+		The tree has a max depth of nine - for each letter possible
+		With each node having at max 26 children - for each letter of the 
+		alphabet.
+
+		Each node contains a letter value and an ArrayList of all possible words
+		at this location.
+
+		When adding a word to the tree. The word is broken into an array it is
+		then sorted into order using Arrays.sort. Then using this order the word
+		can be added to the tree. For example: if given "cat" this would be 
+		sorted to "act". A would be taken first and starting from the root the
+		child node 'a' would be selected or created if it does not already
+		exist. Then for 'c' the node with the value 'c' would be selected or 
+		created. and so on till you have run through the array. This means you
+		end up with a node corresponding to the word.
+
+		When finding the best possible word the above process is very much 
+		repeated. The anagram is broken into and array, sorted and then used to
+		navigate through the tree. When you arrive at the final node the
+		ArrayList of matching words is returned.
+
+		The addition of this means that getWords is now an unattractive way of 
+		finding the solution to an anagram and has been depreciated.
+		^ Tom
 
 	v0.2 - xx/xx/2014 - Complete Word
 

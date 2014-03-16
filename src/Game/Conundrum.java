@@ -1,5 +1,6 @@
 package Game;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.concurrent.Executors;
 
@@ -21,10 +22,8 @@ public class Conundrum extends Round {
 
 		System.out.println("Conundrum Round");
 		
-		String[] temp = dict.getAnagram();
-		
-		String answer = temp[0];
-		String anagram = temp[1];
+		String anagram = dict.getAnagram();
+		ArrayList<String> answer = dict.getBestWords(anagram);
 		
 		String keyPress = "";
 		
