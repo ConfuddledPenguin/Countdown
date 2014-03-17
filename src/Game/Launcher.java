@@ -49,7 +49,7 @@ public class Launcher {
 				case 1: System.out.println("1");
 						break;
 
-				case 2: Word w = new Word();
+				case 2: Word w = new Word(dict, playerOne, playerTwo, i);
 						w.play();
 						break;
 
