@@ -84,6 +84,8 @@ public class Dictionary {
 	 */
 	public boolean checkWord(String word){
 		
+		if (word == null) return false;
+		
 		if( (word.length() <= 9 || word.length() > 0) && words.contains(word.toLowerCase())){
 			return true;
 		}

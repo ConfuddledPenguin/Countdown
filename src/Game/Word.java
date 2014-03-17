@@ -27,32 +27,44 @@ public class Word extends Round{
 		//currently printing the answer for testing purposes
 		System.out.println("The letters are: " + letters+ "\n");
 
-		while(!dict.checkWord(player1Answer) || !checkLetters(player1Answer) || player1Answer.equals("!")) {
+		while(!dict.checkWord(player1Answer) || !checkLetters(player1Answer) /*|| !player1Answer.equals("!")*/) {
 			System.out.println("Please enter a valid word");
-			collectAnswer(player);
+			collectAnswer(player); 
 		}
 
-		while(!dict.checkWord(player2Answer) || !checkLetters(player2Answer) || player2Answer.equals("!")) {
+		while(!dict.checkWord(player2Answer) || !checkLetters(player2Answer) /*|| !player2Answer.equals("!")*/) {
 			System.out.println("Please enter a valid word");
 			collectAnswer(!player);
 		}
 		
+		System.out.println("p1 ans: " + player1Answer + " " + player1Answer.length());
+		System.out.println("p2 ans: " + player2Answer + " " + player2Answer.length());
+		
 		if(player1Answer.equals("!") && !player2Answer.equals("!")) {
-			awardPoints(!player);
+			awardPoints(!player, player2Answer);
 		} else if(!player1Answer.equals("!") && player2Answer.equals("!")) {
-			awardPoints(player);
+			awardPoints(player, player1Answer);
 		} else if(player1Answer.equals("!") && player2Answer.equals("!")) {
 			System.out.println("Both entered no answer. No points awarded");			
 		} else {
 			if(player1Answer.length() > player2Answer.length()) {
-				awardPoints(player);
-			} else if(player1Answer.length() > player2Answer.length()) {
-				awardPoints(!player);
+				System.out.println("Player 1 Wins");
+				awardPoints(player, player1Answer);
+			} else if(player1Answer.length() < player2Answer.length()) {
+				System.out.println("Player 2 Wins");
+				awardPoints(!player, player2Answer);
 			} else {
-				awardPoints(player);
-				awardPoints(!player);
+				System.out.println("Draw");
+				awardPoints(player, player1Answer);
+				awardPoints(!player, player2Answer);
 			}
 		}
+		
+		System.out.println("The best answers were: ");
+		for(String word: bestAnswers) {
+			System.out.println(word);			
+		}
+		
 	}
 	
 	/**
@@ -105,7 +117,7 @@ public class Word extends Round{
 			int temp = r.nextInt(74);
 			
 			/*
-			 * This is truly fucking horrible
+			 * This is truly horrible
 			 * its on my to do list
 			 */
 			if (temp < 2 ){
@@ -173,21 +185,24 @@ public class Word extends Round{
 
 	}
 
-	private void awardPoints(boolean player) {
+	private void awardPoints(boolean player, String answer) {
+		
+		int points = answer.length();
+		
+		if(points == 9)
+			points = points * 2;
 
 		if (player){
-			System.out.println("Player 1 wins");
-			pOne.updateScore(10);
+			pOne.updateScore(points);
 		} else {
-			System.out.println("Player 2 wins");
-			pTwo.updateScore(10);
+			pTwo.updateScore(points);
 		}
 	}
 
 	private void collectAnswer(Boolean whatPlayer) {
 
 		if(whatPlayer) {
-			System.out.println("Player 1 + enter answer: ");
+			System.out.println("Player 1 enter answer: ");
 			player1Answer = i.getWord();
 			System.out.println("Your answer is: " + player1Answer + "\n");
 		} else {

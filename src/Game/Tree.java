@@ -32,6 +32,7 @@ public class Tree {
     public ArrayList<String> findbestWord(String lettersString){
     	
     	char[] letters = lettersString.toCharArray();
+    	ArrayList<String> words = new ArrayList<>();
     	Arrays.sort(letters);
     	Node currentNode = root;
     	
@@ -46,19 +47,27 @@ public class Tree {
 	    			
 	    			if ( n.letter == letters[i]){
 	    				found = true;
-	    				currentNode = n;
+	    				if (n.words.size() != 0){
+		    				words = n.words;
+		    				currentNode = n;
+	    				}
 	    			}
 	    		} // close node finding
     		} else {
-    			System.out.println("No match");
+//    			System.out.println("No match");
     		}
     		
     		if (!found){
-    			System.out.println("No match");
+//    			System.out.println("No match");
     		}
     	}
     	
-    	return currentNode.words;
+//    	return currentNode.words;
+    	
+    	if (words.size() == 0){
+    		words.add("No best words :(");
+    	}
+    	return words;
     }
     
     /**
