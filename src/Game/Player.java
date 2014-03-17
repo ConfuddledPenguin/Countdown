@@ -2,8 +2,6 @@ package Game;
 
 /**
  * This class holds all the details of one player of the game
- * 
- * @author Thomas Sinclair
  *
  */
 public class Player {

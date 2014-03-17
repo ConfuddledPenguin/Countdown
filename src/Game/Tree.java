@@ -5,8 +5,6 @@ import java.util.Arrays;
 
 /**
  * This class is a tree that has been build to allow quick matching of anagrams to words
- * 
- * @author Tom Maxwell
  *
  */
 public class Tree {

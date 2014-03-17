@@ -8,7 +8,6 @@ import java.util.Random;
 /**
  * The dictionary for countdown
  * 
- * @author Tom Maxwell
  *
  */
 public class Dictionary {

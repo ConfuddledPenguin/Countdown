@@ -1,5 +1,8 @@
 package Game;
 
+/**
+ * The main class for the program
+ */
 public class Launcher {
 	
 	private Player playerOne;

@@ -3,11 +3,15 @@ package Game;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * An input handler
+ * 
+ */
 public class Input {
 	
-	/* Takes in a String from the user.
-	 * Can be user for getting the players name
-	 * or the answer for the word round.
+	/**
+	 * Takes in a string from the user
+	 * @return the user entered string
 	 */
 	public String getWord() {
 		
@@ -30,14 +34,19 @@ public class Input {
 	/* Takes in the users solution to the number round,
 	 * tokenises it and then returns it as a String.
 	 */
+	/**
+	 * 
+	 * @return
+	 */
 	public String getSolution() {
 		
 		return null;
 		
 	}
 	
-	/*Takes in an integer from the user
-	 * 
+	/**
+	 * Takes in a number from the user
+	 * @return the user entered number
 	 */
 	public int getNumber() {
 		

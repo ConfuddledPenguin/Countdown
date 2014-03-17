@@ -1,5 +1,9 @@
 package Game;
 
+/**
+ * This class executes a full game of countdown
+ *
+ */
 public class Countdown {
 	
 	private Player playerOne;

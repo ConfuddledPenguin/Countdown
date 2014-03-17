@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+/**
+ * The word round of the game countdown
+ */
 public class Word extends Round{
 
 	//stores the answer entered by the player

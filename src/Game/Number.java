@@ -1,5 +1,9 @@
 package Game;
 
+/**
+ * the number round of the countdown game
+ *
+ */
 public class Number {
 	
 	private Player playerOne;
