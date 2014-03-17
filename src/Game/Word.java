@@ -3,61 +3,56 @@ package Game;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-import java.util.Timer;
 
 public class Word extends Round{
 
 	//stores the answer entered by the player
-	private String playerAnswer;
+	private String player1Answer;
+	private String player2Answer;
 	//Used to track which player has 'buzzed'
 	//true for player one and false for player 2
-	boolean player;
-
-	Timer timer;
+	boolean player = true;
 
 	public Word(Dictionary dict, Player pOne, Player pTwo, Input i) {
 		super(dict, pOne, pTwo, i);
-
-		timer = new Timer();
 	}
 
 	public void play() {
-
-		System.out.println("Word\n");
 		
+		System.out.println("Word\n");
+
 		String letters = generateLetters();
-
-		ArrayList<String> answers = dict.getBestWords(letters);
-
-		String keyPress = "";
+		ArrayList<String> bestAnswers = dict.getBestWords(letters);
 
 		//currently printing the answer for testing purposes
 		System.out.println("The letters are: " + letters+ "\n");
 
-		timer.schedule(new TheTimer(), 10000);
+		while(!dict.checkWord(player1Answer) || !checkLetters(player1Answer) || player1Answer.equals("!")) {
+			System.out.println("Please enter a valid word");
+			collectAnswer(player);
+		}
 
-		while (/* Timer */) {
-
-			
-
+		while(!dict.checkWord(player2Answer) || !checkLetters(player2Answer) || player2Answer.equals("!")) {
+			System.out.println("Please enter a valid word");
+			collectAnswer(!player);
 		}
 		
-		player = true;
-		collectAnswer(player);
-		collectAnswer(!player);
-		
-		if(rankAnswer(player) < rankAnswer(!player)) {
+		if(player1Answer.equals("!") && !player2Answer.equals("!")) {
+			awardPoints(!player);
+		} else if(!player1Answer.equals("!") && player2Answer.equals("!")) {
 			awardPoints(player);
-		} else {	
-			awardPoints(!player);	
+		} else if(player1Answer.equals("!") && player2Answer.equals("!")) {
+			System.out.println("Both entered no answer. No points awarded");			
+		} else {
+			if(player1Answer.length() > player2Answer.length()) {
+				awardPoints(player);
+			} else if(player1Answer.length() > player2Answer.length()) {
+				awardPoints(!player);
+			} else {
+				awardPoints(player);
+				awardPoints(!player);
+			}
 		}
-	}
-	
-	/*return position in array of players word. Smaller is better*/
-	private int rankAnswer(boolean player) {
-		
-		return 0;
-		
 	}
 	
 	/**
@@ -171,6 +166,12 @@ public class Word extends Round{
 				
 		return sb.toString();		
 	}//close horrible method
+	
+	private boolean checkLetters(String answer) {
+
+		return true;
+
+	}
 
 	private void awardPoints(boolean player) {
 
@@ -185,17 +186,15 @@ public class Word extends Round{
 
 	private void collectAnswer(Boolean whatPlayer) {
 
-		int playerNo;
-
 		if(whatPlayer) {
-			playerNo = 1;
+			System.out.println("Player 1 + enter answer: ");
+			player1Answer = i.getWord();
+			System.out.println("Your answer is: " + player1Answer + "\n");
 		} else {
-			playerNo = 2;
+			System.out.println("Player 2 enter answer: ");
+			player2Answer = i.getWord();
+			System.out.println("Your answer is: " + player2Answer + "\n");
 		}
-
-		System.out.println("Player " + playerNo + " enter answer: ");
-		playerAnswer = i.getWord();
-		System.out.println("Your answer is: " + playerAnswer + "\n");
 
 	}
 
