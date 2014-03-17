@@ -73,7 +73,10 @@ Ended		-
 		a player buzzes in.
 		^ Thomas
 
-	v0.1 - xx/xx/2014 - Complete Conundrum
+	v0.1 - 11/03/2014 - Complete Conundrum
+
+		Tidied up and finished the Conundrum.
+		^ Thomas
 
 	v0.1.1 - 15/03/2014 - Finishing dictionary
 
@@ -105,6 +108,14 @@ Ended		-
 		The addition of this means that getWords is now an unattractive way of 
 		finding the solution to an anagram and has been depreciated.
 		^ Tom
+
+	v0.1.2 - 17/03/2014 - Initial Word
+
+		Began implementing a basic word round in a similar way to the conundrum
+		round using the methods in the dictionary class for finding the best
+		words and confirming a valid word. The round has been implemented to
+		have a similar structure to the round as it is in the tv show.
+		^ Thomas
 
 	v0.2 - xx/xx/2014 - Complete Word
 
