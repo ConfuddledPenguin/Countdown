@@ -1,7 +1,8 @@
 package Game;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
-import java.util.StringTokenizer;
 
 /**
  * The number round of the countdown game
@@ -16,6 +17,7 @@ public class NumberRound extends Round{
 	private boolean correct1;
 	private boolean correct2;
 	private int target;
+	private ArrayList<Integer> numbers;
 	
 	public NumberRound(Dictionary dict, Player pOne, Player pTwo, Input i) {
 		super(dict, pOne, pTwo, i);
@@ -31,10 +33,22 @@ public class NumberRound extends Round{
 		
 		printWelcome();
 		
+		//Generate numbers
+		generateNumbers();
+		System.out.print("The numbers are ");
+		
+		for(Integer n: numbers){
+			System.out.print(n + " ");
+		}
+		printLine();
+		
 		//Generate target number
 		Random r = new Random();
 		target = r.nextInt(1000);
+		r = null;
 		System.out.println("The target is : " + target);
+		printLine();
+		
 		
 		//Get the answer for player one
 		getAnswer(pOne);
@@ -70,13 +84,51 @@ public class NumberRound extends Round{
 				System.out.println("Sorry " + pTwo.getName() + " you working is wrong");
 		}
 		
-		System.out.println("\n\nThe best possible solution is " + bestAnswer());
+	}
+
+	/**
+	 * Find the best solution
+	 * @return
+	 */
+	private void bestAnswer(){
 		
 	}
 	
-	private int bestAnswer(){
+	/**
+	 * Generate the number for the game
+	 */
+	private void generateNumbers(){
 		
-		return 0;
+		int[] high = {25, 50, 75, 100};
+		int[] low = new int[20];
+		numbers = new ArrayList<>(); 
+		int noHigh;
+		Random r = new Random();
+		
+		//fil the low array
+		for (int i = 0; i < 10; i++){
+			low[i] = i;
+			low[19-i] = i;
+		}
+		
+		do {
+			
+			System.out.println("Please enter the number of high number you would like: ");
+			noHigh = i.getNumber();
+		}while(noHigh > 4 || noHigh < 0);
+		
+		for(int i = 0; i < noHigh; i++){
+			
+			numbers.add(high[r.nextInt(4)]);
+		}
+		
+		for(int i = 0; i < 6 - noHigh; i++){
+			
+			numbers.add(low[r.nextInt(20)]);
+		}
+		
+		r = null;
+		Collections.shuffle(numbers);	
 	}
 	
 	/**
@@ -157,6 +209,5 @@ public class NumberRound extends Round{
 		System.out.println("Welcome to the Number round");
 		System.out.println("---------------------------\n");
 	}
-
 
 }
