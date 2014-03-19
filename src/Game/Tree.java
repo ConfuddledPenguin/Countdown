@@ -36,16 +36,13 @@ public class Tree {
     	
     	for (int i = 0; i < letters.length; i++){
     		
-    		boolean found = false;
-    		
     		if (!currentNode.children.isEmpty()){
     			
 	    		// find the node for the letter
 	    		for(Node n: currentNode.children){
 	    			
 	    			if ( n.letter == letters[i]){
-	    				found = true;
-	    				if (n.words.size() != 0){
+	    				if (!n.words.isEmpty()){
 		    				words = n.words;
 		    				currentNode = n;
 	    				}
@@ -54,15 +51,10 @@ public class Tree {
     		} else {
 //    			System.out.println("No match");
     		}
-    		
-    		if (!found){
-//    			System.out.println("No match");
-    		}
     	}
     	
-//    	return currentNode.words;
-    	
-    	if (words.size() == 0){
+    	if (!words.isEmpty()){
+    		System.out.println("it was empty");
     		words.add("No best words :(");
     	}
     	return words;

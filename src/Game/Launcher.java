@@ -20,9 +20,9 @@ public class Launcher {
 		dict = new Dictionary();
 		
 		System.out.println("Player One enter name: ");
-		playerOne = new Player(i.getWord());
+		playerOne = new Player(i.getString(), 1);
 		System.out.println("Player Tne enter name: ");
-		playerTwo = new Player(i.getWord());
+		playerTwo = new Player(i.getString(), 2);
 		
 		getCommand();
 
@@ -56,7 +56,7 @@ public class Launcher {
 						w.play();
 						break;
 
-				case 3: Number n = new Number();
+				case 3: NumberRound n = new NumberRound(dict, playerOne, playerTwo, i);
 						n.play();
 						break;
 

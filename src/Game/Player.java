@@ -8,16 +8,17 @@ public class Player {
 	
 	private String name;
 	private int score;
+	private int playerNo;
 	
 	/**
 	 * Constructor for the player class
 	 * @param n of the player
 	 */
-	public Player(String n) {
+	public Player(String n, int playerNo) {
 		
 		name = n;
 		score = 0;
-		
+		this.playerNo = playerNo;
 	}
 	
 	/**
@@ -52,5 +53,15 @@ public class Player {
 		score =+ points;
 		
 	}	
+	
+	/**
+	 * Return the player number
+	 * 
+	 * @return The player number
+	 */
+	public int getNumber(){
+		
+		return playerNo;
+	}
 
 }

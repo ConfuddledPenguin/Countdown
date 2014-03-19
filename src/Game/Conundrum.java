@@ -42,7 +42,7 @@ public class Conundrum extends Round {
 			
 			System.out.println("Player 1 press '1' to enter answer\nPlayer 2 press '2' to enter answer\n");
 			
-			keyPress = i.getWord();
+			keyPress = i.getString();
 		       
 		       if(keyPress.equals("1")) {
 					
@@ -111,7 +111,7 @@ public class Conundrum extends Round {
 		}
 		
 		System.out.println("Player " + playerNo + " enter answer: ");
-		playerAnswer = i.getWord();
+		playerAnswer = i.getString();
 		System.out.println("Your answer is: " + playerAnswer + "\n");
 		
 	}

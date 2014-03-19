@@ -206,11 +206,11 @@ public class Word extends Round{
 
 		if(whatPlayer) {
 			System.out.println("Player 1 enter answer: ");
-			player1Answer = i.getWord();
+			player1Answer = i.getString();
 			System.out.println("Your answer is: " + player1Answer + "\n");
 		} else {
 			System.out.println("Player 2 enter answer: ");
-			player2Answer = i.getWord();
+			player2Answer = i.getString();
 			System.out.println("Your answer is: " + player2Answer + "\n");
 		}
 
