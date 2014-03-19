@@ -46,7 +46,7 @@ public class NumberRound extends Round{
 			
 			if ( ans1 == ans2)
 				System.out.println("You both have the same number, but lets see if the working is right");
-			else if ( target - ans1 < target - ans2)
+			else if ( Math.abs(target - ans1) < Math.abs(target - ans2))
 				System.out.println(pOne.getName() + " is closer, but lets see if the working is right\n");
 			else
 				System.out.println(pTwo.getName() + " is closer, but lets see if the working is right\n");
