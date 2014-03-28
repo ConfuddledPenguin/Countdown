@@ -16,7 +16,7 @@ public class Word extends Round{
 	//true for player one and false for player 2
 	boolean player = true;
 
-	public Word(Dictionary dict, Player pOne, Player pTwo, Input i) {
+	public Word(Dictionary dict, Player pOne, Player pTwo, IO i) {
 		super(dict, pOne, pTwo, i);
 	}
 

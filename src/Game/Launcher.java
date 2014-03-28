@@ -8,24 +8,44 @@ public class Launcher {
 	private Player playerOne;
 	private Player playerTwo;
 
-	private Input i;
+	private IO i;
 	private Scoreboard s;
 	
 	private Dictionary dict;
 
 	public Launcher() {
 
-		i = new Input();
+		i = new IO();
 		s = new Scoreboard();
 		dict = new Dictionary();
 		
-		System.out.println("Player One enter name: ");
-		playerOne = new Player(i.getWord());
-		System.out.println("Player Tne enter name: ");
-		playerTwo = new Player(i.getWord());
+		getPlayerDetials();
 		
 		getCommand();
 
+	}
+	
+	/**
+	 * Get the details of the players an if there is one or two players
+	 */
+	private void getPlayerDetials(){
+		
+		System.out.println("How many players are there: 1, or the better 2:");
+		int playerNo = i.getNumber();
+		while (playerNo < 1 || playerNo > 2){
+		
+			System.err.println("There can only be one or two players, try again:");
+			playerNo = i.getNumber();
+		}
+		
+		System.out.println("Player One enter name: ");
+		playerOne = new Player(i.getWord());
+		
+		if (playerNo == 2){
+			
+			System.out.println("Player Twoe enter name: ");
+			playerTwo = new Player(i.getWord());
+		}
 	}
 
 	private void getCommand() {
@@ -34,7 +54,7 @@ public class Launcher {
 
 		while(loop == true) {
 
-			System.out.println("----------------------------------------------------\n");
+			i.printLine();
 			
 			System.out.println("\nWhat would you like to do?\n\n" +
 							"Play full game\t\t\t- 1\n" +

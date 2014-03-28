@@ -7,7 +7,7 @@ import java.util.Scanner;
  * An input handler
  * 
  */
-public class Input {
+public class IO {
 	
 	/**
 	 * Takes in a string from the user
@@ -64,6 +64,14 @@ public class Input {
 
 		}
 		
+	}
+	
+	/**
+	 * Prints out a line of - to seperate things
+	 */
+	public void printLine(){
+		
+		System.out.println("----------------------------------------------------\n");
 	}
 
 }

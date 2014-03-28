@@ -18,7 +18,7 @@ public class Conundrum extends Round {
 	
 	Timer timer;
 	
-	public Conundrum(Dictionary dict, Player pOne, Player pTwo, Input i) {
+	public Conundrum(Dictionary dict, Player pOne, Player pTwo, IO i) {
 		super(dict, pOne, pTwo, i);
 		
 		timer = new Timer();

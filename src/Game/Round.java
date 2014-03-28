@@ -13,7 +13,7 @@ abstract public class Round {
 	Dictionary dict;
 	Player pOne;
 	Player pTwo;
-	Input i;
+	IO i;
 	Timer t;
 	boolean twoPlayer = false;
 	
@@ -26,7 +26,7 @@ abstract public class Round {
 	 * @param pTwo player two
 	 * @param i the input handler
 	 */
-	public Round(Dictionary dict, Player pOne, Player pTwo, Input i){
+	public Round(Dictionary dict, Player pOne, Player pTwo, IO i){
 		
 		this.dict = dict;
 		this.pOne = pOne;
