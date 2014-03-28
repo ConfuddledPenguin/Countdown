@@ -8,20 +8,41 @@ public class Launcher {
 	private Player playerOne;
 	private Player playerTwo;
 
-	private IO i;
+	private IO io;
 	private Scoreboard s;
 	
 	private Dictionary dict;
 
 	public Launcher() {
 
-		i = new IO();
+		io = new IO();
 		s = new Scoreboard();
 		dict = new Dictionary();
+		
+		printWelcome();
 		getPlayerDetials();
 		
-		getCommand();
+		playGame();
 
+	}
+
+	/**
+	 * Prints a welcome message to the program
+	 */
+	private void printWelcome(){
+		
+		io.printLines(2);
+		System.out.println("Welcome to countdown\n" +
+				"I hope you are ready to play!!\n\n"+
+				"(c) Thomas Maxwell and Thomas Sinclair");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e){
+			
+		}
+		
+		io.printLines(2);
+		
 	}
 	
 	/**
@@ -30,30 +51,34 @@ public class Launcher {
 	private void getPlayerDetials(){
 		
 		System.out.println("How many players are there: 1, or the better 2:");
-		int playerNo = i.getNumber();
+		int playerNo = io.getNumber();
+		
 		while (playerNo < 1 || playerNo > 2){
 		
 			System.err.println("There can only be one or two players, try again:");
-			playerNo = i.getNumber();
-		}
+			playerNo = io.getNumber();
+		}		
 		
 		System.out.println("Player One enter name: ");
-		playerOne = new Player(i.getString(), 1);
+		playerOne = new Player(io.getString(), 1);
 		
 		if (playerNo == 2){
 			
-			System.out.println("Player Twoe enter name: ");
-			playerTwo = new Player(i.getString(), 2);
+			System.out.println("Player Two enter name: ");
+			playerTwo = new Player(io.getString(), 2);
 		}
 	}
 
-	private void getCommand() {
+	/**
+	 * Get the users idea of wonderfulness
+	 */
+	private void playGame() {
 
 		boolean loop = true;
 
 		while(loop == true) {
 
-			i.printLine();
+			io.printLines(2);
 			
 			System.out.println("\nWhat would you like to do?\n\n" +
 							"Play full game\t\t\t- 1\n" +
@@ -64,22 +89,22 @@ public class Launcher {
 							"View Scoreboard\t\t\t- 5\n" +
 							"Quit\t\t\t\t- 6\n");
 
-			switch(i.getNumber()) {
+			switch(io.getNumber()) {
 
 				case 0: break;
 
 				case 1: System.out.println("1");
 						break;
 
-				case 2: WordRound w = new WordRound(dict, playerOne, playerTwo, i);
+				case 2: WordRound w = new WordRound(dict, playerOne, playerTwo, io);
 						w.play();
 						break;
 
-				case 3: NumberRound n = new NumberRound(dict, playerOne, playerTwo, i);
+				case 3: NumberRound n = new NumberRound(dict, playerOne, playerTwo, io);
 						n.play();
 						break;
 
-				case 4: ConundrumRound c = new ConundrumRound(dict, playerOne, playerTwo, i);
+				case 4: ConundrumRound c = new ConundrumRound(dict, playerOne, playerTwo, io);
 						c.play();
 						break;
 
@@ -88,7 +113,9 @@ public class Launcher {
 						break;
 
 				case 6: loop = false;
-						System.out.print("Exiting");
+						io.printLines(2);
+						System.out.println("Exiting");
+						io.printLines(1);
 						System.exit(1);
 						break;
 

@@ -59,12 +59,14 @@ public class IO {
 		}
 		
 	}
-	
 
 	/**
 	 * Prints out a line of - to seperate things
 	 */
-	public void printLine(){
+	public void printLines(int t){
+		
+		for(int i = 0; i < t - 1; i++)
+			System.out.println("----------------------------------------------------");
 		
 		System.out.println("----------------------------------------------------\n");
 	}
