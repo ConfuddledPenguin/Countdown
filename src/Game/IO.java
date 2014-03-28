@@ -9,15 +9,20 @@ import java.util.Scanner;
  */
 public class IO {
 	
+	private Scanner scan;
+	
+	public IO(){
+		
+		scan = new Scanner(System.in);
+	}
+	
 	/**
 	 * Takes in a string from the user
 	 * @return the user entered string
 	 */
-	public String getWord() {
+	public String getString() {
 		
 		try {
-			
-			Scanner scan = new Scanner(System.in);
 			
 			String input = scan.nextLine();
 			
@@ -25,24 +30,13 @@ public class IO {
 			
 		} catch(InputMismatchException e) {
 			
-			return null;
+			System.out.println("Please enter a String ");
+			return getString();
 			
 		}	//end try
 		
 	}
-	
-	/* Takes in the users solution to the number round,
-	 * tokenises it and then returns it as a String.
-	 */
-	/**
-	 * 
-	 * @return
-	 */
-	public String getSolution() {
-		
-		return null;
-		
-	}
+
 	
 	/**
 	 * Takes in a number from the user
@@ -52,20 +46,21 @@ public class IO {
 		
 		try {
 
-			Scanner scan = new Scanner(System.in);
-
 			int input = scan.nextInt();
+			scan.nextLine();
 
 			return input;
 
 		} catch(InputMismatchException e) {
 		
-			return 0;
+			System.out.println("please enter a number : ");
+			return getNumber();
 
 		}
 		
 	}
 	
+
 	/**
 	 * Prints out a line of - to seperate things
 	 */

@@ -8,7 +8,7 @@ import java.util.Timer;
 //import java.util.concurrent.Executor;
 //import java.util.concurrent.Executors;
 
-public class Conundrum extends Round {
+public class ConundrumRound extends Round {
 	
 	//stores the answer entered by the player
 	private String playerAnswer;
@@ -18,7 +18,7 @@ public class Conundrum extends Round {
 	
 	Timer timer;
 	
-	public Conundrum(Dictionary dict, Player pOne, Player pTwo, IO i) {
+	public ConundrumRound(Dictionary dict, Player pOne, Player pTwo, IO i) {
 		super(dict, pOne, pTwo, i);
 		
 		timer = new Timer();
@@ -42,7 +42,7 @@ public class Conundrum extends Round {
 			
 			System.out.println("Player 1 press '1' to enter answer\nPlayer 2 press '2' to enter answer\n");
 			
-			keyPress = i.getWord();
+			keyPress = i.getString();
 		       
 		       if(keyPress.equals("1")) {
 					
@@ -111,7 +111,7 @@ public class Conundrum extends Round {
 		}
 		
 		System.out.println("Player " + playerNo + " enter answer: ");
-		playerAnswer = i.getWord();
+		playerAnswer = i.getString();
 		System.out.println("Your answer is: " + playerAnswer + "\n");
 		
 	}

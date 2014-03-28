@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * The word round of the game countdown
  */
-public class Word extends Round{
+public class WordRound extends Round{
 
 	//stores the answer entered by the player
 	private String player1Answer;
@@ -16,7 +16,7 @@ public class Word extends Round{
 	//true for player one and false for player 2
 	boolean player = true;
 
-	public Word(Dictionary dict, Player pOne, Player pTwo, IO i) {
+	public WordRound(Dictionary dict, Player pOne, Player pTwo, IO i) {
 		super(dict, pOne, pTwo, i);
 	}
 
@@ -206,11 +206,11 @@ public class Word extends Round{
 
 		if(whatPlayer) {
 			System.out.println("Player 1 enter answer: ");
-			player1Answer = i.getWord();
+			player1Answer = i.getString();
 			System.out.println("Your answer is: " + player1Answer + "\n");
 		} else {
 			System.out.println("Player 2 enter answer: ");
-			player2Answer = i.getWord();
+			player2Answer = i.getString();
 			System.out.println("Your answer is: " + player2Answer + "\n");
 		}
 

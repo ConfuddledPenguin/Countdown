@@ -41,6 +41,13 @@ abstract public class Round {
 	}
 	
 	/**
+	 * Prints an empty line
+	 */
+	protected void printLine(){
+		System.out.println();
+	}
+	
+	/**
 	 * This method is for playing the round
 	 */
 	abstract public void play();

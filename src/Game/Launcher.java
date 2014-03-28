@@ -18,7 +18,6 @@ public class Launcher {
 		i = new IO();
 		s = new Scoreboard();
 		dict = new Dictionary();
-		
 		getPlayerDetials();
 		
 		getCommand();
@@ -39,12 +38,12 @@ public class Launcher {
 		}
 		
 		System.out.println("Player One enter name: ");
-		playerOne = new Player(i.getWord());
+		playerOne = new Player(i.getString(), 1);
 		
 		if (playerNo == 2){
 			
 			System.out.println("Player Twoe enter name: ");
-			playerTwo = new Player(i.getWord());
+			playerTwo = new Player(i.getString(), 2);
 		}
 	}
 
@@ -72,15 +71,15 @@ public class Launcher {
 				case 1: System.out.println("1");
 						break;
 
-				case 2: Word w = new Word(dict, playerOne, playerTwo, i);
+				case 2: WordRound w = new WordRound(dict, playerOne, playerTwo, i);
 						w.play();
 						break;
 
-				case 3: Number n = new Number();
+				case 3: NumberRound n = new NumberRound(dict, playerOne, playerTwo, i);
 						n.play();
 						break;
 
-				case 4: Conundrum c = new Conundrum(dict, playerOne, playerTwo, i);
+				case 4: ConundrumRound c = new ConundrumRound(dict, playerOne, playerTwo, i);
 						c.play();
 						break;
 
