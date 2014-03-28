@@ -17,7 +17,6 @@ abstract public class Round {
 	Timer t;
 	boolean twoPlayer = false;
 	
-	
 	/**
 	 * Constructor
 	 * 

@@ -53,15 +53,16 @@ public class IO {
 
 		} catch(InputMismatchException e) {
 		
-			System.out.println("please enter a number : ");
+			System.err.println("Please enter a number : ");
 			return getNumber();
 
 		}
-		
 	}
 
 	/**
-	 * Prints out a line of - to seperate things
+	 * Prints out a specified amount of lines of - to separate things
+	 * 
+	 * @param The number of lines to be printed
 	 */
 	public void printLines(int t){
 		

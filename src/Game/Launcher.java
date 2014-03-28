@@ -23,7 +23,6 @@ public class Launcher {
 		getPlayerDetials();
 		
 		playGame();
-
 	}
 
 	/**
@@ -42,7 +41,6 @@ public class Launcher {
 		}
 		
 		io.printLines(2);
-		
 	}
 	
 	/**
@@ -132,7 +130,6 @@ public class Launcher {
 	public static void main(String args[]) {
 		
 		Launcher l = new Launcher();
-		
 	}
 
 }
