@@ -13,9 +13,8 @@ abstract public class Round {
 	Dictionary dict;
 	Player pOne;
 	Player pTwo;
-	IO i;
-	Timer t;
 	boolean twoPlayer = false;
+	private String roundType;
 	
 	/**
 	 * Constructor
@@ -23,16 +22,12 @@ abstract public class Round {
 	 * @param dict the dictionary for the game
 	 * @param pOne player one
 	 * @param pTwo player two
-	 * @param i the input handler
 	 */
-	public Round(Dictionary dict, Player pOne, Player pTwo, IO i){
+	public Round(Dictionary dict, Player pOne, Player pTwo, String roundType){
 		
 		this.dict = dict;
 		this.pOne = pOne;
 		this.pTwo = pTwo;
-		this.i = i;
-		
-		t = new Timer();
 		
 		if (pTwo != null){
 			twoPlayer = true;
@@ -40,11 +35,14 @@ abstract public class Round {
 	}
 	
 	/**
-	 * Prints an empty line
+	 * Returns the type of round
+	 * 
+	 * @return The type of round
 	 */
-	protected void printLine(){
-		System.out.println();
+	public String roundType() {
+		return roundType;
 	}
+	
 	
 	/**
 	 * This method is for playing the round

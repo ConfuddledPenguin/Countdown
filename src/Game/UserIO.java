@@ -7,11 +7,11 @@ import java.util.Scanner;
  * An input handler
  * 
  */
-public class IO {
+public class UserIO {
 	
 	private Scanner scan;
 	
-	public IO(){
+	public UserIO(){
 		
 		scan = new Scanner(System.in);
 	}
@@ -62,11 +62,11 @@ public class IO {
 	/**
 	 * Prints out a specified amount of lines of - to separate things
 	 * 
-	 * @param The number of lines to be printed
+	 * @param n The number of lines to be printed
 	 */
-	public void printLines(int t){
+	public void printLines(int n){
 		
-		for(int i = 0; i < t - 1; i++)
+		for(int i = 0; i < n - 1; i++)
 			System.out.println("----------------------------------------------------");
 		
 		System.out.println("----------------------------------------------------\n");

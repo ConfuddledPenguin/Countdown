@@ -15,9 +15,13 @@ public class WordRound extends Round{
 	//Used to track which player has 'buzzed'
 	//true for player one and false for player 2
 	boolean player = true;
+	
+	private UserIO i;
 
-	public WordRound(Dictionary dict, Player pOne, Player pTwo, IO i) {
-		super(dict, pOne, pTwo, i);
+	public WordRound(Dictionary dict, Player pOne, Player pTwo) {
+		
+		super(dict, pOne, pTwo, "Word round");
+		i = new UserIO();
 	}
 
 	public void play() {

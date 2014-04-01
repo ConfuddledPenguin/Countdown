@@ -16,11 +16,15 @@ public class ConundrumRound extends Round {
 	//true for player one and false for player 2
 	boolean player;
 	
+	private UserIO i;
+	
 	Timer timer;
 	
-	public ConundrumRound(Dictionary dict, Player pOne, Player pTwo, IO i) {
-		super(dict, pOne, pTwo, i);
+	public ConundrumRound(Dictionary dict, Player pOne, Player pTwo) {
 		
+		super(dict, pOne, pTwo, "Conundrum Round");
+		
+		i = new UserIO();
 		timer = new Timer();
 	}
 	

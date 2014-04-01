@@ -8,16 +8,19 @@ public class Launcher {
 	private Player playerOne;
 	private Player playerTwo;
 
-	private IO io;
-	private Scoreboard s;
+	private UserIO io;
+	private LeaderBoard leaders;
 	
 	private Dictionary dict;
+	
+	private GameObjects objects;
 
 	public Launcher() {
 
-		io = new IO();
-		s = new Scoreboard();
+		io = new UserIO();
+		leaders = new LeaderBoard();
 		dict = new Dictionary();
+		objects = new GameObjects(null, null, dict, leaders);
 		
 		printWelcome();
 		getPlayerDetials();
@@ -59,11 +62,13 @@ public class Launcher {
 		
 		System.out.println("Player One enter name: ");
 		playerOne = new Player(io.getString(), 1);
+		objects.pOne = playerOne;
 		
 		if (playerNo == 2){
 			
 			System.out.println("Player Two enter name: ");
 			playerTwo = new Player(io.getString(), 2);
+			objects.pTwo = playerTwo;
 		}
 	}
 
@@ -94,20 +99,19 @@ public class Launcher {
 				case 1: System.out.println("1");
 						break;
 
-				case 2: WordRound w = new WordRound(dict, playerOne, playerTwo, io);
+				case 2: WordRound w = new WordRound(dict, playerOne, playerTwo);
 						w.play();
 						break;
 
-				case 3: NumberRound n = new NumberRound(dict, playerOne, playerTwo, io);
+				case 3: NumberRound n = new NumberRound(objects);
 						n.play();
 						break;
 
-				case 4: ConundrumRound c = new ConundrumRound(dict, playerOne, playerTwo, io);
+				case 4: ConundrumRound c = new ConundrumRound(dict, playerOne, playerTwo);
 						c.play();
 						break;
 
-				case 5: s.loadScores();
-						s.viewScores();
+				case 5: leaders.printScores();
 						break;
 
 				case 6: loop = false;

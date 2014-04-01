@@ -20,12 +20,28 @@ public class NumberRound extends Round{
 	private int target;
 	private ArrayList<Integer> numbers;
 	
+	private UserIO i;
+	
 	public enum returnValues {
 		TRUE, FALSE, ERROR
 	}
 
-	public NumberRound(Dictionary dict, Player pOne, Player pTwo, IO i) {
-		super(dict, pOne, pTwo, i);
+	/**
+	 * The constructor for a number round
+	 * 
+	 * @param dict The dictionary file
+	 * @param pOne Player one
+	 * @param pTwo Player two if the exist
+	 */
+	public NumberRound(Dictionary dict, Player pOne, Player pTwo ) {
+		
+		super(dict, pOne, pTwo, "NumberRound");
+		i = new UserIO();
+	}
+	
+	public NumberRound(GameObjects o) {
+		
+		this(o.dict, o.pOne, o.pTwo);
 	}
 
 	/**
@@ -45,14 +61,14 @@ public class NumberRound extends Round{
 		for(Integer n: numbers){
 			System.out.print(n + " ");
 		}
-		printLine();
+		System.out.println();
 
 		//Generate target number
 		Random r = new Random();
 		target = r.nextInt(1000);
 		r = null;
 		System.out.println("The target is : " + target);
-		printLine();
+		System.out.println();
 
 
 		//Get the answer for player one
@@ -101,7 +117,6 @@ public class NumberRound extends Round{
 
 	/**
 	 * Find the best solution
-	 * @return
 	 */
 	private void bestAnswer(){
 		
@@ -286,7 +301,7 @@ public class NumberRound extends Round{
 		else
 			ans2 = i.getNumber();
 
-		printLine();
+		System.out.println();
 	}
 
 	/**
@@ -302,7 +317,7 @@ public class NumberRound extends Round{
 		else
 			working2 = i.getString();	
 
-		printLine();
+		System.out.println();
 	}
 
 	/**
