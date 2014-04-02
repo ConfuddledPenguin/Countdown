@@ -36,16 +36,26 @@ public class Tree {
     	
     	for (int i = 0; i < letters.length; i++){
     		
+//    		System.out.println("For letter " + letters[i]);
+    		
     		if (!currentNode.children.isEmpty()){
     			
+//    			System.out.println("The current node has children");
+    			
 	    		// find the node for the letter
+    			nodehunter:
 	    		for(Node n: currentNode.children){
 	    			
+//	    			System.out.println("For node " + n.letter);
+	    			
 	    			if ( n.letter == letters[i]){
+	    				
+//	    				System.out.println("Found the correct node");
 	    				if (!n.words.isEmpty()){
 		    				words = n.words;
-		    				currentNode = n;
 	    				}
+	    				currentNode = n;
+	    				break nodehunter;
 	    			}
 	    		} // close node finding
     		} else {
@@ -53,7 +63,7 @@ public class Tree {
     		}
     	}
     	
-    	if (!words.isEmpty()){
+    	if (words.isEmpty()){
     		System.out.println("it was empty");
     		words.add("No best words :(");
     	}

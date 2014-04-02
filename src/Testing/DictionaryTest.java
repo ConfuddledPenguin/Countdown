@@ -18,9 +18,12 @@ public class DictionaryTest {
 		
 		System.out.println("abc");
 		ArrayList<String> temp = test.getBestWords("abc");
+		System.out.println(temp.size());
 		for (String s: temp){
 			System.out.println(s);
 		}
+		System.out.println(temp.get(0));
+//		assertTrue("cab" == temp.get(0));
 		System.out.println();
 		
 		System.out.println("cba");
@@ -38,6 +41,13 @@ public class DictionaryTest {
 				System.out.println(s);
 			}
 			System.out.println();
+		}
+		
+		System.out.println("iasifelxa");
+		temp = test.getBestWords("iasifelxa");
+		System.out.println(temp.size());
+		for (String s: temp){
+			System.out.println(s);
 		}
 	}
 
