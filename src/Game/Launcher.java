@@ -1,5 +1,7 @@
 package Game;
 
+import java.util.concurrent.CountDownLatch;
+
 /**
  * The main class for the program
  */
@@ -96,19 +98,20 @@ public class Launcher {
 
 				case 0: break;
 
-				case 1: System.out.println("1");
+				case 1: Countdown cd = new Countdown(objects);
+						cd.play();
 						break;
 
-				case 2: WordRound w = new WordRound(dict, playerOne, playerTwo);
-						w.play();
+				case 2: WordRound wr = new WordRound(objects);
+						wr.play();
 						break;
 
-				case 3: NumberRound n = new NumberRound(objects);
-						n.play();
+				case 3: NumberRound nr = new NumberRound(objects);
+						nr.play();
 						break;
 
-				case 4: ConundrumRound c = new ConundrumRound(dict, playerOne, playerTwo);
-						c.play();
+				case 4: ConundrumRound cr = new ConundrumRound(objects);
+						cr.play();
 						break;
 
 				case 5: leaders.printScores();

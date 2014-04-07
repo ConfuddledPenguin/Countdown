@@ -18,12 +18,30 @@ public class WordRound extends Round{
 	
 	private UserIO i;
 
-	public WordRound(Dictionary dict, Player pOne, Player pTwo) {
+	/**
+	 * Constructor for the number round
+	 * @param dict the Dictionary file
+	 * @param pOne Player one
+	 * @param pTwo Player two
+	 */
+	public WordRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board) {
 		
-		super(dict, pOne, pTwo, "Word round");
+		super(dict, pOne, pTwo, board, "Word round");
 		i = new UserIO();
 	}
+	
+	/**
+	 * A constructor for the number round
+	 * @param o A gameObjects object.
+	 */
+	public WordRound(GameObjects o) {
+		
+		this(o.dict, o.pOne, o.pTwo, o.leaders);
+	}
 
+	/**
+	 * Call to play a round
+	 */
 	public void play() {
 		
 		System.out.println("Word\n");

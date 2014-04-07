@@ -15,6 +15,7 @@ abstract public class Round {
 	Player pTwo;
 	boolean twoPlayer = false;
 	private String roundType;
+	private LeaderBoard board;
 	
 	/**
 	 * Constructor
@@ -22,12 +23,15 @@ abstract public class Round {
 	 * @param dict the dictionary for the game
 	 * @param pOne player one
 	 * @param pTwo player two
+	 * @param board the leaderBoard
+	 * @param roundtype the type of round
 	 */
-	public Round(Dictionary dict, Player pOne, Player pTwo, String roundType){
+	public Round(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board, String roundType){
 		
 		this.dict = dict;
 		this.pOne = pOne;
 		this.pTwo = pTwo;
+		this.board = board;
 		
 		if (pTwo != null){
 			twoPlayer = true;

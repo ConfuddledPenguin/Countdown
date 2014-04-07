@@ -1,13 +1,13 @@
 package Game;
 
-/**
- * The conundrum round for the countdown game
- */
 import java.util.ArrayList;
 import java.util.Timer;
 //import java.util.concurrent.Executor;
 //import java.util.concurrent.Executors;
 
+/**
+ * The conundrum round for the countdown game
+ */
 public class ConundrumRound extends Round {
 	
 	//stores the answer entered by the player
@@ -20,12 +20,28 @@ public class ConundrumRound extends Round {
 	
 	Timer timer;
 	
-	public ConundrumRound(Dictionary dict, Player pOne, Player pTwo) {
+	/**
+	 * A constructor for the conundrum round
+	 * 
+	 * @param dict the dictionary file
+	 * @param pOne Player one
+	 * @param pTwo Player two
+	 */
+	public ConundrumRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board) {
 		
-		super(dict, pOne, pTwo, "Conundrum Round");
+		super(dict, pOne, pTwo, board, "Conundrum Round");
 		
 		i = new UserIO();
 		timer = new Timer();
+	}
+	
+	/**
+	 * A constructor for the number round
+	 * @param o A gameObjects object.
+	 */
+	public ConundrumRound(GameObjects o) {
+		
+		this(o.dict, o.pOne, o.pTwo, o.leaders);
 	}
 	
 	public void play() {

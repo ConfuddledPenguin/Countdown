@@ -31,17 +31,21 @@ public class NumberRound extends Round{
 	 * 
 	 * @param dict The dictionary file
 	 * @param pOne Player one
-	 * @param pTwo Player two if the exist
+	 * @param pTwo Player two if they exist
 	 */
-	public NumberRound(Dictionary dict, Player pOne, Player pTwo ) {
+	public NumberRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board ) {
 		
-		super(dict, pOne, pTwo, "NumberRound");
+		super(dict, pOne, pTwo, board, "NumberRound");
 		i = new UserIO();
 	}
 	
+	/**
+	 * A constructor for the number round
+	 * @param o A gameObjects object.
+	 */
 	public NumberRound(GameObjects o) {
 		
-		this(o.dict, o.pOne, o.pTwo);
+		this(o.dict, o.pOne, o.pTwo, o.leaders);
 	}
 
 	/**
