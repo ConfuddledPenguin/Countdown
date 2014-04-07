@@ -127,9 +127,9 @@ public class LeaderBoard {
 	/**
 	 * Adds a score to the leaderboard.
 	 * 
-	 * @param p the player
-	 * @param r The round
-	 * @param s The score
+	 * @param player the player
+	 * @param round The round
+	 * @param points The score
 	 */
 	public void addScore(String player, String round, int points) {
 

@@ -21,7 +21,7 @@ abstract public class Round {
 	 * @param pOne player one
 	 * @param pTwo player two
 	 * @param board the leaderBoard
-	 * @param roundtype the type of round
+	 * @param roundType the type of round
 	 */
 	public Round(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board, String roundType){
 		
