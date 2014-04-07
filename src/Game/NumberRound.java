@@ -15,8 +15,6 @@ public class NumberRound extends Round{
 	private int ans2;
 	private String working1;
 	private String working2;
-	private boolean correct1;
-	private boolean correct2;
 	private int target;
 	private ArrayList<Integer> numbers;
 	
@@ -52,9 +50,6 @@ public class NumberRound extends Round{
 	 * Plays a round of countdown;
 	 */
 	public void play() {
-
-		correct1 = false;
-		correct2 = false;
 
 		printWelcome();
 
@@ -206,6 +201,7 @@ public class NumberRound extends Round{
 	 */
 	private returnValues checkWorking(int ans, String working){
 
+		@SuppressWarnings("unchecked")
 		ArrayList<Integer> numberClone = (ArrayList<Integer>) numbers.clone();
 
 		System.out.println("Players working: " + working);

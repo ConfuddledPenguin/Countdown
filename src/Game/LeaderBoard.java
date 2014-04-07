@@ -56,6 +56,7 @@ public class LeaderBoard {
 		scoresNumber 	= new ArrayList<Score>();
 		scoresWord 		= new ArrayList<Score>();
 		scoresConundrum = new ArrayList<Score>();
+		loadScores();
 	}
 
 

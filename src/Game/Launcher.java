@@ -1,7 +1,5 @@
 package Game;
 
-import java.util.concurrent.CountDownLatch;
-
 /**
  * The main class for the program
  */
