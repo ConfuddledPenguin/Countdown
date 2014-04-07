@@ -20,10 +20,10 @@ public class LeaderBoard {
 		String round;
 		int score;
 		
-		public Score(Player p, Round r, int score){
+		public Score(String p, String r, int score){
 			
-			this.name = p.getName();
-			this.round = r.roundType();
+			this.name = p;
+			this.round = r;
 			this.score = score;
 		}
 
@@ -130,27 +130,12 @@ public class LeaderBoard {
 	 * @param r The round
 	 * @param s The score
 	 */
-	public void addScore(Player p, Round r, int s) {
+	public void addScore(String player, String round, int points) {
 
-		Score score = new Score(p, r, s);
+		Score score = new Score(player, round, points);
 		scores.add(score);
 		
 		Collections.sort(scores);
 	}	
-	
-	/**
-	 * For debugging purposes only
-	 * @param args
-	 */
-	public static void main(String[] args){
-		
-		LeaderBoard l = new LeaderBoard();
-		GameObjects o = new GameObjects(null, null, null, l);
-		l.addScore(new Player("bob", 1), new NumberRound(o), 20);
-		l.addScore(new Player("bob", 1), new NumberRound(o), 12);
-		l.addScore(new Player("bob", 1), new NumberRound(o), 14);
-		l.addScore(new Player("bob", 1), new NumberRound(o), 17);
-		l.printScores();
-	}
 
 }

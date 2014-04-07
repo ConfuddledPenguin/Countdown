@@ -14,8 +14,8 @@ abstract public class Round {
 	Player pOne;
 	Player pTwo;
 	boolean twoPlayer = false;
-	private String roundType;
-	private LeaderBoard board;
+	String roundType;
+	LeaderBoard board;
 	
 	/**
 	 * Constructor
@@ -32,6 +32,7 @@ abstract public class Round {
 		this.pOne = pOne;
 		this.pTwo = pTwo;
 		this.board = board;
+		this.roundType = roundType;
 		
 		if (pTwo != null){
 			twoPlayer = true;
