@@ -33,7 +33,7 @@ public class NumberRound extends Round{
 	 */
 	public NumberRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board ) {
 		
-		super(dict, pOne, pTwo, board, "NumberRound");
+		super(dict, pOne, pTwo, board, LeaderBoard.NUMBERROUND);
 		i = new UserIO();
 	}
 	

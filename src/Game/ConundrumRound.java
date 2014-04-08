@@ -29,7 +29,7 @@ public class ConundrumRound extends Round {
 	 */
 	public ConundrumRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board) {
 		
-		super(dict, pOne, pTwo, board, "Conundrum Round");
+		super(dict, pOne, pTwo, board, LeaderBoard.CONUNDRUMROUND);
 		
 		i = new UserIO();
 		timer = new Timer();

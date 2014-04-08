@@ -11,6 +11,11 @@ public class LeaderBoard {
 	private ArrayList<Score> scoresWord;		// Holds the Word round scores
 	private ArrayList<Score> scoresConundrum;	// Holds the Conundrum round scores
 
+	public static final String WORDROUND = "WordRound";
+    public static final String NUMBERROUND = "NumberRound";
+    public static final String CONUNDRUMROUND = "ConundrumRound";
+    public static final String FULLGAME = "FullGame";
+	
 	/**
 	 * A small class to store the score details 
 	 */
@@ -20,6 +25,13 @@ public class LeaderBoard {
 		String round;
 		int score;
 		
+		/**
+		 * The constructor for score
+		 * 
+		 * @param p the player
+		 * @param r the round
+		 * @param score the score
+		 */
 		public Score(String p, String r, int score){
 			
 			this.name = p;
@@ -27,6 +39,9 @@ public class LeaderBoard {
 			this.score = score;
 		}
 
+		/**
+		 * Need to compare scores against themselves
+		 */
 		@Override
 		public int compareTo(Score s) {
 			
@@ -39,6 +54,9 @@ public class LeaderBoard {
 		    else return AFTER;
 		}
 		
+		/**
+		 * A quick way to print the score
+		 */
 		@Override
 		public String toString(){
 			return (name + "\t\t: " + round + "\t\t: " + score);
@@ -131,12 +149,49 @@ public class LeaderBoard {
 	 * @param round The round
 	 * @param points The score
 	 */
-	public void addScore(String player, String round, int points) {
+	public void addScore(String player, String round, int points) throws IllegalArgumentException {
 
+		//Create a new score object
 		Score score = new Score(player, round, points);
-		scores.add(score);
 		
-		Collections.sort(scores);
+		
+		//Add it to its special LeaderBoard
+		if ( round.equals(NUMBERROUND))
+			addScoreHelper(scoresNumber, score);
+		
+		else if (round.equals(WORDROUND))
+			addScoreHelper(scoresWord, score);
+		
+		else if (round.equals(CONUNDRUMROUND))
+			addScoreHelper(scoresConundrum, score);
+		
+		else if (round.equals(FULLGAME))
+			addScoreHelper(scoresFull, score);
+		
+		else 
+			throw new IllegalArgumentException("Not a valid round type");
+		
+		
+		//Finally add to the general leaderBoards
+		addScoreHelper(scores, score);
 	}	
+	
+	/**
+	 * Adds the score to the leaderboard to reduce LOC
+	 * 
+	 * @param board The board
+	 * @param score The score
+	 */
+	private void addScoreHelper(ArrayList<Score> board, Score score){
+		
+		board.add(score);
+		Collections.sort(board);
+		
+		//Let user know if they are at the top of the leaderboard.
+		if (board.get(0).equals(score)){
+			
+			System.out.println("Hey, your at the top of the leaderBoard for " + score.round + ". Well done you!");
+		}
+	}
 
 }

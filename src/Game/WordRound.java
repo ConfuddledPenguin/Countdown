@@ -26,7 +26,7 @@ public class WordRound extends Round{
 	 */
 	public WordRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board) {
 		
-		super(dict, pOne, pTwo, board, "Word round");
+		super(dict, pOne, pTwo, board, LeaderBoard.WORDROUND);
 		i = new UserIO();
 	}
 	
