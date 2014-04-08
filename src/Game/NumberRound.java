@@ -203,7 +203,6 @@ public class NumberRound extends Round{
 
 		@SuppressWarnings("unchecked")
 		ArrayList<Integer> numberClone = (ArrayList<Integer>) numbers.clone();
-		
 		ArrayList<String> operators = new ArrayList<String>();
 		operators.add("+"); operators.add("-"); operators.add("*"); operators.add("/");
 
@@ -228,7 +227,6 @@ public class NumberRound extends Round{
 					if(numberClone.contains(token2)) {
 						
 						tempAns = calculate(tempAns, token, token2);
-						
 						numberClone.remove(token2);
 						
 					}
