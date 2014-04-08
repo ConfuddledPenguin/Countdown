@@ -17,9 +17,9 @@ public class NumberRound extends Round{
 	private String working2;
 	private int target;
 	private ArrayList<Integer> numbers;
-	
+
 	private UserIO i;
-	
+
 	public enum returnValues {
 		TRUE, FALSE, ERROR
 	}
@@ -32,17 +32,17 @@ public class NumberRound extends Round{
 	 * @param pTwo Player two if they exist
 	 */
 	public NumberRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board ) {
-		
+
 		super(dict, pOne, pTwo, board, LeaderBoard.NUMBERROUND);
 		i = new UserIO();
 	}
-	
+
 	/**
 	 * A constructor for the number round
 	 * @param o A gameObjects object.
 	 */
 	public NumberRound(GameObjects o) {
-		
+
 		this(o.dict, o.pOne, o.pTwo, o.leaders);
 	}
 
@@ -93,7 +93,7 @@ public class NumberRound extends Round{
 		while ( (val = checkWorking( ans1, working1)) == returnValues.ERROR){
 			getWorking(pOne);
 		}
-		
+
 		if ( val == returnValues.TRUE )
 			calulatePoints(pOne);
 		else
@@ -118,7 +118,7 @@ public class NumberRound extends Round{
 	 * Find the best solution
 	 */
 	private void bestAnswer(){
-		
+
 	}
 
 	/**
@@ -162,10 +162,10 @@ public class NumberRound extends Round{
 	 * Calculate a players points
 	 * @param p The player the score is being calculated
 	 */
-	private void calulatePoints(Player p){
+	private void calulatePoints(Player p) {
 
 		int temp;
-		
+
 		if(p.getNumber() == 1)
 			temp = Math.abs(target - ans1);
 		else
@@ -203,6 +203,9 @@ public class NumberRound extends Round{
 
 		@SuppressWarnings("unchecked")
 		ArrayList<Integer> numberClone = (ArrayList<Integer>) numbers.clone();
+		
+		ArrayList<String> operators = new ArrayList<String>();
+		operators.add("+"); operators.add("-"); operators.add("*"); operators.add("/");
 
 		System.out.println("Players working: " + working);
 
@@ -214,89 +217,83 @@ public class NumberRound extends Round{
 
 			st = new StringTokenizer(working);
 
-			while (st.hasMoreTokens()) {
+			while(st.hasMoreTokens()) {
 
 				String token = st.nextToken();
 
-				if(token.equals("*")) {
+				if(operators.contains(token)) { //current token is an operator
 
-					Integer token2 = Integer.valueOf(st.nextToken());
+					Integer token2 = Integer.valueOf(st.nextToken()); //get next number
+					
 					if(numberClone.contains(token2)) {
-						tempAns = tempAns * token2;
+						
+						tempAns = calculate(tempAns, token, token2);
+						
 						numberClone.remove(token2);
-					} else {
-						System.out.println("1 * Your working contains an invalid number");
-						break;
+						
 					}
 
-				} else if(token.equals("+")) {
-
-					Integer token2 = Integer.valueOf(st.nextToken());
-					if(numberClone.contains(token2)) {
-						tempAns = tempAns + token2;
-						numberClone.remove(token2);
-					} else {
-						System.out.println("2 + Your working contains an invalid number");
-						break;
-					}
-
-				} else if(token.equals("-")) {
-
-					Integer token2 = Integer.valueOf(st.nextToken());
-					if(numberClone.contains(token2)) {
-						tempAns = tempAns - token2;
-						numberClone.remove(token2);						
-					} else {
-						System.out.println("3 - Your working contains an invalid number");
-						break;
-					}
-
-				} else if(token.equals("/")) {
-
-					Integer token2 = Integer.valueOf(st.nextToken());
-					if(numberClone.contains(token2)) {
-						numberClone.remove(token2);
-						tempAns = tempAns / token2;
-					} else {
-						System.out.println("4 / Your working contains an invalid number");
-						break;
-					}
+				} else if(numberClone.contains(Integer.valueOf(token))) {
+					
+					tempAns = Integer.valueOf(token);
 					
 				} else {
-
-					if(numberClone.contains(Integer.valueOf(token))){
-						tempAns = Integer.valueOf(token);
-						numberClone.remove(token);
-					}else{
-						System.out.println("5 Your working contains an invalid number");
-						break;
-					}
-
+					
+					System.out.println("Your working contains an invalid number");
+					break;
+					
 				}
 				
-				System.out.println(tempAns);
+				if(tempAns == -1)
+					break;
+				
+				numberClone.remove(token);
 
 			}
 
 		} catch(Exception e) {
 
 			System.err.println("\nDid you remember to enter spaces between the tokens that you entered?");
-			System.err.println("You cheeky little bugger, don't try and break our program again!!\n");
 			return returnValues.ERROR;
 
 		}
 
 		if(tempAns == ans)
 			return returnValues.TRUE;
+		
 		else
 			return returnValues.FALSE;
+		
+	}
+	
+	/**
+	 * Check operator and carry out relevant calculation
+	 * @param answer
+	 * @param operator
+	 * @param token
+	 * @return
+	 */
+	private int calculate(int answer, String operator, int token) {
+
+		if(operator.equals("+"))
+			return answer + token;
+		else if(operator.equals("*"))
+			return answer * token;
+		else if(operator.equals("-"))
+			return answer - token;
+		else if(operator.equals("/"))
+			return answer / token;
+		else {
+			System.out.println("something has gone tragically wrong");
+			return -1;
+		}
 	}
 
 	/**
 	 * Get an answer from the player
 	 * @param p The player the answer is from
 	 */
-	private void getAnswer(Player p){
+	private void getAnswer(Player p) {
 
 		System.out.println(p.getName() + " enter your answer: ");
 
@@ -322,17 +319,6 @@ public class NumberRound extends Round{
 			working2 = i.getString();	
 
 		System.out.println();
-	}
-
-	/**
-	 * Prints out a welcome message
-	 */
-	private void printWelcome(){
-
-		System.out.println("----------------------------------------------------");
-		System.out.println("----------------------------------------------------");
-		System.out.println("Welcome to the Number round");
-		System.out.println("---------------------------\n");
 	}
 
 }

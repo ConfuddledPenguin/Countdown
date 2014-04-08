@@ -46,7 +46,7 @@ public class ConundrumRound extends Round {
 	
 	public void play() {
 
-		System.out.println("Conundrum Round\n");
+		printWelcome();
 		
 		String anagram = dict.getAnagram();
 		ArrayList<String> answer = dict.getBestWords(anagram);

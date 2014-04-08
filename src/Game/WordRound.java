@@ -44,7 +44,7 @@ public class WordRound extends Round{
 	 */
 	public void play() {
 		
-		System.out.println("Word\n");
+		printWelcome();
 
 		String letters = generateLetters();
 		ArrayList<String> bestAnswers = dict.getBestWords(letters);
