@@ -3,6 +3,9 @@ package Game;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * The leaderBoard
+ */
 public class LeaderBoard {
 
 	private ArrayList<Score> scores;			// Holds all of the scores for what ever reason

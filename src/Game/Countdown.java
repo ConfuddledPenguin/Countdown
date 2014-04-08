@@ -76,8 +76,9 @@ public class Countdown {
 			currentRound = new ConundrumRound(objects);
 			currentRound.play();
 			i++;
-		}
+		}// Close game loop
 		
+		printClose();		
 	}
 
 	private void printWelcome(){
@@ -86,6 +87,55 @@ public class Countdown {
 		System.out.println("----------------------------------------------------");
 		System.out.println("Hello and welcome to countdown");
 		System.out.println("---------------------------\n");
+		
+	}
+	
+	/**
+	 * Prints a final message
+	 */
+	private void printClose(){
+		
+		System.out.println("Well that the game over.");
+		
+		if (playerOne.getScore() >= playerTwo.getScore())
+			printWinner(playerOne, playerTwo);
+		else
+			printWinner(playerTwo, playerOne);
+		
+		System.out.println("We hope to see you again soon for another game.");
+	}
+	
+	/**
+	 * Announces the winner of the game
+	 * 
+	 * @param winner the games winner
+	 * @param loser the games loser
+	 */
+	private void printWinner( Player winner, Player loser){
+		
+		System.out.println("Its seems that " + winner.getName() + " has won.");
+		
+		int pointdiff = winner.getScore() - loser.getScore();
+		
+		if ( pointdiff < 10){
+			System.out.println("It was close though with only a " + pointdiff + " lead.");
+			System.out.println("So it was a very exciting game.");
+		} else if (pointdiff > 100){
+			System.out.println("It seems that " + winner.getName() + " kicked " + loser.getName() + " ass, with a " + pointdiff + 
+					" differnce.");
+		} else if (pointdiff == 0){
+			System.out.println("A draw! Well done both players.");
+		} else {
+			System.out.println(winner.getName() + "won with a " + pointdiff + "lead over " + loser.getName() + ".\n" +
+		"A good game all round");
+			
+		}
+		
+		//Add players the the leaderboards
+		objects.leaders.addScore(playerOne.getName(), LeaderBoard.FULLGAME, playerOne.getScore());
+		objects.leaders.addScore(playerTwo.getName(), LeaderBoard.FULLGAME, playerTwo.getScore());
+		
+		System.out.println("commiserations " + loser.getName() + " and of course well done " + winner.getName() + ".");
 		
 	}
 	

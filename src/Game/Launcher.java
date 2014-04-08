@@ -83,6 +83,10 @@ public class Launcher {
 
 			io.printLines(2);
 			
+			//Get ready for a new game;
+			playerOne.clearScore();
+			playerTwo.clearScore();
+			
 			System.out.println("\nWhat would you like to do?\n\n" +
 							"Play full game\t\t\t- 1\n" +
 							"Play single round:\n" +

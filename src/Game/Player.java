@@ -63,5 +63,13 @@ public class Player {
 		
 		return playerNo;
 	}
+	
+	/**
+	 * Clears the players score
+	 */
+	public void clearScore(){
+		
+		score = 0;
+	}
 
 }
