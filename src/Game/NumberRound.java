@@ -17,7 +17,6 @@ public class NumberRound extends Round{
 	private String working2;
 	private int target;
 	private ArrayList<Integer> numbers;
-	
 	private UserIO i;
 	
 	public enum returnValues {
@@ -85,7 +84,6 @@ public class NumberRound extends Round{
 			else
 				System.out.println(pTwo.getName() + " is closer, but lets see if the working is right\n");
 		}
-
 
 		//Get the working for player one
 		getWorking(pOne);

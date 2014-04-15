@@ -85,7 +85,8 @@ public class Launcher {
 			
 			//Get ready for a new game;
 			playerOne.clearScore();
-			playerTwo.clearScore();
+			if (playerTwo != null)
+				playerTwo.clearScore();
 			
 			System.out.println("\nWhat would you like to do?\n\n" +
 							"Play full game\t\t\t- 1\n" +
@@ -123,6 +124,7 @@ public class Launcher {
 						io.printLines(2);
 						System.out.println("Exiting");
 						io.printLines(1);
+						leaders.saveScores();
 						System.exit(1);
 						break;
 

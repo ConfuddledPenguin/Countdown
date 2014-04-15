@@ -11,6 +11,10 @@ public class Countdown {
 	private Round currentRound;
 	private GameObjects objects;
 
+	/**
+	 * The constructor for the countdown class. Takes a GameObjects object
+	 * @param go The GameObjects
+	 */
 	public Countdown(GameObjects go) {
 
 		this.objects = go;
