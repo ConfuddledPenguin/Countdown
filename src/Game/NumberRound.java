@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.StringTokenizer;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 /**
  * The number round of the countdown game
  *
@@ -124,7 +128,7 @@ public class NumberRound extends Round{
 	 */
 	private void generateNumbers(){
 
-		int[] high = {25, 50, 75, 100};
+		ArrayList<Integer> high = new ArrayList<>();
 		int[] low = new int[20];
 		numbers = new ArrayList<>(); 
 		int noHigh;
@@ -132,19 +136,28 @@ public class NumberRound extends Round{
 
 		//fill the low array
 		for (int i = 0; i < 10; i++){
-			low[i] = i;
-			low[19-i] = i;
+			low[i] = i + 1;
+			low[19-i] = i + 1;
 		}
+		
+		//fill the high array
+		high.add(25);
+		high.add(50);
+		high.add(75);
+		high.add(100);
 
+		//get a value for the number of high number between 0 and 4
 		do {
 
-			System.out.println("Please enter the number of high number you would like: ");
+			System.out.println("Please enter the number of high numbers you would like: ");
 			noHigh = i.getNumber();
 		}while(noHigh > 4 || noHigh < 0);
 
 		for(int i = 0; i < noHigh; i++){
 
-			numbers.add(high[r.nextInt(4)]);
+			int rNo = r.nextInt(high.size());
+			numbers.add(high.get( (int) rNo));
+			high.remove( (int) rNo);
 		}
 
 		for(int i = 0; i < 6 - noHigh; i++){
@@ -202,92 +215,63 @@ public class NumberRound extends Round{
 		@SuppressWarnings("unchecked")
 		ArrayList<Integer> numberClone = (ArrayList<Integer>) numbers.clone();
 
-		System.out.println("Players working: " + working);
-
-		int tempAns = 0;
-
-		StringTokenizer st;
-
+		//First check the players working with a little JS
+		ScriptEngineManager mgr = new ScriptEngineManager();
+		ScriptEngine engine = mgr.getEngineByName("JavaScript");
+		
+		double calcAnswer;
+		
 		try {
-
-			st = new StringTokenizer(working);
-
-			while (st.hasMoreTokens()) {
-
-				String token = st.nextToken();
-
-				if(token.equals("*")) {
-
-					Integer token2 = Integer.valueOf(st.nextToken());
-					if(numberClone.contains(token2)) {
-						tempAns = tempAns * token2;
-						numberClone.remove(token2);
-					} else {
-						System.out.println("1 * Your working contains an invalid number");
-						break;
-					}
-
-				} else if(token.equals("+")) {
-
-					Integer token2 = Integer.valueOf(st.nextToken());
-					if(numberClone.contains(token2)) {
-						tempAns = tempAns + token2;
-						numberClone.remove(token2);
-					} else {
-						System.out.println("2 + Your working contains an invalid number");
-						break;
-					}
-
-				} else if(token.equals("-")) {
-
-					Integer token2 = Integer.valueOf(st.nextToken());
-					if(numberClone.contains(token2)) {
-						tempAns = tempAns - token2;
-						numberClone.remove(token2);						
-					} else {
-						System.out.println("3 - Your working contains an invalid number");
-						break;
-					}
-
-				} else if(token.equals("/")) {
-
-					Integer token2 = Integer.valueOf(st.nextToken());
-					if(numberClone.contains(token2)) {
-						numberClone.remove(token2);
-						tempAns = tempAns / token2;
-					} else {
-						System.out.println("4 / Your working contains an invalid number");
-						break;
-					}
-					
-				} else {
-
-					if(numberClone.contains(Integer.valueOf(token))){
-						tempAns = Integer.valueOf(token);
-						numberClone.remove(token);
-					}else{
-						System.out.println("5 Your working contains an invalid number");
-						break;
-					}
-
-				}
-				
-				System.out.println(tempAns);
-
-			}
-
-		} catch(Exception e) {
-
-			System.err.println("\nDid you remember to enter spaces between the tokens that you entered?");
-			System.err.println("You cheeky little bugger, don't try and break our program again!!\n");
+			
+			calcAnswer = (double) engine.eval(working);
+						
+		} catch (ScriptException e) {
+			System.out.println("Hmm your working seems to be off, try again entering it again in a different format");
 			return returnValues.ERROR;
-
 		}
-
-		if(tempAns == ans)
-			return returnValues.TRUE;
-		else
+		
+		if (calcAnswer == ans){
+			System.out.println("Your working comes to " + calcAnswer + ", so it is correct well done");
+		}else{
+			System.out.println("Bad new your working is wrong. Your working gives : " + calcAnswer);
 			return returnValues.FALSE;
+		}
+		
+		//Now to check if they have used the right numbers
+		
+		//First reduce the string to the numbers
+		StringBuilder sb = new StringBuilder(working.length());
+	    for(int i = 0; i < working.length(); i++){
+	        final char c = working.charAt(i);
+	        if(c > 47 && c < 58){
+	            sb.append(c);
+	        }else{
+	        	sb.append(' ');
+	        }
+	    }
+	    
+	    working = sb.toString();
+	    
+	    //tokenise
+	    StringTokenizer st = new StringTokenizer(working);
+	    ArrayList<Integer> numbers = new ArrayList<>();
+	    while (st.hasMoreTokens()){
+	    	numbers.add( Integer.parseInt(st.nextToken()));
+	    }
+	    
+	    //Finally check if the right number have been used
+	    for (int i: numbers){
+	    	
+	    	if (numberClone.contains(i)){
+	    		numberClone.remove( (Integer) i);
+	    	} else {
+	    		System.out.println("But you have made up some numbers to do it");
+	    		return returnValues.FALSE;
+	    	}
+	    }
+		
+		//If this is reached then it must be correct
+		return returnValues.TRUE;
 	}
 
 	/**

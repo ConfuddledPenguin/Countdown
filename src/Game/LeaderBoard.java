@@ -22,6 +22,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/* I wanted to learn how to read/write XML files so I saw this as a chance to do so.
+ * Sowwie that it got a bit long
+ */
+
 /**
  * The leaderBoard
  */
