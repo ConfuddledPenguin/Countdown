@@ -35,6 +35,7 @@ public class LeaderBoard {
 	private ArrayList<Score> scoresNumber;		// Holds the Number round scores
 	private ArrayList<Score> scoresWord;		// Holds the Word round scores
 	private ArrayList<Score> scoresConundrum;	// Holds the Conundrum round scores
+	private ArrayList<Score> scoresCustom;		// Holds the custom game scores
 
 	/*
 	 * A bunch of constants to be used for the round type.
@@ -46,6 +47,7 @@ public class LeaderBoard {
     public static final String NUMBERROUND = "NumberRound";
     public static final String CONUNDRUMROUND = "ConundrumRound";
     public static final String FULLGAME = "FullGame";
+    public static final String CUSTOMGAME = "CustomGame";
 	
 	/**
 	 * A small class to store the score details 
@@ -101,6 +103,7 @@ public class LeaderBoard {
 	public LeaderBoard() {
 		
 		scoresFull 		= new ArrayList<Score>();
+		scoresCustom	= new ArrayList<Score>();
 		scoresNumber 	= new ArrayList<Score>();
 		scoresWord 		= new ArrayList<Score>();
 		scoresConundrum = new ArrayList<Score>();
@@ -127,6 +130,7 @@ public class LeaderBoard {
 			readhelper(doc, NUMBERROUND, scoresNumber);
 			readhelper(doc, CONUNDRUMROUND, scoresConundrum);
 			readhelper(doc, FULLGAME, scoresFull);
+			readhelper(doc, CUSTOMGAME, scoresCustom);
 			
 		} catch (Exception e){
 			System.out.println("Error loading leaderboard file: sorry");
@@ -197,6 +201,7 @@ public class LeaderBoard {
 			writehelper(doc, rootElem, scoresWord, WORDROUND);
 			writehelper(doc, rootElem, scoresNumber, NUMBERROUND);
 			writehelper(doc, rootElem, scoresConundrum, CONUNDRUMROUND);
+			writehelper(doc, rootElem, scoresCustom, CUSTOMGAME);
 			
 			
 			//write file
