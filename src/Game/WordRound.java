@@ -10,12 +10,9 @@ import java.util.Random;
 public class WordRound extends Round{
 
 	//stores the answer entered by the player
-	private String player1Answer;
-	private String player2Answer;
-	//Used to track which player has 'buzzed'
-	//true for player one and false for player 2
-	boolean player = true;
-	
+	private String ans1;
+	private String ans2;
+
 	private UserIO i;
 
 	/**
@@ -25,17 +22,17 @@ public class WordRound extends Round{
 	 * @param pTwo Player two
 	 */
 	public WordRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board) {
-		
+
 		super(dict, pOne, pTwo, board, LeaderBoard.WORDROUND);
 		i = new UserIO();
 	}
-	
+
 	/**
 	 * A constructor for the number round
 	 * @param o A gameObjects object.
 	 */
 	public WordRound(GameObjects o) {
-		
+
 		this(o.dict, o.pOne, o.pTwo, o.leaders);
 	}
 
@@ -43,55 +40,76 @@ public class WordRound extends Round{
 	 * Call to play a round
 	 */
 	public void play() {
-		
+
 		printWelcome();
 
 		String letters = generateLetters();
 		ArrayList<String> bestAnswers = dict.getBestWords(letters);
+		
+		System.out.println("The answers are: ");
+		for(String word: bestAnswers) {
+			System.out.println(word);			
+		}
+		System.out.println();
+		
+		int pOneLen;
+		int pTwoLen;
 
 		//currently printing the answer for testing purposes
 		System.out.println("The letters are: " + letters+ "\n");
 
-		while(!dict.checkWord(player1Answer) || !checkLetters(player1Answer) /*|| !player1Answer.equals("!")*/) {
-			System.out.println("Please enter a valid word");
-			collectAnswer(player); 
+		getAnswer(pOne);
+
+		if(pTwo != null) {
+
+			getAnswer(pTwo);
+
+			if (ans1.equals(ans2))
+				System.out.println("You both have the same answer, let's see if they are correct");
+			else if(ans1.length() == ans2.length())
+				System.out.println("Both answers are the same length, let's see if they are correct");
+			else if (ans1.length() > ans2.length())
+				System.out.println(pOne.getName() + " has the longer word, let's see if it is correct");
+			else
+				System.out.println(pTwo.getName() + " has the longer word, let's see if it is correct");
+		}
+		
+		pOneLen = checkAnswer(pOne, bestAnswers);
+		
+		if(pTwo != null) {
+			
+			pTwoLen = checkAnswer(pTwo, bestAnswers);
+			
+			if(pOneLen > pTwoLen) {
+				System.out.println("Player 1 Wins");
+				awardPoints(pOne, pOneLen);
+			} else if(pOneLen < pTwoLen) {
+				System.out.println("Player 2 Wins");
+				awardPoints(pTwo, pTwoLen);
+			} else if(pOneLen + pTwoLen == 0) {
+				System.out.println("Both players entered an incorrect answer or no answer at all. No Points awarded");
+			} else {
+				System.out.println("It's a draw");
+				awardPoints(pOne, pOneLen);
+				awardPoints(pTwo, pTwoLen);
+			}
+			
+		} else {
+			
+			if(pOneLen > 0)
+				awardPoints(pOne, pOneLen);
+			else
+				System.out.println("You entered an incorrect answer or no answer at all");
+			
 		}
 
-		while(!dict.checkWord(player2Answer) || !checkLetters(player2Answer) /*|| !player2Answer.equals("!")*/) {
-			System.out.println("Please enter a valid word");
-			collectAnswer(!player);
-		}
-		
-		System.out.println("p1 ans: " + player1Answer + " " + player1Answer.length());
-		System.out.println("p2 ans: " + player2Answer + " " + player2Answer.length());
-		
-		if(player1Answer.equals("!") && !player2Answer.equals("!")) {
-			awardPoints(!player, player2Answer);
-		} else if(!player1Answer.equals("!") && player2Answer.equals("!")) {
-			awardPoints(player, player1Answer);
-		} else if(player1Answer.equals("!") && player2Answer.equals("!")) {
-			System.out.println("Both entered no answer. No points awarded");			
-		} else {
-			if(player1Answer.length() > player2Answer.length()) {
-				System.out.println("Player 1 Wins");
-				awardPoints(player, player1Answer);
-			} else if(player1Answer.length() < player2Answer.length()) {
-				System.out.println("Player 2 Wins");
-				awardPoints(!player, player2Answer);
-			} else {
-				System.out.println("Draw");
-				awardPoints(player, player1Answer);
-				awardPoints(!player, player2Answer);
-			}
-		}
-		
 		System.out.println("The best answers were: ");
 		for(String word: bestAnswers) {
 			System.out.println(word);			
 		}
-		
+
 	}
-	
+
 	/**
 	 * asks the user for the number of vowels required and then
 	 * generates and returns a string
@@ -99,30 +117,30 @@ public class WordRound extends Round{
 	 * @return A string of generated letters
 	 */
 	private String generateLetters() {
-		
+
 		boolean loop = true;
 		int noVowles = -1;
 		ArrayList<Character> letters = new ArrayList<>();
 		Random r = new Random();
-		
+
 		while( loop){
 			System.out.println("How many vowels would you like?"); 
-			
+
 			if ((noVowles = i.getNumber()) < 3){
 				System.out.println("Must have at least 3 vowels");
 			}else if (noVowles > 5){
-				
+
 				System.out.println("Cant have more than 5 vowels");
 			}else{
 				loop = false;
 			}
 		}
-		
+
 		//get all vowels
 		for (int i = 0; i < noVowles; i++){
-			
+
 			int temp = r.nextInt(67);
-			
+
 			if (temp < 15 ){
 				letters.add('a');
 			} else if(temp < 36){
@@ -135,12 +153,12 @@ public class WordRound extends Round{
 				letters.add('u');
 			}
 		}
-		
+
 		//get all constantants
 		for (int i = 0; i < (9 - noVowles); i++){
-			
+
 			int temp = r.nextInt(74);
-			
+
 			/*
 			 * This is truly horrible
 			 * its on my to do list
@@ -189,52 +207,66 @@ public class WordRound extends Round{
 				letters.add('z');
 			}
 		}//close horrible for
-		
+
 		//mix up the letters
 		Collections.shuffle(letters);
-		
+
 		//put string back together for returning
 		StringBuilder sb = new StringBuilder(letters.size());
-				
+
 		for (char ch: letters){
-					
+
 			sb.append(ch);
 		}
-				
+
 		return sb.toString();		
 	}//close horrible method
-	
-	private boolean checkLetters(String answer) {
 
-		return true;
+	private int checkAnswer(Player p, ArrayList<String> ans) {
+
+		if(p.getNumber() == 1) {
+			if(ans.contains(ans1))
+				return ans1.length();
+			else
+				return 0;
+		} else {
+			if(ans.contains(ans2))
+				return ans2.length();
+			else
+				return 0;
+		}
 
 	}
 
-	private void awardPoints(boolean player, String answer) {
+	private void awardPoints(Player p, int points) {
 		
-		int points = answer.length();
+		System.out.println(p.getName() + " recieves " + points + " Points");
 		
 		if(points == 9)
 			points = points * 2;
 
-		if (player){
+		if(p.getNumber() == 1) {
+			board.addScore(p.getName(), roundType, points);
 			pOne.updateScore(points);
 		} else {
+			board.addScore(p.getName(), roundType, points);
 			pTwo.updateScore(points);
 		}
 	}
 
-	private void collectAnswer(Boolean whatPlayer) {
+	private void getAnswer(Player p) {
 
-		if(whatPlayer) {
-			System.out.println("Player 1 enter answer: ");
-			player1Answer = i.getString();
-			System.out.println("Your answer is: " + player1Answer + "\n");
+		System.out.println(p.getName() + " enter your answer: ");
+
+		if (p.getNumber() == 1) {
+			ans1 = i.getString();
+			System.out.println("Your answer is: " + ans1);
 		} else {
-			System.out.println("Player 2 enter answer: ");
-			player2Answer = i.getString();
-			System.out.println("Your answer is: " + player2Answer + "\n");
+			ans2 = i.getString();
+			System.out.println("Your answer is: " + ans2);
 		}
+
+		System.out.println();
 
 	}
 
