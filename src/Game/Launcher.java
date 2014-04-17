@@ -85,10 +85,11 @@ public class Launcher {
 			
 			//Get ready for a new game;
 			playerOne.clearScore();
-			playerTwo.clearScore();
+			if (playerTwo != null)
+				playerTwo.clearScore();
 			
 			System.out.println("\nWhat would you like to do?\n\n" +
-							"Play full game\t\t\t- 1\n" +
+							"Play a game\t\t\t- 1\n" +
 							"Play single round:\n" +
 							"\tWord\t\t\t- 2\n" +
 							"\tNumber\t\t\t- 3\n" +
@@ -100,8 +101,7 @@ public class Launcher {
 
 				case 0: break;
 
-				case 1: Countdown cd = new Countdown(objects);
-						cd.play();
+				case 1: gameSelector();
 						break;
 
 				case 2: WordRound wr = new WordRound(objects);
@@ -123,6 +123,7 @@ public class Launcher {
 						io.printLines(2);
 						System.out.println("Exiting");
 						io.printLines(1);
+						leaders.saveScores();
 						System.exit(1);
 						break;
 
@@ -131,10 +132,42 @@ public class Launcher {
 					break;
 
 			} //end switch
-
 		} //end while
-
 	} //end method
+	
+	/**
+	 * A little bit of code to select a game type.
+	 * THIS IS NOT FOR SELECTING A ROUND TYPE
+	 */
+	private void gameSelector(){
+		
+		io.printLines(2);
+		
+		System.out.println("Have some options pick one:\n\n" +
+				"Play a full game\t\t-1\n" +
+				"Play a custom game\t\t-2\n" +
+				"Load a game\t\t\t-3\n" + 
+				"Back\t\t\t\t-4");
+		
+		Countdown cd = new Countdown(objects);
+		
+		switch(io.getNumber()){
+			
+			case 1: cd.play();
+					break;
+			
+			case 2: cd.playCustomGame();
+					break;
+			
+			case 3: cd.load();
+					break;
+			
+			case 4: return;
+			
+			default: System.out.println("Enter a valid option silly");
+					gameSelector();
+		}		
+	}//close gameSelector()
 
 	public static void main(String args[]) {
 		
