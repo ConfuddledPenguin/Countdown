@@ -46,12 +46,6 @@ public class WordRound extends Round{
 		String letters = generateLetters();
 		ArrayList<String> bestAnswers = dict.getBestWords(letters);
 		
-		System.out.println("The answers are: ");
-		for(String word: bestAnswers) {
-			System.out.println(word);			
-		}
-		System.out.println();
-		
 		int pOneLen;
 		int pTwoLen;
 
@@ -119,16 +113,16 @@ public class WordRound extends Round{
 	private String generateLetters() {
 
 		boolean loop = true;
-		int noVowles = -1;
+		int noVowels = -1;
 		ArrayList<Character> letters = new ArrayList<>();
 		Random r = new Random();
 
 		while( loop){
 			System.out.println("How many vowels would you like?"); 
 
-			if ((noVowles = i.getNumber()) < 3){
+			if ((noVowels = i.getNumber()) < 3){
 				System.out.println("Must have at least 3 vowels");
-			}else if (noVowles > 5){
+			}else if (noVowels > 5){
 
 				System.out.println("Cant have more than 5 vowels");
 			}else{
@@ -137,7 +131,7 @@ public class WordRound extends Round{
 		}
 
 		//get all vowels
-		for (int i = 0; i < noVowles; i++){
+		for (int i = 0; i < noVowels; i++){
 
 			int temp = r.nextInt(67);
 
@@ -155,7 +149,7 @@ public class WordRound extends Round{
 		}
 
 		//get all constantants
-		for (int i = 0; i < (9 - noVowles); i++){
+		for (int i = 0; i < (9 - noVowels); i++){
 
 			int temp = r.nextInt(74);
 
@@ -225,12 +219,12 @@ public class WordRound extends Round{
 	private int checkAnswer(Player p, ArrayList<String> ans) {
 
 		if(p.getNumber() == 1) {
-			if(ans.contains(ans1))
+			if(dict.checkWord(ans1))
 				return ans1.length();
 			else
 				return 0;
 		} else {
-			if(ans.contains(ans2))
+			if(dict.checkWord(ans2))
 				return ans2.length();
 			else
 				return 0;
