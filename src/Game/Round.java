@@ -51,4 +51,15 @@ abstract public class Round {
 	 */
 	abstract public void play();
 	
+	/**
+	 * Prints out a welcome message
+	 */
+	public void printWelcome() {
+
+		System.out.println("----------------------------------------------------");
+		System.out.println("----------------------------------------------------");
+		System.out.println("Welcome to the " + roundType + " round");
+		System.out.println("---------------------------\n");
+	}
+	
 }

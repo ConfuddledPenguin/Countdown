@@ -22,7 +22,7 @@ public class NumberRound extends Round{
 	private int target;
 	private ArrayList<Integer> numbers;
 	private UserIO i;
-	
+
 	public enum returnValues {
 		TRUE, FALSE, ERROR
 	}
@@ -35,17 +35,17 @@ public class NumberRound extends Round{
 	 * @param pTwo Player two if they exist
 	 */
 	public NumberRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board ) {
-		
+
 		super(dict, pOne, pTwo, board, LeaderBoard.NUMBERROUND);
 		i = new UserIO();
 	}
-	
+
 	/**
 	 * A constructor for the number round
 	 * @param o A gameObjects object.
 	 */
 	public NumberRound(GameObjects o) {
-		
+
 		this(o.dict, o.pOne, o.pTwo, o.leaders);
 	}
 
@@ -95,7 +95,7 @@ public class NumberRound extends Round{
 		while ( (val = checkWorking( ans1, working1)) == returnValues.ERROR){
 			getWorking(pOne);
 		}
-		
+
 		if ( val == returnValues.TRUE )
 			calulatePoints(pOne);
 		else
@@ -120,7 +120,7 @@ public class NumberRound extends Round{
 	 * Find the best solution
 	 */
 	private void bestAnswer(){
-		
+
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class NumberRound extends Round{
 			low[i] = i + 1;
 			low[19-i] = i + 1;
 		}
-		
+
 		//fill the high array
 		high.add(25);
 		high.add(50);
@@ -176,7 +176,7 @@ public class NumberRound extends Round{
 	private void calulatePoints(Player p){
 
 		int temp;
-		
+
 		if(p.getNumber() == 1)
 			temp = Math.abs(target - ans1);
 		else
@@ -218,27 +218,27 @@ public class NumberRound extends Round{
 		//First check the players working with a little JS
 		ScriptEngineManager mgr = new ScriptEngineManager();
 		ScriptEngine engine = mgr.getEngineByName("JavaScript");
-		
+
 		double calcAnswer;
-		
+
 		try {
-			
+
 			calcAnswer = (double) engine.eval(working);
-						
+
 		} catch (ScriptException e) {
 			System.out.println("Hmm your working seems to be off, try again entering it again in a different format");
 			return returnValues.ERROR;
 		}
-		
+
 		if (calcAnswer == ans){
 			System.out.println("Your working comes to " + calcAnswer + ", so it is correct well done");
 		}else{
 			System.out.println("Bad new your working is wrong. Your working gives : " + calcAnswer);
 			return returnValues.FALSE;
 		}
-		
+
 		//Now to check if they have used the right numbers
-		
+
 		//First reduce the string to the numbers
 		StringBuilder sb = new StringBuilder(working.length());
 	    for(int i = 0; i < working.length(); i++){
@@ -249,19 +249,19 @@ public class NumberRound extends Round{
 	        	sb.append(' ');
 	        }
 	    }
-	    
+
 	    working = sb.toString();
-	    
+
 	    //tokenise
 	    StringTokenizer st = new StringTokenizer(working);
 	    ArrayList<Integer> numbers = new ArrayList<>();
 	    while (st.hasMoreTokens()){
 	    	numbers.add( Integer.parseInt(st.nextToken()));
 	    }
-	    
+
 	    //Finally check if the right number have been used
 	    for (int i: numbers){
-	    	
+
 	    	if (numberClone.contains(i)){
 	    		numberClone.remove( (Integer) i);
 	    	} else {
@@ -269,7 +269,7 @@ public class NumberRound extends Round{
 	    		return returnValues.FALSE;
 	    	}
 	    }
-		
+
 		//If this is reached then it must be correct
 		return returnValues.TRUE;
 	}
@@ -304,17 +304,6 @@ public class NumberRound extends Round{
 			working2 = i.getString();	
 
 		System.out.println();
-	}
-
-	/**
-	 * Prints out a welcome message
-	 */
-	private void printWelcome(){
-
-		System.out.println("----------------------------------------------------");
-		System.out.println("----------------------------------------------------");
-		System.out.println("Welcome to the Number round");
-		System.out.println("---------------------------\n");
 	}
 
 }
