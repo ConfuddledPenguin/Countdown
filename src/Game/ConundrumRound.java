@@ -62,9 +62,9 @@ public class ConundrumRound extends Round {
 		
 		checkAnswer(pOne, answer);
 		
-		if(pTwo != null) {
+		if(pTwo != null)
 			checkAnswer(pTwo, answer);
-		}
+		
 	}
 	
 	private void awardPoints(Player p){
