@@ -26,7 +26,6 @@ public class ConundrumRound extends Round {
 	public ConundrumRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board) {
 		
 		super(dict, pOne, pTwo, board, LeaderBoard.CONUNDRUMROUND);
-		
 		i = new UserIO();
 	}
 	
