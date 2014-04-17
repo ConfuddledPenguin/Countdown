@@ -12,6 +12,7 @@ public class Countdown {
 	private GameObjects objects;
 	private char[] gameorder;
 	private UserIO io;
+	private boolean customGame;
 	
 	private static char WORD = 'W';
 	private static char NUMBER = 'N';
@@ -30,9 +31,13 @@ public class Countdown {
 		io = new UserIO();
 	}
 
+	/**
+	 * Play a full game of countdown
+	 */
 	public void play() {
 
 		gameorder = new char[15];
+		customGame = false;
 		
 		int i = 0;
 		while ( i < 14){
@@ -70,6 +75,11 @@ public class Countdown {
 		play(0);
 	}
 	
+	/**
+	 * Plays the game from a starting pos
+	 * 
+	 * @param start The round number to start from
+	 */
 	private void play(int start){
 		
 		//Say hi :)
@@ -177,17 +187,28 @@ public class Countdown {
 			}
 		}
 		
-		//Add players the the leaderboards
-		objects.leaders.addScore(playerOne.getName(), LeaderBoard.FULLGAME, playerOne.getScore());
+		//Add players to the leaderboards
+		
+		String gametypeString;
+		
+		if (!customGame)
+			gametypeString = LeaderBoard.FULLGAME;
+		else
+			gametypeString = LeaderBoard.CUSTOMGAME;
+				
+		
+		objects.leaders.addScore(playerOne.getName(), gametypeString, playerOne.getScore());
 		
 		if (loser != null){
-			objects.leaders.addScore(playerTwo.getName(), LeaderBoard.FULLGAME, playerTwo.getScore());
-			
-		System.out.println("commiserations " + loser.getName() + " and of course well done " + winner.getName() + ".");
+			objects.leaders.addScore(playerTwo.getName(), gametypeString, playerTwo.getScore());
+			System.out.println("commiserations " + loser.getName() + " and of course well done " + winner.getName() + ".");
 		}
 		
 	}
 	
+	/**
+	 * Loads the game
+	 */
 	public void load() {
 
 		System.out.println("Hey :) You have reached non code! Well done you\n");
@@ -196,6 +217,9 @@ public class Countdown {
 		System.out.println("Goodbye: useless method");
 	}
 
+	/**
+	 * Saves the game
+	 */
 	private void save() {
 
 		System.out.println("Hey :) You have reached non code! Well done you\n");
@@ -204,16 +228,15 @@ public class Countdown {
 		System.out.println("Goodbye: useless method");
 	}
 	
+	/**
+	 * Allows the playing of a custom game of countdown
+	 * In this game type the user specifies which rounds
+	 * they would like to play
+	 */
 	public void playCustomGame(){
 		
-//		System.out.println("Hey :) You have reached non code! Well done you\n");
-//		System.out.println("So what does this mean for you?");
-//		System.out.println("That the option you selected is not complete, you should give up and turn around!");
-//		System.out.println("Goodbye: useless method");
-//		
-//		return;
-		
 		io.printLines(2);
+		customGame = false;
 		
 		System.out.println("So a custom game is it?");
 		

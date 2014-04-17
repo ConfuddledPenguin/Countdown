@@ -116,7 +116,7 @@ public class Launcher {
 						cr.play();
 						break;
 
-				case 5: leaders.printScores();
+				case 5: leaderboardAwesomeness();
 						break;
 
 				case 6: loop = false;
@@ -134,6 +134,43 @@ public class Launcher {
 			} //end switch
 		} //end while
 	} //end method
+	
+	private void leaderboardAwesomeness(){
+		
+		io.printLines(2);
+		
+		System.out.println("So you would like to see how pathetic you are compared to other players huh? Okay then");
+		System.out.println("How would you like to measure your patheticness:\n");
+		
+		
+		System.out.println("Overall pathetiness\t\t- 1\n" +
+				"Full game uselessness:\t\t- 2\n" +
+				"Custom game rubbishness\t\t- 3\n" +
+				"Word round crappyness\t\t- 4\n" +
+				"Number round shitness\t\t- 5\n" +
+				"Conundrum round incompantance\t- 6\n\n" +
+				"Back\t\t\t\t- 7\n");
+		
+		switch(io.getNumber()){
+		
+			case 1: leaders.printScores();
+					break;
+			case 2: leaders.printScoresFull();
+					break;
+			case 3: leaders.printScoresCustom();
+					break;
+			case 4: leaders.printScoresWord();
+					break;
+			case 5: leaders.printScoresNumber();
+					break;
+			case 6: leaders.printScoresConundrum();
+					break;
+			case 7: return;
+			default: System.out.println("Pick a valid option you muppet");
+					leaderboardAwesomeness();
+					break;
+		}
+	}//Close leaderboardAwesomeness()
 	
 	/**
 	 * A little bit of code to select a game type.
@@ -169,6 +206,10 @@ public class Launcher {
 		}		
 	}//close gameSelector()
 
+	/**
+	 * The almighty main
+	 * @param args Nothing/nada/ziltch
+	 */
 	public static void main(String args[]) {
 		
 		Launcher l = new Launcher();

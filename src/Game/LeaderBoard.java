@@ -265,6 +265,14 @@ public class LeaderBoard {
 	 */
 	private void printScores(ArrayList<Score> list) {
 
+		UserIO io = new UserIO();
+		io.printLines(1);
+		
+		if (list.isEmpty()){
+			System.out.println("hmm no one has made any high scores, I would say why don't you try but i doubt you could . . .");
+			return;
+		}
+		
 		System.out.println("Name\t\t: Round\t\t: Score\n");
 		
 		for(Score s: list) {
@@ -281,6 +289,14 @@ public class LeaderBoard {
 	public void printScoresFull() {
 
 		printScores(scoresFull);
+	}
+	
+	/**
+	 * Prints out all of the scores for the custom games
+	 */
+	public void printScoresCustom() {
+		
+		printScores(scoresCustom);
 	}
 	
 	/**
