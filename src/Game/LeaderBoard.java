@@ -213,8 +213,6 @@ public class LeaderBoard {
 			StreamResult result = new StreamResult(new File("leaderboard.xml"));
 			transformer.transform(source, result);
 			
-			System.out.println("File written");
-			
 			
 			
 		} catch (ParserConfigurationException pce) {
@@ -365,6 +363,9 @@ public class LeaderBoard {
 		
 		else if (round.equals(FULLGAME))
 			addScoreHelper(scoresFull, score);
+		
+		else if (round.equals(CUSTOMGAME))
+			addScoreHelper(scoresCustom, score);
 		
 		else 
 			throw new IllegalArgumentException("Not a valid round type");

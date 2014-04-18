@@ -1,5 +1,25 @@
 package Game;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 /**
  * This class executes a full game of countdown
  *
@@ -11,12 +31,15 @@ public class Countdown {
 	private Round currentRound;
 	private GameObjects objects;
 	private char[] gameorder;
+	private String gameOrderString;
 	private UserIO io;
 	private boolean customGame;
 	
 	private static char WORD = 'W';
 	private static char NUMBER = 'N';
 	private static char CONUNDRUM = 'C';
+	
+	private long timestamp;
 
 	/**
 	 * The constructor for the countdown class. Takes a GameObjects object
@@ -29,6 +52,9 @@ public class Countdown {
 		playerTwo = go.pTwo;
 		
 		io = new UserIO();
+		
+		timestamp = System.nanoTime();
+		
 	}
 
 	/**
@@ -86,47 +112,67 @@ public class Countdown {
 		printWelcome();
 		
 		//Loop for the number of rounds i.e 15
-		int i = start;
-		while ( i < gameorder.length){
+		int roundNo = start;
+		while ( roundNo < gameorder.length){
 			
 			//Tempted to change the below to a list of some sort and use contains . . . .
 			
 			// if word round
-			if ( gameorder[i] == WORD ){
+			if ( gameorder[roundNo] == WORD ){
 				
-				//Inform the user that we are going to play a round
-				if (i != 0)
+				//Let the player know what is going on
+				if (roundNo != 0)
 					System.out.println("Next up we have a word round");
+				else if (roundNo == gameorder.length)
+					System.out.println("Sadly we are nearing the end\nwith just a word round left to play");
 				else
 					System.out.println("The first round, as always, is a word round");
 				
 				currentRound = new WordRound(objects);
 				currentRound.play();
-				i++;
-				continue;
 			}
 			
 			// If its a numbers round
-			if ( gameorder[i] == NUMBER ){
+			if ( gameorder[roundNo] == NUMBER ){
 				
-				System.out.println("Next up we have a number round");
+				//Let the player know what is going on
+				if (roundNo != 0)
+					System.out.println("Next up we have a number round");
+				else if (roundNo == gameorder.length)
+					System.out.println("Sadly we are nearing the end\nwith just a number round left to play");
+				else
+					System.out.println("The first round, is a number round");
+				
 				currentRound = new  NumberRound(objects);
 				currentRound.play();
-				i++;
-				continue;
 			}
 			
-			/* If this part of the loop is reached then we are on the last round
-			 * which is the conundrum round.
-			 */
-			System.out.println("Sadly we are nearing the end\nwith just the conundrum round left to play");
-			currentRound = new ConundrumRound(objects);
-			currentRound.play();
+			//If its a conundrum round
+			if (gameorder[roundNo] == CONUNDRUM){
+				
+				//Let the player know what is going on
+				if (roundNo != 0)
+					System.out.println("Next up we have a conundrum round");
+				else if (roundNo == gameorder.length)
+					System.out.println("Sadly we are nearing the end.\nWhich of course means we are going to play\n" +
+				" a coundrumround");
+				else
+					System.out.println("The first round, is a conundrum round");
+				
+				currentRound = new ConundrumRound(objects);
+				currentRound.play();
+			}
 			
-			i++;
+			/*
+			 * Autosave the game :)
+			 * 
+			 * Incremented roundNo is passed as it should save the roundNo of the next round not the one
+			 * that has just been played.
+			 */
+			save(++roundNo);
 		}// Close game loop
 		
-		printClose();		
+		printClose();
 	}
 
 	private void printWelcome(){
@@ -220,12 +266,189 @@ public class Countdown {
 	/**
 	 * Saves the game
 	 */
-	private void save() {
+	private void save(int roundNoValue) {
 
+		Element save = null;
+		
 		System.out.println("Hey :) You have reached non code! Well done you\n");
 		System.out.println("So what does this mean for you?");
 		System.out.println("That the option you selected is not complete, you should give up and turn around!");
 		System.out.println("Goodbye: useless method");
+		
+		try {
+			
+			//create tools
+			String filepath = "saves.xml";
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			Document doc = docBuilder.parse(filepath);
+			
+			Node root = doc.getFirstChild();
+			
+			NodeList saves = root.getChildNodes();
+			
+			//Check if save of this game already exists
+			boolean found = false;
+			for (int i = 0; i < saves.getLength(); i++){
+				
+				Node temp = saves.item(i);
+				
+				if ( temp instanceof Element){
+					save = (Element) temp;
+					
+					if (save.getAttribute("id").equals("" + timestamp)){
+						found = true;
+						break;
+					}
+				}
+			}//close save finder
+			
+			if (found){	//If save exits, update existing save
+				
+				NodeList saveDataNodes = save.getChildNodes();
+				
+				//Update player info
+				
+				/*
+				 * If player two exists then the gamedata will be in position 4 of the list
+				 * otherwise it will be in position 5. So while updating the player
+				 * we shall calc the position while updating player
+				 * 
+				 * The weird positioning is due to the DOM model seeing text between the nodes
+				 */
+				int pos = 3;
+				
+				playerUpdater(saveDataNodes, playerOne);
+				
+				if (playerTwo != null){
+					playerUpdater(saveDataNodes, playerTwo);
+					pos = 5;
+				}
+				
+				
+				//Next update the game data
+				Node gameData = saveDataNodes.item(pos);
+
+				NodeList gameDataNodes = gameData.getChildNodes();
+				
+				//Loop through them until value to be updated is found
+				for (int j = 0; j < gameDataNodes.getLength(); j++){
+					
+					Node current = gameDataNodes.item(j);
+					
+					if (current.getNodeName().equals("roundNo"))
+						current.setTextContent("" + roundNoValue);
+				}
+				
+				
+			}else{ // If save doesn't exist create a new one
+				
+				//create save
+				save = doc.createElement("save");
+				save.setAttribute("id", "" + timestamp);
+				
+	
+				//save the players
+				playerSaver(doc, save, playerOne);
+				if (playerTwo != null)
+					playerSaver(doc, save, playerTwo);
+				
+				
+				//save the game details
+				Element game = doc.createElement("game");
+				
+					Element roundString = doc.createElement("roundString");
+					roundString.appendChild(doc.createTextNode(gameOrderString));
+					game.appendChild(roundString);
+				
+					Element roundNo = doc.createElement("roundNo");
+					roundNo.appendChild(doc.createTextNode("" + roundNoValue));
+					game.appendChild(roundNo);
+				
+					Element customeGameElement = doc.createElement("customGame");
+					if (customGame)
+						customeGameElement.appendChild(doc.createTextNode("TRUE"));
+					else
+						customeGameElement.appendChild(doc.createTextNode("FALSE"));
+					game.appendChild(customeGameElement);
+				
+				save.appendChild(game);	
+				
+				root.appendChild(save);
+			}
+			
+			// write the content into xml file
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(new File(filepath));
+			transformer.transform(source, result);
+			
+		} catch (ParserConfigurationException pce) {
+			pce.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Updates the players score in DOM for writing to disk
+	 * 
+	 * @param saveDataNodes The nodes of save
+	 * @param p The player
+	 */
+	private void playerUpdater(NodeList saveDataNodes, Player p){
+		
+		//Grab the nodes in player
+		NodeList playerDataNodes = saveDataNodes.item(p.getNumber() -1).getChildNodes();
+		
+		//Loop through them until value to be updated is found
+		for (int j = 0; j < playerDataNodes.getLength(); j++){
+			
+			Node current = playerDataNodes.item(j);
+			
+			if (current.getNodeName().equals("score"))
+				current.setTextContent("" + p.getScore());
+		}
+	}
+	
+	/**
+	 * A small helper method for the save method. This saves the 
+	 * Player to the DOM, for writing to disk.
+	 * 
+	 * @param doc The Document
+	 * @param save The save Element
+	 * @param p the Player to be saved
+	 */
+	private void playerSaver(Document doc, Element save, Player p){
+		
+		Element player = doc.createElement("player");
+		
+			Element number = doc.createElement("number");
+			number.appendChild(doc.createTextNode("" + p.getNumber()));
+			player.appendChild(number);
+			
+			Element name = doc.createElement("name");
+			name.appendChild(doc.createTextNode(p.getName()));
+			player.appendChild(name);
+			
+			Element score = doc.createElement("score");
+			score.appendChild(doc.createTextNode("" + p.getScore()));
+			player.appendChild(score);
+		
+		save.appendChild(player);
 	}
 	
 	/**
@@ -236,7 +459,7 @@ public class Countdown {
 	public void playCustomGame(){
 		
 		io.printLines(2);
-		customGame = false;
+		customGame = true;
 		
 		System.out.println("So a custom game is it?");
 		
@@ -250,7 +473,8 @@ public class Countdown {
 			System.out.println("I may have lied sorry. Please enter a string of rounds you would like to play");
 			System.out.println("W for word, N for number, C for conundrum. For example: WWNNWC");
 			
-			gameorder = io.getString().toUpperCase().toCharArray();
+			gameOrderString = io.getString();
+			gameorder = gameOrderString.toUpperCase().toCharArray();
 			
 			for ( int i = 0; i < gameorder.length; i++){
 				
