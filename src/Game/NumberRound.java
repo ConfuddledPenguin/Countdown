@@ -119,7 +119,7 @@ public class NumberRound extends Round{
 	/**
 	 * Find the best solution
 	 */
-	private void bestAnswer(){
+	private void bestAnswer(int count){
 
 	}
 
