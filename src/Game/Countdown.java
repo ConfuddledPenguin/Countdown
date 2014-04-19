@@ -6,8 +6,10 @@ import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -87,12 +89,13 @@ public class Countdown {
 			if ( gameorder[roundNo] == WORD ){
 				
 				//Let the player know what is going on
+				io.printLines(1);
 				if (roundNo != 0)
-					System.out.println("Next up we have a word round");
+					System.out.println("Next up we have a word round\n");
 				else if (roundNo == gameorder.length)
-					System.out.println("Sadly we are nearing the end\nwith just a word round left to play");
+					System.out.println("Sadly we are nearing the end\nwith just a word round left to play\n");
 				else
-					System.out.println("The first round, as always, is a word round");
+					System.out.println("The first round, as always, is a word round\n");
 				
 				currentRound = new WordRound(objects);
 				currentRound.play();
@@ -102,12 +105,13 @@ public class Countdown {
 			if ( gameorder[roundNo] == NUMBER ){
 				
 				//Let the player know what is going on
+				io.printLines(1);
 				if (roundNo != 0)
-					System.out.println("Next up we have a number round");
+					System.out.println("Next up we have a number roundn");
 				else if (roundNo == gameorder.length)
-					System.out.println("Sadly we are nearing the end\nwith just a number round left to play");
+					System.out.println("Sadly we are nearing the end\nwith just a number round left to play\n");
 				else
-					System.out.println("The first round, is a number round");
+					System.out.println("The first round, is a number round\n");
 				
 				currentRound = new  NumberRound(objects);
 				currentRound.play();
@@ -117,13 +121,14 @@ public class Countdown {
 			if (gameorder[roundNo] == CONUNDRUM){
 				
 				//Let the player know what is going on
+				io.printLines(1);
 				if (roundNo != 0)
-					System.out.println("Next up we have a conundrum round");
+					System.out.println("Next up we have a conundrum round\n");
 				else if (roundNo == gameorder.length)
 					System.out.println("Sadly we are nearing the end.\nWhich of course means we are going to play\n" +
-				" a coundrumround");
+				" a coundrumround\n");
 				else
-					System.out.println("The first round, is a conundrum round");
+					System.out.println("The first round, is a conundrum round\n");
 				
 				currentRound = new ConundrumRound(objects);
 				currentRound.play();
@@ -229,11 +234,6 @@ public class Countdown {
 
 		io.printLines(1);
 		
-		System.out.println("Hey :) You have reached non code! Well done you\n");
-		System.out.println("So what does this mean for you?");
-		System.out.println("That the option you selected is not complete, you should give up and turn around!");
-		System.out.println("Goodbye: useless method");
-		
 		
 		try{
 			
@@ -329,7 +329,7 @@ public class Countdown {
 			
 		} catch (FileNotFoundException e){
 			
-			System.out.println("No saves exit");
+			System.out.println("No saves exist");
 		} catch (Exception e){
 			System.err.println("The savefile has become corrupted. I hope you had backups");
 			e.printStackTrace();
@@ -449,10 +449,16 @@ public class Countdown {
 
 		Element save = null;
 		
+		String filepath = "saves.xml";
+		File f = new File(filepath);
+		
+		if ( !f.exists())
+			createSaveFile();
+		
+		
 		try {
 			
 			//create tools
-			String filepath = "saves.xml";
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 			Document doc = docBuilder.parse(filepath);
@@ -558,13 +564,9 @@ public class Countdown {
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 			DOMSource source = new DOMSource(doc);
 			
-			if (source == null)
-				System.out.println("FUCK!");
-			else System.out.println("All good");
-			
 			StreamResult result = new StreamResult(new File(filepath));
 			transformer.transform(source, result);
-			
+						
 		} catch (Exception e){
 			System.out.println("The save file has become corrupted! Delete it! I hope you back things up");
 			e.printStackTrace();
@@ -617,6 +619,42 @@ public class Countdown {
 			player.appendChild(score);
 		
 		save.appendChild(player);
+	}
+	
+	/**
+	 * Creates the save file if this is the first time this game has been played
+	 */
+	private void createSaveFile(){
+		
+		
+		try {
+			
+			//create tools
+			DocumentBuilderFactory docFac = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder;
+			docBuilder = docFac.newDocumentBuilder();
+			
+			//create doc
+			Document doc = docBuilder.newDocument();
+			
+			//root
+			Element rootElem = doc.createElement("savedGames");
+			doc.appendChild(rootElem);
+			
+			//write file
+			TransformerFactory tranFact = TransformerFactory.newInstance();
+			Transformer transformer = tranFact.newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(new File("saves.xml"));
+			transformer.transform(source, result);
+			
+		} catch (Exception e){
+			System.out.println("Error writing save file. Sorry about that");
+		}
+		
+		
 	}
 	
 	/**

@@ -216,8 +216,7 @@ public class LeaderBoard {
 			
 			
 		} catch (Exception e){
-			System.out.println("The leaderboard file is unreadable. Please delete the file and start again");
-			e.printStackTrace();
+			System.out.println("Error writing leaderboard file. Sorry about that");
 		}
 
 	}
