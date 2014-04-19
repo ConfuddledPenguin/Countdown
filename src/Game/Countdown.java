@@ -1,15 +1,13 @@
 package Game;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -18,7 +16,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  * This class executes a full game of countdown
@@ -62,11 +59,8 @@ public class Countdown {
 	 */
 	public void play() {
 
-		//Weird way of assigning array is due to values needing to be added when declaring the array;
-		char[] defualt = {'W','W','N','W','W','W','W','N','N','W','W','W','W','N','C'};
 		gameOrderString = "WWNWWWWNNWWWWNC";
-		gameorder = defualt;
-		defualt = null;
+		gameorder = gameOrderString.toCharArray();
 		
 		customGame = false;
 		
@@ -147,6 +141,10 @@ public class Countdown {
 		printClose();
 	}
 
+	/**
+	 * Prints out a nice friendly welcome message
+	 * to make the players feel all warm and fuzzy inside
+	 */
 	private void printWelcome(){
 		
 		System.out.println("----------------------------------------------------");
@@ -229,6 +227,8 @@ public class Countdown {
 	 */
 	public void load() {
 
+		io.printLines(1);
+		
 		System.out.println("Hey :) You have reached non code! Well done you\n");
 		System.out.println("So what does this mean for you?");
 		System.out.println("That the option you selected is not complete, you should give up and turn around!");
@@ -237,7 +237,7 @@ public class Countdown {
 		
 		try{
 			
-			File xmlFile = new File("leaderboard.xml");
+			File xmlFile = new File("saves.xml");
 			DocumentBuilderFactory docFac = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFac.newDocumentBuilder();
 			Document doc = docBuilder.parse(xmlFile);
@@ -245,14 +245,203 @@ public class Countdown {
 			//Quick sanity formating. Should be fine unless someone has been playing with the file . . .
 			doc.getDocumentElement().normalize();
 			
-			//LOAD IT HERE
+			//Get all the saves
+			NodeList saves = doc.getElementsByTagName("save");
+			
+			//get the save the user wants
+			long timestamp = loadSelector(saves);
+			
+			Element save = null;
+			for (int i = 0; i < saves.getLength(); i++){
+				
+				Element saveTemp = (Element) saves.item(i);
+				
+				if (saveTemp.getAttribute("id").equals("" + timestamp)){
+					
+					save = (Element) saves.item(i);
+					break;
+				}
+			} //close save hunter
+			
+			if(save == null){
+				throw new Exception("error finding save");
+			}
+			
+			/*
+			 * Now the save to be loaded has been selected load it
+			 * and update the game state.
+			 */
+			
+			//update timestamp
+				this.timestamp = timestamp;
+			
+			//Update the players scores with the saved values
+				NodeList players = save.getElementsByTagName("player");
+				
+				Element pOne = (Element) players.item(0);
+				NodeList pointsData = pOne.getElementsByTagName("score");
+				int points = Integer.parseInt( pointsData.item(0).getTextContent() );
+				playerOne.updateScore(points);
+				
+				if (playerTwo != null){
+					
+					Element pTwo = (Element) players.item(1);
+					pointsData = pTwo.getElementsByTagName("score");
+					points = Integer.parseInt( pointsData.item(0).getTextContent() );
+					playerOne.updateScore(points);
+				}
+			
+			//load gamedata
+				NodeList gameList = save.getElementsByTagName("game");
+				Element game = (Element) gameList.item(0);
+				
+				NodeList roundstringData = game.getElementsByTagName("roundString");
+				gameOrderString = roundstringData.item(0).getTextContent();
+				gameorder = gameOrderString.toCharArray();
+				
+				NodeList roundNoData = game.getElementsByTagName("roundNo");
+				int roundNo = Integer.parseInt( roundNoData.item(0).getTextContent() );
+				
+				NodeList customGameData = game.getElementsByTagName("customGame");
+				String custom = customGameData.item(0).getTextContent();
+				if (custom.equals("TRUE"))
+					customGame = true;
+				else if (custom.equals("FALSE"))
+					customGame = false;
+				else
+					throw new Exception("Error parsing customGame");
+			
+			//free everything for garbage collection
+				gameList = null;
+				game = null;
+				
+				pOne = null;
+				pointsData = null;				
+				
+				roundstringData = null;
+				roundNoData = null;
+				customGameData = null;
+				custom = null;
+			
+			//And finally play the game
+				play(roundNo);
 			
 			
+		} catch (FileNotFoundException e){
+			
+			System.out.println("No saves exit");
 		} catch (Exception e){
 			System.err.println("The savefile has become corrupted. I hope you had backups");
+			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Allows the player(s) to select a game to load
+	 * 
+	 * @param saves the nodelist of save
+	 */
+	private long loadSelector(NodeList saves){
+		
+		HashMap<Integer, Long> saveMap = new HashMap<>();
+		
+		System.out.println("Please choose a save to load: ");
+		System.out.println("\n Number\t:\tType\t\t:\troundNo");
+		
+		for (int i = 0; i < saves.getLength(); i++){
+			
+			Node save = saves.item(i);
+			
+			NodeList saveData = save.getChildNodes();
+			
+			//if a two player game length of save is 7
+			//if one player game length of save is 5
+			
+			//if two player
+			if (playerTwo != null){
+				
+				if (saveData.getLength() == 7){
+					
+					//if two player game and its a two player save then cont
+					Element pOneData = (Element) saveData.item(1);
+					Element pTwoData = (Element) saveData.item(3);
+					
+					String pOneName = pOneData.getElementsByTagName("name").item(0).getTextContent();
+					String pTwoName = pTwoData.getElementsByTagName("name").item(0).getTextContent();
+					
+					//If the names of the current session match the names in the save
+					if ( playerOne.getName().equals(pOneName) || playerTwo.getName().equals(pTwoName)){
+						
+						loadSelectorPrinter(save, saveMap, i);
+					}
+				}
+				
+			}
+			
+			//if one player
+			if (playerTwo == null){
+				
+				if (saveData.getLength() == 5){
+					
+					//if two player game and its a two player save then cont
+					Element pOneData = (Element) saveData.item(1);
+					
+					String pOneName = pOneData.getElementsByTagName("name").item(0).getTextContent();
+					
+					//If the names of the current session match the names in the save
+					if ( playerOne.getName().equals(pOneName)){
+						
+						loadSelectorPrinter(save, saveMap, i);
+					}
+				}
+				
+			}
+			
+			
+		}
 
+		System.out.println("note: other games can not be loaded by the current players");
+		
+		int selection;
+		do {
+			System.out.println("Select one of the options:");
+			selection = io.getNumber();
+		}while ( selection < 0 || selection >= saves.getLength());
+		
+		//return the timestamp of the selected save;
+		return saveMap.get(selection);
+		
+	}//close loadSelector()
+
+	/**
+	 * Prints out the game details for loadSelector
+	 * Here to reduce LOC
+	 * 
+	 * @param save The savedata
+	 * @param saveMap The map to which we are storing the timestamps
+	 * @param i the current iteration of the loop
+	 */
+	private void loadSelectorPrinter(Node save, HashMap<Integer, Long> saveMap, int i){
+		
+		Element saveElement = (Element) save;
+		
+		Long timestamp = Long.valueOf(saveElement.getAttribute("id")).longValue();
+		saveMap.put(i, timestamp);
+		
+		NodeList game = saveElement.getElementsByTagName("game");
+		NodeList gameData = game.item(0).getChildNodes();
+		
+		String custom = gameData.item(5).getTextContent();
+		String roundNo = gameData.item(3).getTextContent();
+		
+		String roundtype = "Full game";
+		if (custom.equals("TRUE")){
+			roundtype = "Custom game";
+		}
+		
+		System.out.println(i + "\t:\t" + roundtype + "\t:\t " + roundNo);
+	}
+	
 	/**
 	 * Saves the game
 	 */

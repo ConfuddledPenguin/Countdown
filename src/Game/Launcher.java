@@ -36,6 +36,8 @@ public class Launcher {
 		io.printLines(2);
 		System.out.println("Welcome to countdown\n" +
 				"I hope you are ready to play!!\n\n"+
+				"This Game features autosave! be amazed!\n" +
+				"So your games are saved after every round!\n\n"+
 				"(c) Thomas Maxwell and Thomas Sinclair");
 		try {
 			Thread.sleep(2000);
@@ -178,7 +180,7 @@ public class Launcher {
 	 */
 	private void gameSelector(){
 		
-		io.printLines(2);
+		io.printLines(1);
 		
 		System.out.println("Have some options pick one:\n\n" +
 				"Play a full game\t\t-1\n" +
