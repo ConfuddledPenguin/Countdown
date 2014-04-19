@@ -64,6 +64,7 @@ public class Countdown {
 
 		//Weird way of assigning array is due to values needing to be added when declaring the array;
 		char[] defualt = {'W','W','N','W','W','W','W','N','N','W','W','W','W','N','C'};
+		gameOrderString = "WWNWWWWNNWWWWNC";
 		gameorder = defualt;
 		defualt = null;
 		
