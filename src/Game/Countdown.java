@@ -62,41 +62,12 @@ public class Countdown {
 	 */
 	public void play() {
 
-		gameorder = new char[15];
+		//Weird way of assigning array is due to values needing to be added when declaring the array;
+		char[] defualt = {'W','W','N','W','W','W','W','N','N','W','W','W','W','N','C'};
+		gameorder = defualt;
+		defualt = null;
+		
 		customGame = false;
-		
-		int i = 0;
-		while ( i < 14){
-			
-			//Tempted to change the below to a list of some sort and use contains . . . .
-			
-			/* If its a word round
-			 * 
-			 * The word rounds are round numbers:
-			 * 0, 1, 3, 4, 5, 6, 9 ,10, 11, 12
-			 */
-			if ( i < 2 || ( i >= 3 && i < 7) || (i >= 9 || i < 13)){
-				
-				gameorder[i] = WORD;
-				continue;
-			}
-			
-			/* If its a numbers round
-			 * 
-			 * The numbers rounds are round numbers:
-			 * 2, 7, 8, 13
-			 */
-			if ( i == 2 || i == 7 || i == 8 || i == 13){
-				
-				gameorder[i] = NUMBER;
-				continue;
-			}
-			
-			i++;
-		}// Close game loop
-		
-		// finally add conundrum
-		gameorder[14] = CONUNDRUM;
 		
 		play(0);
 	}
@@ -261,6 +232,24 @@ public class Countdown {
 		System.out.println("So what does this mean for you?");
 		System.out.println("That the option you selected is not complete, you should give up and turn around!");
 		System.out.println("Goodbye: useless method");
+		
+		
+		try{
+			
+			File xmlFile = new File("leaderboard.xml");
+			DocumentBuilderFactory docFac = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docFac.newDocumentBuilder();
+			Document doc = docBuilder.parse(xmlFile);
+			
+			//Quick sanity formating. Should be fine unless someone has been playing with the file . . .
+			doc.getDocumentElement().normalize();
+			
+			//LOAD IT HERE
+			
+			
+		} catch (Exception e){
+			System.err.println("The savefile has become corrupted. I hope you had backups");
+		}
 	}
 
 	/**
@@ -269,11 +258,6 @@ public class Countdown {
 	private void save(int roundNoValue) {
 
 		Element save = null;
-		
-		System.out.println("Hey :) You have reached non code! Well done you\n");
-		System.out.println("So what does this mean for you?");
-		System.out.println("That the option you selected is not complete, you should give up and turn around!");
-		System.out.println("Goodbye: useless method");
 		
 		try {
 			
@@ -383,22 +367,16 @@ public class Countdown {
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 			DOMSource source = new DOMSource(doc);
+			
+			if (source == null)
+				System.out.println("FUCK!");
+			else System.out.println("All good");
+			
 			StreamResult result = new StreamResult(new File(filepath));
 			transformer.transform(source, result);
 			
-		} catch (ParserConfigurationException pce) {
-			pce.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e){
+			System.out.println("The save file has become corrupted! Delete it! I hope you back things up");
 			e.printStackTrace();
 		}
 	}
@@ -461,7 +439,7 @@ public class Countdown {
 		io.printLines(2);
 		customGame = true;
 		
-		System.out.println("So a custom game is it?");
+		System.out.println("So a custom game, is it?");
 		
 		boolean unvalid;
 		
@@ -473,8 +451,8 @@ public class Countdown {
 			System.out.println("I may have lied sorry. Please enter a string of rounds you would like to play");
 			System.out.println("W for word, N for number, C for conundrum. For example: WWNNWC");
 			
-			gameOrderString = io.getString();
-			gameorder = gameOrderString.toUpperCase().toCharArray();
+			gameOrderString = io.getString().toUpperCase();
+			gameorder = gameOrderString.toCharArray();
 			
 			for ( int i = 0; i < gameorder.length; i++){
 				
@@ -489,8 +467,6 @@ public class Countdown {
 			}
 					
 		}while(unvalid);
-		
-		//tell player if length is silly maybe?
 		
 		play(0);
 		

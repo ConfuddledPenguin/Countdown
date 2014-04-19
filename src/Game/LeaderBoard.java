@@ -215,11 +215,10 @@ public class LeaderBoard {
 			
 			
 			
-		} catch (ParserConfigurationException pce) {
-			pce.printStackTrace();
-		  } catch (TransformerException tfe) {
-			tfe.printStackTrace();
-		  }
+		} catch (Exception e){
+			System.out.println("The leaderboard file is unreadable. Please delete the file and start again");
+			e.printStackTrace();
+		}
 
 	}
 	
