@@ -46,23 +46,22 @@ public class ConundrumRound extends Round {
 		System.out.println("The conundrum is: " + anagram + ", Answer: " + answer + "\n");
 		
 		CountdownTimer();
-		       
-		getAnswer(pOne);
 		
-		if(pTwo != null) {
-			
+		if(keyPress == 1) {
+			getAnswer(pOne);
+			if(!checkAnswer(pOne, answer) && twoPlayer) {
+				getAnswer(pTwo);
+				checkAnswer(pTwo, answer);
+			}
+		} else if(keyPress == 2) {
 			getAnswer(pTwo);
-			
-			if (ans1.equals(ans2));
-				System.out.println("You both have the same answer, but lets see if the working is right");
-				
+			if(!checkAnswer(pTwo, answer)) {
+				getAnswer(pOne);
+				checkAnswer(pOne, answer);
+			}
+		} else {
+			System.out.println("There was no buzz in time therefore no points are awarded :(");
 		}
-		
-		checkAnswer(pOne, answer);
-		
-		if(pTwo != null)
-			checkAnswer(pTwo, answer);
-		
 	}
 	
 	private void awardPoints(Player p){
@@ -78,19 +77,26 @@ public class ConundrumRound extends Round {
 		}
 	}
 	
-	private void checkAnswer(Player p, ArrayList<String> ans) {
+	private boolean checkAnswer(Player p, ArrayList<String> ans) {
 		
 		if(p.getNumber() == 1) {
-			if(ans.contains(ans1))
+			
+			if(ans.contains(ans1)) {
 				awardPoints(pOne);
-			else
-				System.out.println("Player 1 is wrong!!!");
+				return true;
+			}
+			
 		} else {
-			if(ans.contains(ans2))
+			
+			if(ans.contains(ans2)) {
 				awardPoints(pTwo);
-			else
-				System.out.println("Player 2 is wrong!!!");
+				return true;
+			}
 		}
+		
+		System.out.println(p.getName() + " is wrong!!!");
+		return false;
+		
 	}
 	
 	private void getAnswer(Player p) {

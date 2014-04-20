@@ -2,7 +2,6 @@ package Game;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -18,6 +17,8 @@ abstract public class Round {
 	boolean twoPlayer = false;
 	String roundType;
 	LeaderBoard board;
+	int keyPress;
+	UserIO i;
 
 	/**
 	 * Constructor
@@ -35,6 +36,8 @@ abstract public class Round {
 		this.pTwo = pTwo;
 		this.board = board;
 		this.roundType = roundType;
+		
+		i = new UserIO();
 
 		if (pTwo != null){
 			twoPlayer = true;
@@ -49,10 +52,31 @@ abstract public class Round {
 		
 		scheduler.scheduleAtFixedRate(timer, 0, 1, TimeUnit.SECONDS);
 		
-		timer.doWait();
-		
-		scheduler.shutdown();
-
+		if(roundType.equals("ConundrumRound")) {
+			
+			keyPress = 0;
+			
+			while (keyPress == 0) {
+				
+				keyPress = i.getNumber();
+				
+				System.out.println(keyPress);
+				
+				if(keyPress == 1) {
+					System.out.println("\nPlayer 1 Buzzed First!");
+					scheduler.shutdown();
+				} else if(keyPress == 2 && twoPlayer) {
+					System.out.println("\nPlayer 2 Buzzed First!");
+					scheduler.shutdown();
+				} else {
+					keyPress = 0;
+				}
+			}
+			
+		} else {
+			timer.doWait();
+			scheduler.shutdown();
+		}
 	}
 
 	/**
@@ -74,11 +98,9 @@ abstract public class Round {
 	 * Prints out a welcome message
 	 */
 	public void printWelcome() {
-
-		System.out.println("----------------------------------------------------");
-		System.out.println("----------------------------------------------------");
+		i.printLines(2);
 		System.out.println("Welcome to the " + roundType + " round");
-		System.out.println("---------------------------\n");
+		i.printShortLines(1);
 	}
 
 }

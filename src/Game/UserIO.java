@@ -71,6 +71,19 @@ public class UserIO {
 		
 		System.out.println("----------------------------------------------------\n");
 	}
+	
+	/**
+	 * Prints out a specified amount of short lines of - to separate things
+	 * 
+	 * @param n The number of lines to be printed
+	 */
+	public void printShortLines(int n){
+		
+		for(int i = 0; i < n - 1; i++)
+			System.out.println("---------------------------");
+		
+		System.out.println("---------------------------\n");
+	}
 
 }
 
