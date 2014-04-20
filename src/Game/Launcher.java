@@ -26,6 +26,8 @@ public class Launcher {
 		getPlayerDetials();
 		
 		playGame();
+		
+		io.close();
 	}
 
 	/**
