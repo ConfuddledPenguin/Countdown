@@ -12,6 +12,7 @@ public class WordRound extends Round{
 	//stores the answer entered by the player
 	private String ans1;
 	private String ans2;
+	private String letters;
 
 	private UserIO i;
 
@@ -43,15 +44,15 @@ public class WordRound extends Round{
 
 		printWelcome();
 
-		String letters = generateLetters();
+		letters = generateLetters();
 		ArrayList<String> bestAnswers = dict.getBestWords(letters);
-		
+
 		int pOneLen;
 		int pTwoLen;
 
 		//currently printing the answer for testing purposes
 		System.out.println("The letters are: " + letters+ "\n");
-		
+
 		CountdownTimer();
 
 		getAnswer(pOne);
@@ -69,13 +70,13 @@ public class WordRound extends Round{
 			else
 				System.out.println(pTwo.getName() + " has the longer word, let's see if it is correct");
 		}
-		
+
 		pOneLen = checkAnswer(pOne, bestAnswers);
-		
+
 		if(pTwo != null) {
-			
+
 			pTwoLen = checkAnswer(pTwo, bestAnswers);
-			
+
 			if(pOneLen > pTwoLen) {
 				System.out.println("Player 1 Wins");
 				awardPoints(pOne, pOneLen);
@@ -89,14 +90,14 @@ public class WordRound extends Round{
 				awardPoints(pOne, pOneLen);
 				awardPoints(pTwo, pTwoLen);
 			}
-			
+
 		} else {
-			
+
 			if(pOneLen > 0)
 				awardPoints(pOne, pOneLen);
 			else
 				System.out.println("You entered an incorrect answer or no answer at all");
-			
+
 		}
 
 		System.out.println("The best answers were: ");
@@ -221,12 +222,12 @@ public class WordRound extends Round{
 	private int checkAnswer(Player p, ArrayList<String> ans) {
 
 		if(p.getNumber() == 1) {
-			if(dict.checkWord(ans1))
+			if(validWord(ans1))
 				return ans1.length();
 			else
 				return 0;
 		} else {
-			if(dict.checkWord(ans2))
+			if(validWord(ans2))
 				return ans2.length();
 			else
 				return 0;
@@ -234,10 +235,31 @@ public class WordRound extends Round{
 
 	}
 
+	private boolean validWord(String a) {
+
+		int count = 0;
+
+		if(dict.checkWord(a)) {
+			for(int i = 0; i < a.length(); i++) {
+				
+				if(letters.contains(a.subSequence(i, i + 1)))
+					count++;
+
+			}
+
+		}
+
+		if(count == a.length())
+			return true;
+		else
+			return false;
+
+	}
+
 	private void awardPoints(Player p, int points) {
-		
+
 		System.out.println(p.getName() + " recieves " + points + " Points");
-		
+
 		if(points == 9)
 			points = points * 2;
 

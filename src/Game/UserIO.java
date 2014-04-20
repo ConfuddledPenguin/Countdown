@@ -30,7 +30,7 @@ public class UserIO {
 			
 		} catch(InputMismatchException e) {
 			
-			System.out.println("Please enter a String ");
+			System.out.println("Please enter a String: ");
 			return getString();
 			
 		}	//end try
@@ -53,7 +53,7 @@ public class UserIO {
 
 		} catch(InputMismatchException e) {
 		
-			System.err.println("Please enter a number : ");
+			System.err.println("Please enter a number: ");
 			return getNumber();
 
 		}
