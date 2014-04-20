@@ -37,6 +37,7 @@ public class TheTimer implements Runnable {
 		}
 	}
 	
+	//Object used to pass signals between threads
 	private class Monitor {
 		private Monitor() {}
 	}
