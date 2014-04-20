@@ -77,6 +77,8 @@ abstract public class Round {
 			timer.doWait();
 			scheduler.shutdown();
 		}
+		
+		i.clear();
 	}
 
 	/**

@@ -66,6 +66,13 @@ public class UserIO {
 		
 		scan.close();
 	}
+	/**
+	 * Clear the input buffer
+	 */
+	public void clear() {
+		
+		scan.nextLine();
+	}
 
 	/**
 	 * Prints out a specified amount of lines of - to separate things
