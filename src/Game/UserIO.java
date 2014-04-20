@@ -43,7 +43,7 @@ public class UserIO {
 	 * @return the user entered number
 	 */
 	public int getNumber() {
-		
+
 		try {
 
 			int input = scan.nextInt();
@@ -52,8 +52,9 @@ public class UserIO {
 			return input;
 
 		} catch(InputMismatchException e) {
-		
+
 			System.err.println("Please enter a number: ");
+			scan.nextLine();
 			return getNumber();
 
 		}
