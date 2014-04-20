@@ -8,10 +8,8 @@ import java.util.Collections;
 //yeah more of them . . .
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -95,7 +93,7 @@ public class LeaderBoard {
 			return (name + "\t\t: " + round + "\t\t: " + score);
 			
 		}
-	}
+	} // Close score class
 	
 	/**
 	 * The constructor for the LeaderBoard
@@ -213,15 +211,10 @@ public class LeaderBoard {
 			StreamResult result = new StreamResult(new File("leaderboard.xml"));
 			transformer.transform(source, result);
 			
-			System.out.println("File written");
 			
-			
-			
-		} catch (ParserConfigurationException pce) {
-			pce.printStackTrace();
-		  } catch (TransformerException tfe) {
-			tfe.printStackTrace();
-		  }
+		} catch (Exception e){
+			System.out.println("Error writing leaderboard file. Sorry about that");
+		}
 
 	}
 	
@@ -265,6 +258,14 @@ public class LeaderBoard {
 	 */
 	private void printScores(ArrayList<Score> list) {
 
+		UserIO io = new UserIO();
+		io.printLines(1);
+		
+		if (list.isEmpty()){
+			System.out.println("hmm no one has made any high scores, I would say why don't you try but i doubt you could . . .");
+			return;
+		}
+		
 		System.out.println("Name\t\t: Round\t\t: Score\n");
 		
 		for(Score s: list) {
@@ -281,6 +282,14 @@ public class LeaderBoard {
 	public void printScoresFull() {
 
 		printScores(scoresFull);
+	}
+	
+	/**
+	 * Prints out all of the scores for the custom games
+	 */
+	public void printScoresCustom() {
+		
+		printScores(scoresCustom);
 	}
 	
 	/**
@@ -349,6 +358,9 @@ public class LeaderBoard {
 		
 		else if (round.equals(FULLGAME))
 			addScoreHelper(scoresFull, score);
+		
+		else if (round.equals(CUSTOMGAME))
+			addScoreHelper(scoresCustom, score);
 		
 		else 
 			throw new IllegalArgumentException("Not a valid round type");

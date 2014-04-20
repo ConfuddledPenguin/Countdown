@@ -58,6 +58,14 @@ public class UserIO {
 
 		}
 	}
+	
+	/**
+	 * Close input when done
+	 */
+	public void close(){
+		
+		scan.close();
+	}
 
 	/**
 	 * Prints out a specified amount of lines of - to separate things
