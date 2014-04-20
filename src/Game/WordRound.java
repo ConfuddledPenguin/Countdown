@@ -51,6 +51,8 @@ public class WordRound extends Round{
 
 		//currently printing the answer for testing purposes
 		System.out.println("The letters are: " + letters+ "\n");
+		
+		CountdownTimer();
 
 		getAnswer(pOne);
 

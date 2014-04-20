@@ -1,9 +1,6 @@
 package Game;
 
 import java.util.ArrayList;
-import java.util.Timer;
-//import java.util.concurrent.Executor;
-//import java.util.concurrent.Executors;
 
 /**
  * The conundrum round for the countdown game
@@ -47,6 +44,8 @@ public class ConundrumRound extends Round {
 		
 		//currently printing the answer for testing purposes
 		System.out.println("The conundrum is: " + anagram + ", Answer: " + answer + "\n");
+		
+		CountdownTimer();
 		       
 		getAnswer(pOne);
 		

@@ -1,19 +1,24 @@
 package Game;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+
 /**
  * This abstract class is deigned to be used as a basis for the individual rounds of the game
  * 
  * @author Tom
  */
 abstract public class Round {
-	
+
 	Dictionary dict;
 	Player pOne;
 	Player pTwo;
 	boolean twoPlayer = false;
 	String roundType;
 	LeaderBoard board;
-	
+
 	/**
 	 * Constructor
 	 * 
@@ -24,18 +29,32 @@ abstract public class Round {
 	 * @param roundType the type of round
 	 */
 	public Round(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board, String roundType){
-		
+
 		this.dict = dict;
 		this.pOne = pOne;
 		this.pTwo = pTwo;
 		this.board = board;
 		this.roundType = roundType;
-		
+
 		if (pTwo != null){
 			twoPlayer = true;
 		}
 	}
-	
+
+	public void CountdownTimer() {
+
+		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+		TheTimer timer = new TheTimer();
+		
+		scheduler.scheduleAtFixedRate(timer, 0, 1, TimeUnit.SECONDS);
+		
+		timer.doWait();
+		
+		scheduler.shutdown();
+
+	}
+
 	/**
 	 * Returns the type of round
 	 * 
@@ -44,13 +63,13 @@ abstract public class Round {
 	public String roundType() {
 		return roundType;
 	}
-	
-	
+
+
 	/**
 	 * This method is for playing the round
 	 */
 	abstract public void play();
-	
+
 	/**
 	 * Prints out a welcome message
 	 */
@@ -61,5 +80,5 @@ abstract public class Round {
 		System.out.println("Welcome to the " + roundType + " round");
 		System.out.println("---------------------------\n");
 	}
-	
+
 }

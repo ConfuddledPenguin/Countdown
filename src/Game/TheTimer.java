@@ -1,18 +1,44 @@
 package Game;
 
-import java.util.TimerTask;
+public class TheTimer implements Runnable {
 
-public class TheTimer extends TimerTask {
-	
-	boolean alive = true;
-	
+	Monitor m;
+	int time;
+
+	public TheTimer() {
+
+		m = new Monitor();
+		time = 30;
+
+	}
+
 	public void run() {
+
+		System.out.print(time + " ");
+		time--;
+		if(time == 0) {
+			System.out.println("\nTime's up!");
+			doNotify();
+		}
 		
-		alive = false;
-		System.out.println("Time's up");		
+	}
+
+	public void doWait(){
+		synchronized(m){
+			try{
+				m.wait();
+			} catch(InterruptedException e){}
+		}
+	}
+
+	public void doNotify(){
+		synchronized(m){
+			m.notify();
+		}
 	}
 	
-	public boolean IsAlive(){
-		return alive;
+	private class Monitor {
+		private Monitor() {}
 	}
+	
 }
