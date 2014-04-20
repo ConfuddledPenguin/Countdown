@@ -60,6 +60,32 @@ public class UserIO {
 	}
 	
 	/**
+	 * Gets a yes no answer from the user
+	 * 
+	 * @return true for yes, false for no
+	 */
+	public boolean getYesNo(){
+		
+		try {
+			
+			String input = scan.nextLine().toUpperCase();
+			
+			if ( input.equals("Y") || input.equals("YES"))
+				return true;
+			else if ( input.equals("N") || input.equals("NO"))
+				return false;
+			else 
+				throw new InputMismatchException();
+			
+			
+		} catch (InputMismatchException e){
+			System.out.println("Please enter Y/N");
+			e.printStackTrace();
+			return getYesNo();
+		}
+	}
+	
+	/**
 	 * Close input when done
 	 */
 	public void close(){

@@ -83,7 +83,15 @@ public class Countdown {
 		int roundNo = start;
 		while ( roundNo < gameorder.length){
 			
-			//Tempted to change the below to a list of some sort and use contains . . . .
+			//IF user wishes to continue or quit the game
+			if ( roundNo != 0){
+				
+				System.out.println("Ready to continue> (Yes/No) :");
+				boolean resume = io.getYesNo(); // should be continue not resume. But continue is a keyword and using it would be bad
+				if (!resume){
+					break;
+				}
+			}
 			
 			// if word round
 			if ( gameorder[roundNo] == WORD ){
