@@ -13,8 +13,15 @@ public class TheTimer implements Runnable {
 	}
 
 	public void run() {
-
-		System.out.print(time + " ");
+		
+		if(time == 30)
+			System.out.println("30 Seconds Left!");
+		else if(time == 20)
+			System.out.println("20 Seconds Left!");
+		else if(time == 10)
+			System.out.println("10 Seconds Left!");
+		else if(time < 6)
+			System.out.print(time + " ");
 		time--;
 		if(time == 0) {
 			System.out.println("\nTime's up!");

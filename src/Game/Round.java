@@ -1,5 +1,7 @@
 package Game;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -54,24 +56,7 @@ abstract public class Round {
 		
 		if(roundType.equals("ConundrumRound")) {
 			
-			keyPress = 0;
-			
-			while (keyPress == 0) {
-				
-				keyPress = i.getNumber();
-				
-				System.out.println(keyPress);
-				
-				if(keyPress == 1) {
-					System.out.println("\nPlayer 1 Buzzed First!");
-					scheduler.shutdown();
-				} else if(keyPress == 2 && twoPlayer) {
-					System.out.println("\nPlayer 2 Buzzed First!");
-					scheduler.shutdown();
-				} else {
-					keyPress = 0;
-				}
-			}
+			buzzer(scheduler);
 			
 		} else {
 			timer.doWait();
@@ -79,6 +64,33 @@ abstract public class Round {
 		}
 		
 		i.clear();
+		
+	}
+	
+	public void buzzer(ScheduledExecutorService scheduler) {
+		
+		System.out.println("Player 1, press 1 to buzz with answer");
+		if(twoPlayer)
+			System.out.println("Player 2, press 2 to buzz with answer");
+		
+		keyPress = 0;
+		
+		while (keyPress == 0) {
+			
+			keyPress = i.getNumber();
+			
+			System.out.println(keyPress);
+			
+			if(keyPress == 1) {
+				System.out.println("Player 1 Buzzed First!");
+				scheduler.shutdown();
+			} else if(keyPress == 2 && twoPlayer) {
+				System.out.println("Player 2 Buzzed First!");
+				scheduler.shutdown();
+			} else {
+				keyPress = 0;
+			}
+		}
 	}
 
 	/**
