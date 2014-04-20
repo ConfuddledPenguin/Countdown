@@ -39,7 +39,7 @@ public class Launcher {
 		System.out.println("Welcome to countdown\n" +
 				"I hope you are ready to play!!\n\n"+
 				"This Game features autosave! be amazed!\n" +
-				"So your games are saved after every round!\n\n"+
+				"Your games are saved by magic after every round!\n\n"+
 				"(c) Thomas Maxwell and Thomas Sinclair");
 		try {
 			Thread.sleep(2000);
@@ -92,7 +92,8 @@ public class Launcher {
 			if (playerTwo != null)
 				playerTwo.clearScore();
 			
-			System.out.println("\nWhat would you like to do?\n\n" +
+			System.out.println("\nMain Menu\n"+
+							"What would you like to do?\n\n" +
 							"Play a game\t\t\t- 1\n" +
 							"Play single round:\n" +
 							"\tWord\t\t\t- 2\n" +
@@ -120,12 +121,12 @@ public class Launcher {
 						cr.play();
 						break;
 
-				case 5: leaderboardAwesomeness();
+				case 5: leaderboard();
 						break;
 
 				case 6: loop = false;
 						io.printLines(2);
-						System.out.println("Exiting");
+						System.out.println("Exiting . . . ");
 						io.printLines(1);
 						leaders.saveScores();
 						System.exit(1);
@@ -139,20 +140,20 @@ public class Launcher {
 		} //end while
 	} //end method
 	
-	private void leaderboardAwesomeness(){
+	private void leaderboard(){
 		
 		io.printLines(2);
 		
 		System.out.println("So you would like to see how pathetic you are compared to other players huh? Okay then");
-		System.out.println("How would you like to measure your patheticness:\n");
+		System.out.println("How would you like to measure your lack of performance:\n");
 		
 		
-		System.out.println("Overall pathetiness\t\t- 1\n" +
-				"Full game uselessness:\t\t- 2\n" +
-				"Custom game rubbishness\t\t- 3\n" +
-				"Word round crappyness\t\t- 4\n" +
-				"Number round shitness\t\t- 5\n" +
-				"Conundrum round incompantance\t- 6\n\n" +
+		System.out.println("Overall leaderboard\t\t- 1\n\n" +
+				"Full game\t\t\t- 2\n" +
+				"Custom game\t\t\t- 3\n\n" +
+				"Word round\t\t\t- 4\n" +
+				"Number round\t\t\t- 5\n" +
+				"Conundrum round\t\t\t- 6\n\n" +
 				"Back\t\t\t\t- 7\n");
 		
 		switch(io.getNumber()){
@@ -170,15 +171,14 @@ public class Launcher {
 			case 6: leaders.printScoresConundrum();
 					break;
 			case 7: return;
-			default: System.out.println("Pick a valid option you muppet");
-					leaderboardAwesomeness();
+			default: System.out.println("Pick a valid option");
+					leaderboard();
 					break;
 		}
-	}//Close leaderboardAwesomeness()
+	}//Close leaderboard()
 	
 	/**
 	 * A little bit of code to select a game type.
-	 * THIS IS NOT FOR SELECTING A ROUND TYPE
 	 */
 	private void gameSelector(){
 		
@@ -187,7 +187,7 @@ public class Launcher {
 		System.out.println("Have some options pick one:\n\n" +
 				"Play a full game\t\t-1\n" +
 				"Play a custom game\t\t-2\n" +
-				"Load a game\t\t\t-3\n" + 
+				"Load a game\t\t\t-3\n\n" + 
 				"Back\t\t\t\t-4");
 		
 		Countdown cd = new Countdown(objects);
@@ -205,7 +205,7 @@ public class Launcher {
 			
 			case 4: return;
 			
-			default: System.out.println("Enter a valid option silly");
+			default: System.out.println("Please choose a valid option, not your silly one");
 					gameSelector();
 		}		
 	}//close gameSelector()
