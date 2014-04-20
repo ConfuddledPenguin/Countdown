@@ -72,6 +72,8 @@ public class Countdown {
 	/**
 	 * Plays the game from a starting pos
 	 * 
+	 * Handles the actual playing of the game
+	 * 
 	 * @param start The round number to start from
 	 */
 	private void play(int start){
@@ -485,40 +487,52 @@ public class Countdown {
 			
 			if (found){	//If save exits, update existing save
 				
-				NodeList saveDataNodes = save.getChildNodes();
-				
-				//Update player info
-				
-				/*
-				 * If player two exists then the gamedata will be in position 4 of the list
-				 * otherwise it will be in position 5. So while updating the player
-				 * we shall calc the position while updating player
-				 * 
-				 * The weird positioning is due to the DOM model seeing text between the nodes
+				/* If the game is completed then delete it
 				 */
-				int pos = 3;
-				
-				playerUpdater(saveDataNodes, playerOne);
-				
-				if (playerTwo != null){
-					playerUpdater(saveDataNodes, playerTwo);
-					pos = 5;
-				}
-				
-				
-				//Next update the game data
-				Node gameData = saveDataNodes.item(pos);
-
-				NodeList gameDataNodes = gameData.getChildNodes();
-				
-				//Loop through them until value to be updated is found
-				for (int j = 0; j < gameDataNodes.getLength(); j++){
+				if (roundNoValue == gameorder.length){
+					System.out.println("GAME DONE DELETING");
+					Node saveNode = (Node) save;
+					root.removeChild(saveNode);
 					
-					Node current = gameDataNodes.item(j);
+				} else { // else update the game		
+				
+					NodeList saveDataNodes = save.getChildNodes();
 					
-					if (current.getNodeName().equals("roundNo"))
-						current.setTextContent("" + roundNoValue);
-				}
+					//Update player info
+					
+					/*
+					 * If player two exists then the gamedata will be in position 4 of the list
+					 * otherwise it will be in position 5. So while updating the player
+					 * we shall calc the position while updating player
+					 * 
+					 * The weird positioning is due to the DOM model seeing text between the nodes
+					 */
+					int pos = 3;
+					
+					playerUpdater(saveDataNodes, playerOne);
+					
+					if (playerTwo != null){
+						playerUpdater(saveDataNodes, playerTwo);
+						pos = 5;
+					}
+					
+					
+					//Next update the game data
+					Node gameData = saveDataNodes.item(pos);
+	
+					NodeList gameDataNodes = gameData.getChildNodes();
+					
+					//Loop through them until value to be updated is found
+					for (int j = 0; j < gameDataNodes.getLength(); j++){
+						
+						Node current = gameDataNodes.item(j);
+						
+						if (current.getNodeName().equals("roundNo"))
+							current.setTextContent("" + roundNoValue);
+					}
+					
+					
+				} // Close update/delete if
 				
 				
 			}else{ // If save doesn't exist create a new one

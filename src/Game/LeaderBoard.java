@@ -214,7 +214,6 @@ public class LeaderBoard {
 			transformer.transform(source, result);
 			
 			
-			
 		} catch (Exception e){
 			System.out.println("Error writing leaderboard file. Sorry about that");
 		}
