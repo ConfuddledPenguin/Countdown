@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 import java.util.StringTokenizer;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -58,7 +62,7 @@ public class NumberRound extends Round{
 
 		//Generate numbers
 		generateNumbers();
-		System.out.print("The numbers are ");
+		System.out.print("The numbers are: ");
 
 		for(Integer n: numbers){
 			System.out.print(n + " ");
@@ -69,9 +73,15 @@ public class NumberRound extends Round{
 		Random r = new Random();
 		target = r.nextInt(1000);
 		r = null;
-		System.out.println("The target is : " + target);
-		System.out.println();
-
+		System.out.println("The target is : " + target + "\n");
+		
+		//Begin generating solutions
+		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+		GenerateSolution generate = new GenerateSolution(numbers, target);
+		scheduler.schedule(generate, 0, TimeUnit.SECONDS);
+		
+		//Start Countdown
+		CountdownTimer();
 
 		//Get the answer for player one
 		getAnswer(pOne);
@@ -113,13 +123,9 @@ public class NumberRound extends Round{
 			else
 				System.out.println("Sorry " + pTwo.getName() + " you working is wrong");
 		}
-
-	}
-
-	/**
-	 * Find the best solution
-	 */
-	private void bestAnswer(int count){
+		
+		//Print all solutions
+		//generate.printSolutions();
 
 		//TODO
 		// this

@@ -30,7 +30,7 @@ public class UserIO {
 			
 		} catch(InputMismatchException e) {
 			
-			System.out.println("Please enter a String ");
+			System.out.println("Please enter a String: ");
 			return getString();
 			
 		}	//end try
@@ -43,7 +43,7 @@ public class UserIO {
 	 * @return the user entered number
 	 */
 	public int getNumber() {
-		
+
 		try {
 
 			int input = scan.nextInt();
@@ -52,8 +52,9 @@ public class UserIO {
 			return input;
 
 		} catch(InputMismatchException e) {
-		
-			System.err.println("Please enter a number : ");
+
+			System.err.println("Please enter a number: ");
+			scan.nextLine();
 			return getNumber();
 
 		}
@@ -92,6 +93,13 @@ public class UserIO {
 		
 		scan.close();
 	}
+	/**
+	 * Clear the input buffer
+	 */
+	public void clear() {
+		
+		scan.nextLine();
+	}
 
 	/**
 	 * Prints out a specified amount of lines of - to separate things
@@ -104,6 +112,19 @@ public class UserIO {
 			System.out.println("----------------------------------------------------");
 		
 		System.out.println("----------------------------------------------------\n");
+	}
+	
+	/**
+	 * Prints out a specified amount of short lines of - to separate things
+	 * 
+	 * @param n The number of lines to be printed
+	 */
+	public void printShortLines(int n){
+		
+		for(int i = 0; i < n - 1; i++)
+			System.out.println("---------------------------");
+		
+		System.out.println("---------------------------\n");
 	}
 
 }
