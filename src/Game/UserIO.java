@@ -98,7 +98,10 @@ public class UserIO {
 	 */
 	public void clear() {
 		
+		
 		scan.nextLine();
+		
+		
 	}
 
 	/**
