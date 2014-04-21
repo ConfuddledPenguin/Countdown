@@ -69,7 +69,7 @@ public class ConundrumRound extends Round {
 		ArrayList<String> answer = dict.getBestWords(anagram);
 		
 		//currently printing the answer for testing purposes
-		System.out.println("The conundrum is: " + anagram + ", Answer: " + answer + "\n");
+		System.out.println("The conundrum is: " + anagram + "\n");
 		
 		if(timerActive) {
 			CountdownTimer();
