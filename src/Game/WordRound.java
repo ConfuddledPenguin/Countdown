@@ -60,7 +60,7 @@ public class WordRound extends Round{
 	}
 
 	/**
-	 * Call to play a round
+	 * Play the word round
 	 */
 	public void play() {
 
@@ -94,11 +94,11 @@ public class WordRound extends Round{
 				System.out.println(pTwo.getName() + " has the longer word, let's see if it is correct");
 		}
 
-		pOneLen = checkAnswer(pOne, bestAnswers);
+		pOneLen = checkAnswer(pOne);
 
 		if(pTwo != null) {
 
-			pTwoLen = checkAnswer(pTwo, bestAnswers);
+			pTwoLen = checkAnswer(pTwo);
 
 			if(pOneLen > pTwoLen) {
 				System.out.println("Player 1 Wins");
@@ -202,7 +202,13 @@ public class WordRound extends Round{
 		return sb.toString().toUpperCase();		
 	}//close horrible method
 
-	private int checkAnswer(Player p, ArrayList<String> ans) {
+	/**
+	 * Checks the players answer
+	 * 
+	 * @param The Player who's answer is to be checked
+	 * @return the length of the word or 0 for an incorrect word
+	 */
+	private int checkAnswer(Player p) {
 
 		if(p.getNumber() == 1) {
 			if(validWord(ans1))
@@ -217,7 +223,13 @@ public class WordRound extends Round{
 		}
 
 	}
-
+	
+	/**
+	 * Checks if the word is valid
+	 * 
+	 * @param the word to be checked
+	 * @return true if valid word, false otherwise
+	 */
 	private boolean validWord(String a) {
 
 		int count = 0;
@@ -239,6 +251,12 @@ public class WordRound extends Round{
 
 	}
 
+	/**
+	 * Award the user points based on the length of their answer
+	 * 
+	 * @param The Player to be awarded points
+	 * @param the number of points to be awarded
+	 */
 	private void awardPoints(Player p, int points) {
 
 		System.out.println(p.getName() + " recieves " + points + " Points");
@@ -257,6 +275,11 @@ public class WordRound extends Round{
 		}
 	}
 
+	/**
+	 * Get the players answer
+	 * 
+	 * @param Player who's answer is to be collected
+	 */
 	private void getAnswer(Player p) {
 
 		System.out.println(p.getName() + " enter your answer: ");

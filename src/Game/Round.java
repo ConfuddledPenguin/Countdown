@@ -46,6 +46,9 @@ abstract public class Round {
 		}
 	}
 
+	/**
+	 * Controls the thirty second countdown
+	 */
 	public void CountdownTimer() {
 
 		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);

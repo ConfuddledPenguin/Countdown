@@ -1,9 +1,6 @@
 package Game;
 
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * The conundrum round for the countdown game
@@ -61,6 +58,9 @@ public class ConundrumRound extends Round {
 		this(o.dict, o.pOne, o.pTwo, o.leaders, true);
 	}
 	
+	/**
+	 * Play the conundrum round
+	 */
 	public void play() {
 
 		printWelcome("conundrum");
@@ -96,6 +96,10 @@ public class ConundrumRound extends Round {
 		}
 	}
 	
+	/**
+	 * Awards points to a Player
+	 * @param the Player to be awarded points
+	 */
 	private void awardPoints(Player p){
 		
 		System.out.println("Player " + p.getNumber() + " is correct!!!");
@@ -111,6 +115,14 @@ public class ConundrumRound extends Round {
 		}
 	}
 	
+	/**
+	 * 
+	 * Checks if a players answer is correct
+	 * 
+	 * @param the Player who's answer is to be checked
+	 * @param an ArrayList of all possible answers
+	 * @return returns true if answer is correct
+	 */
 	private boolean checkAnswer(Player p, ArrayList<String> ans) {
 		
 		if(p.getNumber() == 1) {
@@ -133,6 +145,11 @@ public class ConundrumRound extends Round {
 		
 	}
 	
+	/**
+	 * Get the players answer
+	 * 
+	 * @param the Player who's answer is to be collected
+	 */
 	private void getAnswer(Player p) {
 		
 		System.out.println(p.getName() + " enter your answer: ");

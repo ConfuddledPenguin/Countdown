@@ -19,6 +19,9 @@ public class GenerateSolution implements Runnable {
 	int[] numbers;
 	int target;
 
+	/**
+	 * 
+	 */
 	private class mathString{
 
 		String string;
@@ -29,7 +32,11 @@ public class GenerateSolution implements Runnable {
 		}
 	}
 
-
+	/**
+	 * Constructor for GenerateSolution
+	 * @param list of numbers
+	 * @param target number
+	 */
 	public GenerateSolution(ArrayList<Integer> n, int t) {
 
 		solutions = new ArrayList<String>();
@@ -48,6 +55,9 @@ public class GenerateSolution implements Runnable {
 
 	}
 
+	/**
+	 * Method from Runnable interface
+	 */
 	public void run() {
 
 		try {
@@ -58,6 +68,11 @@ public class GenerateSolution implements Runnable {
 
 	}
 
+	/**
+	 * Generates all possible permutations of the 6 numbers and calculates
+	 * all possible valid solutions
+	 * @throws Exception
+	 */
 	private void generateSolutions() throws Exception {
 
 		//first case
@@ -122,7 +137,12 @@ public class GenerateSolution implements Runnable {
 
 	}
 
-	// modifies c to next permutation or returns null if such permutation does not exist
+	/**
+	 * modifies c to next permutation or returns null if such permutation does not exist
+	 * 
+	 * @param c
+	 * @return
+	 */
 	private int[] nextPermutation( int[] c ) {
 		// 1. finds the largest k, that c[k] < c[k+1]
 		int first = getFirst( c );
@@ -140,8 +160,13 @@ public class GenerateSolution implements Runnable {
 		return c;
 	}
 
-	// finds the largest k, that c[k] < c[k+1]
-	// if no such k exists (there is not greater permutation), return -1
+	/**
+	 * finds the largest k, that c[k] < c[k+1]
+	 * if no such k exists (there is not greater permutation), return -1
+	 * 
+	 * @param c
+	 * @return
+	 */
 	private int getFirst(int[] c) {
 		for (int i = c.length - 2; i >= 0; --i)
 			if (c[i] < c[i + 1])
@@ -149,13 +174,26 @@ public class GenerateSolution implements Runnable {
 		return -1;
 	}
 
-	// swaps two elements (with indexes i and j) in array 
+	/**
+	 * swaps two elements (with indexes i and j) in array 
+	 * 
+	 * @param c
+	 * @param i
+	 * @param j
+	 */
 	private void swap(int[] c, int i, int j ) {
 		int tmp = c[ i ];
 		c[ i ] = c[ j ];
 		c[ j ] = tmp;
 	}
-
+	
+	/**
+	 * 
+	 * 
+	 * @param mathStrings
+	 * @return
+	 * @throws Exception
+	 */
 	private mathString[] calc (mathString[] mathStrings) throws Exception{
 
 		mathString calculated[] = new mathString[ (int) Math.pow(4, mathStrings.length -1)];
@@ -283,7 +321,10 @@ public class GenerateSolution implements Runnable {
 
 		return calculated;
 	}
-
+	
+	/**
+	 * Prints out all possible solutions for the given 6 numbers
+	 */
 	public void printSolutions() {
 
 		if(solutions.size() > 0) {
