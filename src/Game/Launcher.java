@@ -197,7 +197,7 @@ public class Launcher {
 				"Load a game\t\t\t-3\n\n" + 
 				"Back\t\t\t\t-4");
 		
-		Countdown cd = new Countdown(objects);
+		Countdown cd = new Countdown(objects, timerActive);
 		
 		switch(io.getNumber()){
 			
