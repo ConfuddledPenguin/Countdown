@@ -6,9 +6,14 @@ public class GenerateSolution implements Runnable {
 	
 	ArrayList<String> solutions;
 	ArrayList<Integer> numbers;
+	
+	int a; int b; int c; int d; int e; int f;
+	
 	int target;
 
 	public GenerateSolution(ArrayList<Integer> n, int t) {
+		
+		solutions = new ArrayList<String>();
 		
 		numbers = n;
 		target = t;
@@ -20,12 +25,10 @@ public class GenerateSolution implements Runnable {
 		generateSolutions();
 
 	}
-	
+
 	private void generateSolutions() {
 		
-		System.out.println("Adding Solutions");
 		
-		solutions.add("Hello World");
 		
 	}
 
