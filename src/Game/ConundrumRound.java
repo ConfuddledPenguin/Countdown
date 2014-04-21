@@ -11,7 +11,6 @@ public class ConundrumRound extends Round {
 	private String ans1;
 	private String ans2;
 	
-	private UserIO i;
 	
 	/**
 	 * A constructor for the conundrum round
@@ -19,11 +18,35 @@ public class ConundrumRound extends Round {
 	 * @param dict the dictionary file
 	 * @param pOne Player one
 	 * @param pTwo Player two
+	 * @param board the leaderboard
+	 * @param timerActive if the timer is active
+	 */
+	public ConundrumRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board, boolean timerActive) {
+		
+		super(dict, pOne, pTwo, board, LeaderBoard.CONUNDRUMROUND, timerActive);
+	}
+	
+	/**
+	 * A constructor for the conundrum round
+	 * 
+	 * @param dict the dictionary file
+	 * @param pOne Player one
+	 * @param pTwo Player two
+	 * @param board the leaderboard
 	 */
 	public ConundrumRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board) {
 		
-		super(dict, pOne, pTwo, board, LeaderBoard.CONUNDRUMROUND);
-		i = new UserIO();
+		super(dict, pOne, pTwo, board, LeaderBoard.CONUNDRUMROUND, true);
+	}
+	
+	/**
+	 * A constructor for the number round
+	 * @param o A gameObjects object.
+	 * @param timerActive if the timer is active
+	 */
+	public ConundrumRound(GameObjects o, boolean timerActive) {
+		
+		this(o.dict, o.pOne, o.pTwo, o.leaders, timerActive);
 	}
 	
 	/**
@@ -32,7 +55,7 @@ public class ConundrumRound extends Round {
 	 */
 	public ConundrumRound(GameObjects o) {
 		
-		this(o.dict, o.pOne, o.pTwo, o.leaders);
+		this(o.dict, o.pOne, o.pTwo, o.leaders, true);
 	}
 	
 	public void play() {
@@ -104,10 +127,10 @@ public class ConundrumRound extends Round {
 		System.out.println(p.getName() + " enter your answer: ");
 
 		if (p.getNumber() == 1) {
-			ans1 = i.getString();
+			ans1 = io.getString();
 			System.out.println("Your answer is: " + ans1);
 		} else {
-			ans2 = i.getString();
+			ans2 = io.getString();
 			System.out.println("Your answer is: " + ans2);
 		}
 

@@ -27,11 +27,13 @@ public class Countdown {
 	private Player playerTwo;
 	private Round currentRound;
 	private GameObjects objects;
-	private char[] gameorder;
+	private char[] gameOrder;
 	private String gameOrderString;
 	private UserIO io;
 	private boolean customGame;
+	private boolean timerActive = true;
 	
+	//bunch of constants for the gameOrder and gameOrderString
 	private static char WORD = 'W';
 	private static char NUMBER = 'N';
 	private static char CONUNDRUM = 'C';
@@ -53,6 +55,24 @@ public class Countdown {
 		timestamp = System.nanoTime();
 		
 	}
+	
+	/**
+	 * The constructor for the countdown class. Takes a GameObjects object
+	 * @param go The GameObjects
+	 * @param timerActive Is the timer to be active?
+	 */
+	public Countdown(GameObjects go, boolean timerActive) {
+
+		this.objects = go;
+		playerOne = go.pOne;
+		playerTwo = go.pTwo;
+		this.timerActive = timerActive;
+		
+		io = new UserIO();
+		
+		timestamp = System.nanoTime();
+		
+	}
 
 	/**
 	 * Play a full game of countdown
@@ -60,7 +80,7 @@ public class Countdown {
 	public void play() {
 
 		gameOrderString = "WWNWWWWNNWWWWNC";
-		gameorder = gameOrderString.toCharArray();
+		gameOrder = gameOrderString.toCharArray();
 		
 		customGame = false;
 		
@@ -81,7 +101,7 @@ public class Countdown {
 		
 		//Loop for the number of rounds i.e 15
 		int roundNo = start;
-		while ( roundNo < gameorder.length){
+		while ( roundNo < gameOrder.length){
 			
 			//IF user wishes to continue or quit the game
 			if ( roundNo != 0){
@@ -94,51 +114,51 @@ public class Countdown {
 			}
 			
 			// if word round
-			if ( gameorder[roundNo] == WORD ){
+			if ( gameOrder[roundNo] == WORD ){
 				
 				//Let the player know what is going on
 				io.printLines(1);
 				if (roundNo != 0)
 					System.out.println("Next up we have a word round\n");
-				else if (roundNo == gameorder.length)
+				else if (roundNo == gameOrder.length)
 					System.out.println("Sadly we are nearing the end\nwith just a word round left to play\n");
 				else
 					System.out.println("The first round, as always, is a word round\n");
 				
-				currentRound = new WordRound(objects);
+				currentRound = new WordRound(objects, timerActive);
 				currentRound.play();
 			}
 			
 			// If its a numbers round
-			if ( gameorder[roundNo] == NUMBER ){
+			if ( gameOrder[roundNo] == NUMBER ){
 				
 				//Let the player know what is going on
 				io.printLines(1);
 				if (roundNo != 0)
 					System.out.println("Next up we have a number roundn");
-				else if (roundNo == gameorder.length)
+				else if (roundNo == gameOrder.length)
 					System.out.println("Sadly we are nearing the end\nwith just a number round left to play\n");
 				else
 					System.out.println("The first round, is a number round\n");
 				
-				currentRound = new  NumberRound(objects);
+				currentRound = new  NumberRound(objects, timerActive);
 				currentRound.play();
 			}
 			
 			//If its a conundrum round
-			if (gameorder[roundNo] == CONUNDRUM){
+			if (gameOrder[roundNo] == CONUNDRUM){
 				
 				//Let the player know what is going on
 				io.printLines(1);
 				if (roundNo != 0)
 					System.out.println("Next up we have a conundrum round\n");
-				else if (roundNo == gameorder.length)
+				else if (roundNo == gameOrder.length)
 					System.out.println("Sadly we are nearing the end.\nWhich of course means we are going to play\n" +
 				" a coundrumround\n");
 				else
 					System.out.println("The first round, is a conundrum round\n");
 				
-				currentRound = new ConundrumRound(objects);
+				currentRound = new ConundrumRound(objects, timerActive);
 				currentRound.play();
 			}
 			
@@ -305,7 +325,7 @@ public class Countdown {
 				
 				NodeList roundstringData = game.getElementsByTagName("roundString");
 				gameOrderString = roundstringData.item(0).getTextContent();
-				gameorder = gameOrderString.toCharArray();
+				gameOrder = gameOrderString.toCharArray();
 				
 				NodeList roundNoData = game.getElementsByTagName("roundNo");
 				int roundNo = Integer.parseInt( roundNoData.item(0).getTextContent() );
@@ -495,7 +515,7 @@ public class Countdown {
 				
 				/* If the game is completed then delete it
 				 */
-				if (roundNoValue == gameorder.length){
+				if (roundNoValue == gameOrder.length){
 					System.out.println("GAME DONE DELETING");
 					Node saveNode = (Node) save;
 					root.removeChild(saveNode);
@@ -702,11 +722,11 @@ public class Countdown {
 			System.out.println("W for word, N for number, C for conundrum. For example: WWNNWC");
 			
 			gameOrderString = io.getString().toUpperCase();
-			gameorder = gameOrderString.toCharArray();
+			gameOrder = gameOrderString.toCharArray();
 			
-			for ( int i = 0; i < gameorder.length; i++){
+			for ( int i = 0; i < gameOrder.length; i++){
 				
-				char c = gameorder[i];
+				char c = gameOrder[i];
 				
 				if ( !(c == WORD || c == NUMBER || c == CONUNDRUM) ){
 					

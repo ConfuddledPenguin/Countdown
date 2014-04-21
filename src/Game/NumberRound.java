@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 import java.util.StringTokenizer;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -25,7 +24,6 @@ public class NumberRound extends Round{
 	private String working2;
 	private int target;
 	private ArrayList<Integer> numbers;
-	private UserIO i;
 
 	public enum returnValues {
 		TRUE, FALSE, ERROR
@@ -37,20 +35,46 @@ public class NumberRound extends Round{
 	 * @param dict The dictionary file
 	 * @param pOne Player one
 	 * @param pTwo Player two if they exist
+	 * @param board the leaderboard
+	 * @param timerActive if the timer is active
 	 */
-	public NumberRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board ) {
+	public NumberRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board, boolean timerActive ) {
 
-		super(dict, pOne, pTwo, board, LeaderBoard.NUMBERROUND);
-		i = new UserIO();
+		super(dict, pOne, pTwo, board, LeaderBoard.NUMBERROUND, timerActive);
+		
+	}
+	
+	/**
+	 * The constructor for a number round
+	 * 
+	 * @param dict The dictionary file
+	 * @param pOne Player one
+	 * @param pTwo Player two if they exist
+	 * @param board the leaderboard
+	 * @param timerActive if the timer is active
+	 */
+	public NumberRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board) {
+
+		super(dict, pOne, pTwo, board, LeaderBoard.NUMBERROUND, true);
+		
 	}
 
 	/**
 	 * A constructor for the number round
 	 * @param o A gameObjects object.
 	 */
+	public NumberRound(GameObjects o, boolean timerActive) {
+
+		this(o.dict, o.pOne, o.pTwo, o.leaders, timerActive);
+	}
+	
+	/**
+	 * A constructor for the number round
+	 * @param o A gameObjects object.
+	 */
 	public NumberRound(GameObjects o) {
 
-		this(o.dict, o.pOne, o.pTwo, o.leaders);
+		this(o.dict, o.pOne, o.pTwo, o.leaders, true);
 	}
 
 	/**
@@ -158,7 +182,7 @@ public class NumberRound extends Round{
 		do {
 
 			System.out.println("Please enter the number of high numbers you would like: ");
-			noHigh = i.getNumber();
+			noHigh = io.getNumber();
 		}while(noHigh > 4 || noHigh < 0);
 
 		for(int i = 0; i < noHigh; i++){
@@ -291,9 +315,9 @@ public class NumberRound extends Round{
 		System.out.println(p.getName() + " enter your answer: ");
 
 		if (p.getNumber() == 1)
-			ans1 = i.getNumber();
+			ans1 = io.getNumber();
 		else
-			ans2 = i.getNumber();
+			ans2 = io.getNumber();
 
 		System.out.println();
 	}
@@ -307,9 +331,9 @@ public class NumberRound extends Round{
 		System.out.println(p.getName() + " using + - * / please enter your working: ");
 
 		if (p.getNumber() == 1)
-			working1 = i.getString();
+			working1 = io.getString();
 		else
-			working2 = i.getString();	
+			working2 = io.getString();	
 
 		System.out.println();
 	}
