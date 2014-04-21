@@ -14,6 +14,9 @@ public class Launcher {
 	private Dictionary dict;
 	
 	private GameObjects objects;
+	
+	//default to timer always on
+	private boolean timerActive = true;
 
 	public Launcher() {
 
@@ -100,7 +103,8 @@ public class Launcher {
 							"\tNumber\t\t\t- 3\n" +
 							"\tConundrum\t\t- 4\n\n" +
 							"View Scoreboard\t\t\t- 5\n" +
-							"Quit\t\t\t\t- 6\n");
+							"Options\t\t\t\t- 6\n" +
+							"Quit\t\t\t\t- 7\n");
 
 			switch(io.getNumber()) {
 
@@ -109,22 +113,25 @@ public class Launcher {
 				case 1: gameSelector();
 						break;
 
-				case 2: WordRound wr = new WordRound(objects);
+				case 2: WordRound wr = new WordRound(objects, timerActive);
 						wr.play();
 						break;
 
-				case 3: NumberRound nr = new NumberRound(objects);
+				case 3: NumberRound nr = new NumberRound(objects, timerActive);
 						nr.play();
 						break;
 
-				case 4: ConundrumRound cr = new ConundrumRound(objects);
+				case 4: ConundrumRound cr = new ConundrumRound(objects, timerActive);
 						cr.play();
 						break;
 
 				case 5: leaderboard();
 						break;
 
-				case 6: loop = false;
+				case 6: options();
+						break;
+						
+				case 7: loop = false;
 						io.printLines(2);
 						System.out.println("Exiting . . . ");
 						io.printLines(1);
@@ -210,6 +217,39 @@ public class Launcher {
 		}		
 	}//close gameSelector()
 
+	private void options(){
+		
+		io.printLines(2);
+		
+		System.out.println("Options:\n\n" +
+					"Timer\t\t\t\t-1\n" +
+					"back\t\t\t\t-2");
+		
+		switch (io.getNumber()){
+		
+		case 1: io.printShortLines(1);
+				System.out.println("Would you like the timer to be active? (Yes/No) :");
+				timerActive = io.getYesNo();
+				if (!timerActive){
+					System.out.println("Doesn't that defeat the point of countdown?");
+					System.out.println("Its cheating on its highest level");
+					System.out.println("Be ashamed!!!!!");
+					System.out.println("As such your scores will not be stored on the leaderboard\n" +
+					"Further more becuase cheating is shameful this always resets back to true, when" +
+					"ever the game is luanched");
+				}
+				break;
+		
+		case 2: return;
+		
+		default: System.out.println("Not a valid choice. Try again!");
+				break;	
+		}
+		
+		options();
+		
+	}
+	
 	/**
 	 * The almighty main
 	 * @param args Nothing/nada/ziltch

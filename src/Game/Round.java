@@ -18,8 +18,8 @@ abstract public class Round {
 	String roundType;
 	LeaderBoard board;
 	int keyPress;
-	UserIO i;
-	boolean timer;
+	UserIO io;
+	boolean timerActive;
 
 	/**
 	 * Constructor
@@ -29,17 +29,17 @@ abstract public class Round {
 	 * @param pTwo player two
 	 * @param board the leaderBoard
 	 * @param roundType the type of round
+	 * @param timerActive If the timer is active
 	 */
-	public Round(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board, String roundType){
+	public Round(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board, String roundType, boolean timerActive){
 
 		this.dict = dict;
 		this.pOne = pOne;
 		this.pTwo = pTwo;
 		this.board = board;
 		this.roundType = roundType;
-		
-		i = new UserIO();
-		timer = true;
+		this.timerActive = timerActive;
+		io = new UserIO();
 
 		if (pTwo != null){
 			twoPlayer = true;
@@ -63,7 +63,7 @@ abstract public class Round {
 			scheduler.shutdown();
 		}
 		
-		i.clear();
+		io.clear();
 		
 	}
 	
@@ -77,15 +77,15 @@ abstract public class Round {
 		
 		while (keyPress == 0) {
 			
-			keyPress = i.getNumber();
+			keyPress = io.getNumber();
 			
 			if(keyPress == 1) {
 				System.out.println("Player 1 Buzzed First!");
-				if(timer)
+				if(timerActive)
 					scheduler.shutdown();
 			} else if(keyPress == 2 && twoPlayer) {
 				System.out.println("Player 2 Buzzed First!");
-				if(timer)
+				if(timerActive)
 					scheduler.shutdown();
 			} else {
 				keyPress = 0;
@@ -112,9 +112,9 @@ abstract public class Round {
 	 * Prints out a welcome message
 	 */
 	public void printWelcome() {
-		i.printLines(2);
+		io.printLines(2);
 		System.out.println("Welcome to the " + roundType + " round");
-		i.printShortLines(1);
+		io.printShortLines(1);
 	}
 
 }

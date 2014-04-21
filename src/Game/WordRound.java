@@ -14,8 +14,20 @@ public class WordRound extends Round{
 	private String ans2;
 	private String letters;
 
-	private UserIO i;
+	/**
+	 * Constructor for the number round
+	 * @param dict the Dictionary file
+	 * @param pOne Player one
+	 * @param pTwo Player two
+	 * @param board the leaderboard
+	 * @param timerActive if the timer is active
+	 */
+	public WordRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board, boolean timerActive) {
 
+		super(dict, pOne, pTwo, board, LeaderBoard.WORDROUND, timerActive);
+		io = new UserIO();
+	}
+	
 	/**
 	 * Constructor for the number round
 	 * @param dict the Dictionary file
@@ -24,17 +36,27 @@ public class WordRound extends Round{
 	 */
 	public WordRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board) {
 
-		super(dict, pOne, pTwo, board, LeaderBoard.WORDROUND);
-		i = new UserIO();
+		super(dict, pOne, pTwo, board, LeaderBoard.WORDROUND, true);
+		io = new UserIO();
 	}
 
+	/**
+	 * A constructor for the number round
+	 * @param o A gameObjects object.
+	 * @param timerActive if the timer is active
+	 */
+	public WordRound(GameObjects o, boolean timerActive) {
+
+		this(o.dict, o.pOne, o.pTwo, o.leaders, timerActive);
+	}
+	
 	/**
 	 * A constructor for the number round
 	 * @param o A gameObjects object.
 	 */
 	public WordRound(GameObjects o) {
 
-		this(o.dict, o.pOne, o.pTwo, o.leaders);
+		this(o.dict, o.pOne, o.pTwo, o.leaders, true);
 	}
 
 	/**
@@ -53,7 +75,7 @@ public class WordRound extends Round{
 		//currently printing the answer for testing purposes
 		System.out.println("The letters are: " + letters+ "\n");
 
-		if(timer)
+		if(timerActive)
 			CountdownTimer();
 
 		getAnswer(pOne);
@@ -124,7 +146,7 @@ public class WordRound extends Round{
 		while( loop){
 			System.out.println("How many vowels would you like?"); 
 
-			if ((noVowels = i.getNumber()) < 3){
+			if ((noVowels = io.getNumber()) < 3){
 				System.out.println("Must have at least 3 vowels");
 			}else if (noVowels > 5){
 
@@ -265,10 +287,12 @@ public class WordRound extends Round{
 			points = points * 2;
 
 		if(p.getNumber() == 1) {
-			board.addScore(p.getName(), roundType, points);
+			if (timerActive)
+				board.addScore(p.getName(), roundType, 10);
 			pOne.updateScore(points);
 		} else {
-			board.addScore(p.getName(), roundType, points);
+			if (timerActive)
+				board.addScore(p.getName(), roundType, 10);
 			pTwo.updateScore(points);
 		}
 	}
@@ -278,10 +302,10 @@ public class WordRound extends Round{
 		System.out.println(p.getName() + " enter your answer: ");
 
 		if (p.getNumber() == 1) {
-			ans1 = i.getString();
+			ans1 = io.getString();
 			System.out.println("Your answer is: " + ans1);
 		} else {
-			ans2 = i.getString();
+			ans2 = io.getString();
 			System.out.println("Your answer is: " + ans2);
 		}
 
