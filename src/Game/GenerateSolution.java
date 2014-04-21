@@ -2,6 +2,19 @@ package Game;
 
 import java.util.ArrayList;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
+import Game.NumberRound.returnValues;
+
+/**
+ * Generate a solution to the number round
+ * 
+ * It does this by generating all possible
+ * combinations of the number with +-/*, then check if
+ * any of them are right 
+ */
 public class GenerateSolution implements Runnable {
 
 	ArrayList<String> solutions;
@@ -68,10 +81,16 @@ public class GenerateSolution implements Runnable {
 
 		}
 		
+		
+		
 		for(mathString m : calc(msArray)) {
 			
-			if(m.value == target)
+			
+			
+			if(m.value == target){
 				solutions.add(m.string);
+				System.out.println("Stuff has been added");
+			}
 			
 		}
 		
@@ -98,8 +117,10 @@ public class GenerateSolution implements Runnable {
 			
 			for(mathString m : calc(msArray2)) {
 				
-				if(m.value == target)
+				if(m.value == target){
 					solutions.add(m.string);
+					System.out.println("added : " + m.string + " : " + m.value + " : " + target);
+				}
 				
 			}
 			
@@ -169,25 +190,25 @@ public class GenerateSolution implements Runnable {
 				for (int index2 = 0; index2 < ms2.length; index2++){
 
 					ms = new mathString();
-					ms.string = ms1[index1] + "+" + ms2[index2];
+					ms.string = "(" + ms1[index1] + ")+(" + ms2[index2] + ")";
 					ms.value = ms1[index1].value + ms2[index2].value;
 
 					calculated[i++] = ms;
 
 					ms = new mathString();
-					ms.string = ms1[index1] + "-" + ms2[index2];
+					ms.string = "(" + ms1[index1] + ")-(" + ms2[index2] + ")";
 					ms.value = ms1[index1].value - ms2[index2].value;
 
 					calculated[i++] = ms;
 
 					ms = new mathString();
-					ms.string = ms1[index1] + "/" + ms2[index2];
+					ms.string = "(" + ms1[index1] + ")/(" + ms2[index2] + ")";
 					ms.value = ms1[index1].value / ms2[index2].value;
 
 					calculated[i++] = ms;
 
 					ms = new mathString();
-					ms.string = ms1[index1] + "*" + ms2[index2];
+					ms.string = "(" + ms1[index1] + ")*(" + ms2[index2] + ")";
 					ms.value = ms1[index1].value * ms2[index2].value;
 
 					calculated[i++] = ms;
@@ -206,25 +227,25 @@ public class GenerateSolution implements Runnable {
 			for (int index = 0; index < 4; index++){
 
 				ms = new mathString();
-				ms.string = calced[index] + "+" + mathStrings[2];
+				ms.string = "(" + calced[index] + "+" + mathStrings[2] + ")";
 				ms.value = calced[index].value + mathStrings[2].value;
 
 				calculated[i++] = ms;
 
 				ms = new mathString();
-				ms.string = calced[index] + "-" + mathStrings[2];
+				ms.string = "(" + calced[index] + "-" + mathStrings[2] + ")";
 				ms.value = calced[index].value - mathStrings[2].value;
 
 				calculated[i++] = ms;
 
 				ms = new mathString();
-				ms.string = calced[index] + "/" + mathStrings[2];
+				ms.string = "(" + calced[index] + "/" + mathStrings[2] + ")";
 				ms.value = calced[index].value / mathStrings[2].value;
 
 				calculated[i++] = ms;
 
 				ms = new mathString();
-				ms.string = calced[index] + "*" + mathStrings[2];
+				ms.string = "(" + calced[index] + "*" + mathStrings[2] + ")";
 				ms.value = calced[index].value * mathStrings[2].value;
 
 				calculated[i++] = ms;
@@ -271,11 +292,31 @@ public class GenerateSolution implements Runnable {
 
 	public void printSolutions() {
 
-		System.out.println("Here are all of the possible correct solutions: ");
+		System.out.println("Here is a possible correct solution: ");
 
 		for(String i : solutions) {
 
-			System.out.println(i);
+			/*
+			 * For some reason mathStrings where passing the above even if the wheren't
+			 * correct. so this hack solves that. This means the above is being used to
+			 * get a small list of possible answers that is then being checked here
+			 */
+			ScriptEngineManager mgr = new ScriptEngineManager();
+			ScriptEngine engine = mgr.getEngineByName("JavaScript");
+
+			double calcAnswer = -111111;
+
+			try {
+
+				calcAnswer = (double) engine.eval(i);
+
+			} catch (ScriptException e) {
+			}
+
+			if (calcAnswer == target){
+				System.out.println(i);
+				break;
+			}
 
 		}
 
