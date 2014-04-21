@@ -351,7 +351,7 @@ public class GenerateSolution implements Runnable {
 				}
 
 				if (calcAnswer == target){
-					System.out.println(i);
+					System.out.println("\t" + i);
 					break;
 				}
 

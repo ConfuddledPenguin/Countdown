@@ -72,7 +72,6 @@ public class WordRound extends Round{
 		int pOneLen;
 		int pTwoLen;
 
-		//currently printing the answer for testing purposes
 		System.out.println("The letters are: " + letters+ "\n");
 
 		if(timerActive)

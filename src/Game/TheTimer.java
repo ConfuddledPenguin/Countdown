@@ -28,11 +28,13 @@ public class TheTimer implements Runnable {
 			System.out.println("10 Seconds Left!");
 		else if(time < 6 && time > 0)
 			System.out.print(time + " ");
-		time--;
-		if(time == 0) {
-			System.out.println("\nTime's up!");
+		else if(time == 0) {
+			System.out.println("\nTime's up!\n");
 			doNotify();
 		}		
+		
+		time--;
+		
 	}
 	
 	/**

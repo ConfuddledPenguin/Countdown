@@ -94,6 +94,11 @@ public class ConundrumRound extends Round {
 		} else {
 			System.out.println("There was no buzz in time therefore no points are awarded :(");
 		}
+		
+		System.out.println("\nThe correct answer(s) was / were: ");
+		for(String i : answer)
+			System.out.println("\t" + i);
+		
 	}
 	
 	/**
