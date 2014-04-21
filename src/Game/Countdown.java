@@ -109,7 +109,8 @@ public class Countdown {
 				System.out.println("Ready to continue> (Yes/No) :");
 				boolean resume = io.getYesNo(); // should be continue not resume. But continue is a keyword and using it would be bad
 				if (!resume){
-					break;
+					System.out.println("We hope to see you agian soon!");
+					return;
 				}
 			}
 			
@@ -192,7 +193,7 @@ public class Countdown {
 	 */
 	private void printClose(){
 		
-		System.out.println("Well that the game over.");
+		System.out.println("Well that is the game over.");
 		
 		if (playerTwo == null){
 			printWinner(playerOne, null);
