@@ -45,7 +45,10 @@ public class ConundrumRound extends Round {
 		//currently printing the answer for testing purposes
 		System.out.println("The conundrum is: " + anagram + ", Answer: " + answer + "\n");
 		
-		CountdownTimer();
+		if(timer)
+			CountdownTimer();
+		else
+			buzzer(null);
 		
 		if(keyPress == 1) {
 			getAnswer(pOne);

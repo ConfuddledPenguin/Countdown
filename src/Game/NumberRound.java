@@ -80,8 +80,8 @@ public class NumberRound extends Round{
 		GenerateSolution generate = new GenerateSolution(numbers, target);
 		scheduler.schedule(generate, 0, TimeUnit.SECONDS);
 		
-		//Start Countdown
-		CountdownTimer();
+		if(timer)
+			CountdownTimer();
 
 		//Get the answer for player one
 		getAnswer(pOne);

@@ -53,7 +53,8 @@ public class WordRound extends Round{
 		//currently printing the answer for testing purposes
 		System.out.println("The letters are: " + letters+ "\n");
 
-		CountdownTimer();
+		if(timer)
+			CountdownTimer();
 
 		getAnswer(pOne);
 

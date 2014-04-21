@@ -19,6 +19,7 @@ abstract public class Round {
 	LeaderBoard board;
 	int keyPress;
 	UserIO i;
+	boolean timer;
 
 	/**
 	 * Constructor
@@ -38,6 +39,7 @@ abstract public class Round {
 		this.roundType = roundType;
 		
 		i = new UserIO();
+		timer = true;
 
 		if (pTwo != null){
 			twoPlayer = true;
@@ -81,10 +83,12 @@ abstract public class Round {
 			
 			if(keyPress == 1) {
 				System.out.println("Player 1 Buzzed First!");
-				scheduler.shutdown();
+				if(timer)
+					scheduler.shutdown();
 			} else if(keyPress == 2 && twoPlayer) {
 				System.out.println("Player 2 Buzzed First!");
-				scheduler.shutdown();
+				if(timer)
+					scheduler.shutdown();
 			} else {
 				keyPress = 0;
 			}
