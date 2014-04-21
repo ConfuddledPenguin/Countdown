@@ -141,6 +141,12 @@ public class WordRound extends Round{
 		int noVowels = -1;
 		ArrayList<Character> letters = new ArrayList<>();
 		Random r = new Random();
+		//frequency taken from http://www.thecountdownpage.com/letters.htm
+		char[] constantants = {'b','b','c','c','c','d','d','d','d','d','d','f','f','g','g','g',
+					'h','h','j','k','l','l','l','l','l','m','m','m','m','n','n','n','n','n','n',
+					'n','n','p','p','p','p','q','r','r','r','r','r','r','r','r','r','s','s','s',
+					's','s','s','s','s','s','t','t','t','t','t','t','t','t','t','v','w','x','y',
+					'z'}; 
 
 		while( loop){
 			System.out.println("How many vowels would you like?"); 
@@ -178,54 +184,8 @@ public class WordRound extends Round{
 
 			int temp = r.nextInt(74);
 
-			/*
-			 * This is truly horrible
-			 * its on my to do list
-			 */
-			if (temp < 2 ){
-				letters.add('b');
-			} else if(temp < 5){
-				letters.add('c');
-			} else if(temp < 11){
-				letters.add('d');
-			} else if(temp < 13){
-				letters.add('f');
-			} else if(temp < 16){
-				letters.add('g');
-			} else if(temp < 18){
-				letters.add('h');
-			} else if(temp < 19){
-				letters.add('j');
-			} else if(temp < 20){
-				letters.add('k');
-			} else if(temp < 25){
-				letters.add('l');
-			} else if(temp < 29){
-				letters.add('m');
-			} else if(temp < 37){
-				letters.add('n');
-			} else if(temp < 41){
-				letters.add('p');
-			} else if(temp < 42){
-				letters.add('q');
-			} else if(temp < 51){
-				letters.add('r');
-			} else if(temp < 60){
-				letters.add('s');
-			} else if(temp < 69){
-				letters.add('t');
-			} else if(temp < 70){
-				letters.add('v');
-			} else if(temp < 71){
-				letters.add('w');
-			} else if(temp < 72){
-				letters.add('x');
-			} else if(temp < 73){
-				letters.add('y');
-			} else{
-				letters.add('z');
-			}
-		}//close horrible for
+			letters.add(constantants[temp]);
+		}//close
 
 		//mix up the letters
 		Collections.shuffle(letters);
@@ -238,7 +198,7 @@ public class WordRound extends Round{
 			sb.append(ch);
 		}
 
-		return sb.toString();		
+		return sb.toString().toUpperCase();		
 	}//close horrible method
 
 	private int checkAnswer(Player p, ArrayList<String> ans) {
@@ -301,10 +261,10 @@ public class WordRound extends Round{
 		System.out.println(p.getName() + " enter your answer: ");
 
 		if (p.getNumber() == 1) {
-			ans1 = io.getString();
+			ans1 = io.getString().toUpperCase();
 			System.out.println("Your answer is: " + ans1);
 		} else {
-			ans2 = io.getString();
+			ans2 = io.getString().toUpperCase();
 			System.out.println("Your answer is: " + ans2);
 		}
 
