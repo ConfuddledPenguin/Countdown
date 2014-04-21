@@ -92,10 +92,12 @@ public class ConundrumRound extends Round {
 		System.out.println("Player " + p.getNumber() + " is correct!!!");
 		
 		if (p.getNumber() == 1) {
-			board.addScore(p.getName(), roundType, 10);
+			if (timerActive)
+				board.addScore(p.getName(), roundType, 10);
 			pOne.updateScore(10);
 		} else {
-			board.addScore(p.getName(), roundType, 10);
+			if (timerActive)
+				board.addScore(p.getName(), roundType, 10);
 			pTwo.updateScore(10);
 		}
 	}

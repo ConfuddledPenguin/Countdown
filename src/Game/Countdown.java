@@ -245,11 +245,12 @@ public class Countdown {
 		else
 			gametypeString = LeaderBoard.CUSTOMGAME;
 				
-		
-		objects.leaders.addScore(playerOne.getName(), gametypeString, playerOne.getScore());
+		if (timerActive)
+			objects.leaders.addScore(playerOne.getName(), gametypeString, playerOne.getScore());
 		
 		if (loser != null){
-			objects.leaders.addScore(playerTwo.getName(), gametypeString, playerTwo.getScore());
+			if (timerActive)
+				objects.leaders.addScore(playerTwo.getName(), gametypeString, playerTwo.getScore());
 			System.out.println("commiserations " + loser.getName() + " and of course well done " + winner.getName() + ".");
 		}
 		

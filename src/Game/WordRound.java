@@ -286,10 +286,12 @@ public class WordRound extends Round{
 			points = points * 2;
 
 		if(p.getNumber() == 1) {
-			board.addScore(p.getName(), roundType, points);
+			if (timerActive)
+				board.addScore(p.getName(), roundType, 10);
 			pOne.updateScore(points);
 		} else {
-			board.addScore(p.getName(), roundType, points);
+			if (timerActive)
+				board.addScore(p.getName(), roundType, 10);
 			pTwo.updateScore(points);
 		}
 	}

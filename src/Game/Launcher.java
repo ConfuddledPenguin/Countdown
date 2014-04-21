@@ -222,7 +222,7 @@ public class Launcher {
 		io.printLines(2);
 		
 		System.out.println("Options:\n\n" +
-					"Timer\t\t\t\t-1" +
+					"Timer\t\t\t\t-1\n" +
 					"back\t\t\t\t-2");
 		
 		switch (io.getNumber()){
@@ -230,13 +230,23 @@ public class Launcher {
 		case 1: io.printShortLines(1);
 				System.out.println("Would you like the timer to be active? (Yes/No) :");
 				timerActive = io.getYesNo();
+				if (!timerActive){
+					System.out.println("Doesn't that defeat the point of countdown?");
+					System.out.println("Its cheating on its highest level");
+					System.out.println("Be ashamed!!!!!");
+					System.out.println("As such your scores will not be stored on the leaderboard\n" +
+					"Further more becuase cheating is shameful this always resets back to true, when" +
+					"ever the game is luanched");
+				}
+				break;
 		
 		case 2: return;
 		
 		default: System.out.println("Not a valid choice. Try again!");
-				options();
+				break;	
 		}
 		
+		options();
 		
 	}
 	

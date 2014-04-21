@@ -217,22 +217,26 @@ public class NumberRound extends Round{
 		if (temp == 0){
 
 			System.out.println(p.getName() + " Got it perfectly. Is awarded 10 points");
-			board.addScore(p.getName(), roundType, 10);
+			if (timerActive)
+				board.addScore(p.getName(), roundType, 10);
 			p.updateScore(10);
 		} else if ( temp < 5 ){ 
 
 			System.out.println(p.getName() + " got within 5 and is awarded 7 points");
-			board.addScore(p.getName(), roundType, 7);
+			if (timerActive)
+				board.addScore(p.getName(), roundType, 10);
 			p.updateScore(7);
 		} else if ( temp < 10){ 
 
 			System.out.println(p.getName() + " got within 10 and is awarded 5 points");
-			board.addScore(p.getName(), roundType, 5);
+			if (timerActive)
+				board.addScore(p.getName(), roundType, 10);
 			p.updateScore(5);
 		}else {
 
 			System.out.println("Nice try " + p.getName() + " but no points");
-			board.addScore(p.getName(), roundType, 0);
+			if (timerActive)
+				board.addScore(p.getName(), roundType, 10);
 		}
 	}
 
