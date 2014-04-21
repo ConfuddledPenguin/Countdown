@@ -79,8 +79,6 @@ abstract public class Round {
 			
 			keyPress = i.getNumber();
 			
-			System.out.println(keyPress);
-			
 			if(keyPress == 1) {
 				System.out.println("Player 1 Buzzed First!");
 				if(timer)

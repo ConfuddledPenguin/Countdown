@@ -26,8 +26,7 @@ public class TheTimer implements Runnable {
 		if(time == 0) {
 			System.out.println("\nTime's up!");
 			doNotify();
-		}
-		
+		}		
 	}
 
 	public void doWait(){
