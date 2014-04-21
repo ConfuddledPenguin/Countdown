@@ -6,8 +6,6 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import Game.NumberRound.returnValues;
-
 /**
  * Generate a solution to the number round
  * 
@@ -61,69 +59,65 @@ public class GenerateSolution implements Runnable {
 	}
 
 	private void generateSolutions() throws Exception {
-		
+
 		//first case
-		
+
 		mathString[] msArray = new mathString[6];
 
 		int count1 = 0;
-		
+
 		for(int n : numbers) {
-			
+
 			mathString ms = new mathString();
-			
+
 			ms.value = n;
 			ms.string = String.valueOf(n);
 
 			msArray[count1] = ms;
-			
+
 			count1++;
 
 		}
-		
-		
-		
+
 		for(mathString m : calc(msArray)) {
-			
-			
-			
+
 			if(m.value == target){
 				solutions.add(m.string);
-				System.out.println("Stuff has been added");
+				//System.out.println("Stuff has been added");
 			}
-			
+
 		}
-		
+
 		//rest of the cases
-		
+
 		while ((numbers = nextPermutation(numbers)) != null ) {
-			
+
 			mathString[] msArray2 = new mathString[6];
 
 			int count2 = 0;
-			
+
 			for(int n : numbers) {
-				
+
 				mathString ms = new mathString();
-				
+
 				ms.value = n;
 				ms.string = String.valueOf(n);
 
 				msArray2[count2] = ms;
-				
+
 				count2++;
 
 			}
-			
+
 			for(mathString m : calc(msArray2)) {
-				
+
 				if(m.value == target){
 					solutions.add(m.string);
-					System.out.println("added : " + m.string + " : " + m.value + " : " + target);
+					//System.out.println("added : " + m.string + " : " + m.value + " : " + target);
 				}
-				
+
 			}
-			
+
 		}
 
 	}
@@ -292,32 +286,40 @@ public class GenerateSolution implements Runnable {
 
 	public void printSolutions() {
 
-		System.out.println("Here is a possible correct solution: ");
+		if(solutions.size() > 0) {
+			
+			System.out.println("Here is a possible correct solution: ");
 
-		for(String i : solutions) {
+			for(String i : solutions) {
 
-			/*
-			 * For some reason mathStrings where passing the above even if the wheren't
-			 * correct. so this hack solves that. This means the above is being used to
-			 * get a small list of possible answers that is then being checked here
-			 */
-			ScriptEngineManager mgr = new ScriptEngineManager();
-			ScriptEngine engine = mgr.getEngineByName("JavaScript");
+				/*
+				 * For some reason mathStrings where passing the above even if the weren't
+				 * correct. so this hack solves that. This means the above is being used to
+				 * get a small list of possible answers that is then being checked here
+				 */
+				ScriptEngineManager mgr = new ScriptEngineManager();
+				ScriptEngine engine = mgr.getEngineByName("JavaScript");
 
-			double calcAnswer = -111111;
+				double calcAnswer = -111111;
 
-			try {
+				try {
 
-				calcAnswer = (double) engine.eval(i);
+					calcAnswer = (double) engine.eval(i);
 
-			} catch (ScriptException e) {
+				} catch (ScriptException e) {
+				}
+
+				if (calcAnswer == target){
+					System.out.println(i);
+					break;
+				}
+
 			}
-
-			if (calcAnswer == target){
-				System.out.println(i);
-				break;
-			}
-
+			
+		} else {
+			
+			System.out.println("There were no perfect solutions :(");
+			
 		}
 
 	}
