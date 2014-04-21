@@ -64,7 +64,7 @@ public class WordRound extends Round{
 	 */
 	public void play() {
 
-		printWelcome();
+		printWelcome("word");
 
 		letters = generateLetters();
 		ArrayList<String> bestAnswers = dict.getBestWords(letters);
