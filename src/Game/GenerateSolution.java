@@ -8,6 +8,10 @@ public class GenerateSolution implements Runnable {
 	ArrayList<Integer> numbers;
 	int target;
 
+	/**
+	 * A contraption that hold string data and the value
+	 * of the maths within.
+	 */
 	private class mathString{
 		
 		String string;
@@ -40,6 +44,15 @@ public class GenerateSolution implements Runnable {
 		
 	}
 	
+	/**
+	 * generates all possible strings and the values of them
+	 * 
+	 * This is a wonderful chunk of code . . . .
+	 * 
+	 * @param mathStrings and array of mathStrings should contain six to begin
+	 * @return the calculated strings and values
+	 * @throws Exception you used me wrong
+	 */
 	private mathString[] calc (mathString[] mathStrings) throws Exception{
 		
 		mathString calculated[] = new mathString[ (int) Math.pow(4, mathStrings.length -1)];
