@@ -19,7 +19,7 @@ import org.w3c.dom.NodeList;
 
 /**
  * This class executes a full game of countdown
- *
+ * or a custom game of countdown
  */
 public class Countdown {
 	
@@ -85,6 +85,49 @@ public class Countdown {
 		customGame = false;
 		
 		play(0);
+	}
+	
+	/**
+	 * Allows the playing of a custom game of countdown
+	 * In this game type the user specifies which rounds
+	 * they would like to play
+	 */
+	public void playCustomGame(){
+		
+		io.printLines(2);
+		customGame = true;
+		
+		System.out.println("So a custom game, is it?");
+		
+		boolean unvalid;
+		
+		do {
+			
+			unvalid = false;
+			
+			System.out.println("\nPlease enter a string of type awesome :");
+			System.out.println("I may have lied sorry. Please enter a string of rounds you would like to play");
+			System.out.println("W for word, N for number, C for conundrum. For example: WWNNWC");
+			
+			gameOrderString = io.getString().toUpperCase();
+			gameOrder = gameOrderString.toCharArray();
+			
+			for ( int i = 0; i < gameOrder.length; i++){
+				
+				char c = gameOrder[i];
+				
+				if ( !(c == WORD || c == NUMBER || c == CONUNDRUM) ){
+					
+					System.out.println("Error!!!!!! try again!!!\n");
+					unvalid = true;
+					break;
+				}
+			}
+					
+		}while(unvalid);
+		
+		play(0);
+		
 	}
 	
 	/**
@@ -701,47 +744,4 @@ public class Countdown {
 		
 	}
 	
-	/**
-	 * Allows the playing of a custom game of countdown
-	 * In this game type the user specifies which rounds
-	 * they would like to play
-	 */
-	public void playCustomGame(){
-		
-		io.printLines(2);
-		customGame = true;
-		
-		System.out.println("So a custom game, is it?");
-		
-		boolean unvalid;
-		
-		do {
-			
-			unvalid = false;
-			
-			System.out.println("\nPlease enter a string of type awesome :");
-			System.out.println("I may have lied sorry. Please enter a string of rounds you would like to play");
-			System.out.println("W for word, N for number, C for conundrum. For example: WWNNWC");
-			
-			gameOrderString = io.getString().toUpperCase();
-			gameOrder = gameOrderString.toCharArray();
-			
-			for ( int i = 0; i < gameOrder.length; i++){
-				
-				char c = gameOrder[i];
-				
-				if ( !(c == WORD || c == NUMBER || c == CONUNDRUM) ){
-					
-					System.out.println("Error!!!!!! try again!!!\n");
-					unvalid = true;
-					break;
-				}
-			}
-					
-		}while(unvalid);
-		
-		play(0);
-		
-	}
-
 }
