@@ -48,54 +48,24 @@ abstract public class Round {
 
 	public void CountdownTimer() {
 
-		//bail if the timer is turned off
-		if (!timerActive){
-			return;
-		}
-		
-		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
 
 		TheTimer timer = new TheTimer();
-		
-		scheduler.scheduleAtFixedRate(timer, 0, 1, TimeUnit.SECONDS);
+		Buzzer buzzer = new Buzzer(twoPlayer, io);
+
+		if(roundType.equals("ConundrumRound"))
+			scheduler.schedule(buzzer, 0, TimeUnit.SECONDS);
+		scheduler.scheduleAtFixedRate(timer, 1, 1, TimeUnit.SECONDS);
 		
 		if(roundType.equals("ConundrumRound")) {
-			
-			buzzer(scheduler);
-			
+			buzzer.doWait();
+			keyPress = buzzer.getKeyPress();
 		} else {
 			timer.doWait();
-			scheduler.shutdown();
 		}
-		
-		io.clear();
-		
-	}
-	
-	public void buzzer(ScheduledExecutorService scheduler) {
-		
-		System.out.println("Player 1, press 1 to buzz with answer");
-		if(twoPlayer)
-			System.out.println("Player 2, press 2 to buzz with answer");
-		
-		keyPress = 0;
-		
-		while (keyPress == 0) {
-			
-			keyPress = io.getNumber();
-			
-			if(keyPress == 1) {
-				System.out.println("Player 1 Buzzed First!");
-				if(timerActive)
-					scheduler.shutdown();
-			} else if(keyPress == 2 && twoPlayer) {
-				System.out.println("Player 2 Buzzed First!");
-				if(timerActive)
-					scheduler.shutdown();
-			} else {
-				keyPress = 0;
-			}
-		}
+
+		scheduler.shutdownNow();
+
 	}
 
 	/**

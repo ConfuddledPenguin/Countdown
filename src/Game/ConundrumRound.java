@@ -1,6 +1,9 @@
 package Game;
 
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The conundrum round for the countdown game
@@ -68,10 +71,13 @@ public class ConundrumRound extends Round {
 		//currently printing the answer for testing purposes
 		System.out.println("The conundrum is: " + anagram + ", Answer: " + answer + "\n");
 		
-		if(timerActive)
+		if(timerActive) {
 			CountdownTimer();
-		else
-			buzzer(null);
+		} else {
+			Buzzer buzzer = new Buzzer(twoPlayer, io);
+			buzzer.run();
+			keyPress = buzzer.getKeyPress();
+		}			
 		
 		if(keyPress == 1) {
 			getAnswer(pOne);
