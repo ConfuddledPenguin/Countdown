@@ -158,9 +158,9 @@ public class GenerateSolution implements Runnable {
 			mathString[] ms1 = calc (msa);
 
 			//get all possible combinations for last 3 numbers
-			msa[3] = mathStrings[3];
-			msa[4] = mathStrings[4];
-			msa[5] = mathStrings[5];
+			msa[0] = mathStrings[3];
+			msa[1] = mathStrings[4];
+			msa[2] = mathStrings[5];
 			mathString[] ms2 = calc (msa);
 
 			//merge them to give 1024 possible values
