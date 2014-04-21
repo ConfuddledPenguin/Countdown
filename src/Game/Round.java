@@ -86,9 +86,9 @@ abstract public class Round {
 	/**
 	 * Prints out a welcome message
 	 */
-	public void printWelcome() {
+	public void printWelcome(String currentRound) {
 		io.printLines(2);
-		System.out.println("Welcome to the " + roundType + " round");
+		System.out.println("Welcome to the " + currentRound + " round");
 		io.printShortLines(1);
 	}
 

@@ -82,7 +82,7 @@ public class NumberRound extends Round{
 	 */
 	public void play() {
 
-		printWelcome();
+		printWelcome("number");
 
 		//Generate numbers
 		generateNumbers();
@@ -149,7 +149,7 @@ public class NumberRound extends Round{
 		}
 		
 		//Print all solutions
-		//generate.printSolutions();
+		generate.printSolutions();
 
 		//TODO
 		// this
