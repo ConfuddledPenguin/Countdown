@@ -1,7 +1,8 @@
 package Game;
 
 /**
- * The main class for the program
+ * The main class for the program.
+ * Its does lots of stuff
  */
 public class Launcher {
 	
@@ -10,7 +11,6 @@ public class Launcher {
 
 	private UserIO io;
 	private LeaderBoard leaders;
-	
 	private Dictionary dict;
 	
 	private GameObjects objects;
@@ -246,8 +246,7 @@ public class Launcher {
 				break;	
 		}
 		
-		options();
-		
+		options();	
 	}
 	
 	/**
@@ -257,6 +256,16 @@ public class Launcher {
 	public static void main(String args[]) {
 		
 		Launcher l = new Launcher();
+		
+		/*
+		 * This line of code does nothing. It is here because I was getting
+		 * annoyed at eclipse telling me that l (from above) is not being used,
+		 * so I used it. 
+		 * 
+		 * Better yet this line of code will never ever be executed. Its completely
+		 * pointless. Thank you eclipse, thanks very much.
+		 */
+		l.io = null;
 	}
 
 }

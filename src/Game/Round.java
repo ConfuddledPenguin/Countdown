@@ -48,6 +48,11 @@ abstract public class Round {
 
 	public void CountdownTimer() {
 
+		//bail if the timer is turned off
+		if (!timerActive){
+			return;
+		}
+		
 		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
 		TheTimer timer = new TheTimer();
