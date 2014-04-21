@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * The dictionary for countdown
  * 
- *
+ * It handles wordy things
  */
 public class Dictionary {
 	
@@ -155,9 +155,13 @@ public class Dictionary {
 				}
 			}
  
-		} catch (IOException e){
-			System.err.println("I broke :(");
-			e.printStackTrace();
+		} catch (FileNotFoundException fnfe){
+			System.err.println("Error: dictionary not found");
+		}catch (IOException e){
+			System.err.println("Error: Reading file failed. File must be currupt");
+		} catch (Exception e){
+			System.out.println("I broke :( Sorry about that!");
+			System.out.println("Technical junk: " + e.getClass().getName());
 		}
 		
 		if (testing){
