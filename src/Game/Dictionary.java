@@ -36,9 +36,14 @@ public class Dictionary {
 	 */
 	public ArrayList<String> getBestWords(String letters){
 		
-		ArrayList<String> bestWords;
+		ArrayList<String> bestWords = getWords(letters);
 		
-		bestWords = wordtree.findbestWord(letters);
+		if (!bestWords.isEmpty()){
+			return bestWords;
+		}
+		
+		//TODO
+		//COMPUTE FOR EVERYTHING ELSE
 		
 		return bestWords;
 	}
@@ -47,9 +52,7 @@ public class Dictionary {
 	 * Gets all nine letter words that could be made from the anagram
 	 * @param letters
 	 * @return ArrayList<String> All matches
-	 * @deprecated use {@link Dictionary#getBestWords(String letters)} instead
 	 */
-	@Deprecated
 	public ArrayList<String> getWords(String letters){
 		
 		ArrayList<Character> charList = new ArrayList<Character>();
