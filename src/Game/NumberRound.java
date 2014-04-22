@@ -149,6 +149,7 @@ public class NumberRound extends Round{
 		}
 		
 		//Print all solutions
+		System.out.println();
 		generate.printSolutions();
 
 		//TODO

@@ -5,6 +5,9 @@ public class TheTimer implements Runnable {
 	Monitor m;
 	int time;
 
+	/**
+	 * Constructor for TheTimer class
+	 */
 	public TheTimer() {
 
 		m = new Monitor();
@@ -12,6 +15,9 @@ public class TheTimer implements Runnable {
 
 	}
 
+	/**
+	 * Method from Runnable interface which is called from executor
+	 */
 	public void run() {
 		
 		if(time == 30)
@@ -22,13 +28,18 @@ public class TheTimer implements Runnable {
 			System.out.println("10 Seconds Left!");
 		else if(time < 6 && time > 0)
 			System.out.print(time + " ");
-		time--;
-		if(time == 0) {
-			System.out.println("\nTime's up!");
+		else if(time == 0) {
+			System.out.println("\nTime's up!\n");
 			doNotify();
 		}		
+		
+		time--;
+		
 	}
-
+	
+	/**
+	 * Allows an object to wait on the execution of this class completing
+	 */
 	public void doWait(){
 		synchronized(m){
 			try{
@@ -37,6 +48,9 @@ public class TheTimer implements Runnable {
 		}
 	}
 
+	/**
+	 * Notify waiting object that executon is complete
+	 */
 	public void doNotify(){
 		synchronized(m){
 			m.notifyAll();

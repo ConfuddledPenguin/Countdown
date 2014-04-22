@@ -8,6 +8,12 @@ public class Buzzer implements Runnable {
 
 	int keyPress;
 
+	/**
+	 * Constructor for Buzzer class
+	 * 
+	 * @param boolean to tell if the game is single or multi player
+	 * @param UserIO
+	 */
 	public Buzzer(boolean twoPlayer, UserIO io) {
 
 		m = new Monitor();
@@ -15,7 +21,10 @@ public class Buzzer implements Runnable {
 		this.io = io;
 
 	}
-
+	
+	/**
+	 * Method from Runnable interface which is called from executor
+	 */
 	public void run() {
 
 		System.out.println("Player 1, press 1 to buzz with answer");
@@ -45,12 +54,18 @@ public class Buzzer implements Runnable {
 
 	}
 
+	/**
+	 * @return an int to show who buzzed first
+	 */
 	public int getKeyPress() {
 
 		return keyPress;
 
 	}
 
+	/**
+	 * Allows an object to wait on the execution of this class completing
+	 */
 	public void doWait(){
 		synchronized(m){
 			try{
@@ -59,6 +74,9 @@ public class Buzzer implements Runnable {
 		}
 	}
 
+	/**
+	 * Notify waiting object that executon is complete
+	 */
 	public void doNotify(){
 		synchronized(m){
 			m.notifyAll();
