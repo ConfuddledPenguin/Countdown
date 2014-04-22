@@ -203,7 +203,7 @@ public class WordRound extends Round{
 	/**
 	 * Checks the players answer
 	 * 
-	 * @param The Player who's answer is to be checked
+	 * @param p The Player who's answer is to be checked
 	 * @return the length of the word or 0 for an incorrect word
 	 */
 	private int checkAnswer(Player p) {
@@ -225,7 +225,7 @@ public class WordRound extends Round{
 	/**
 	 * Checks if the word is valid
 	 * 
-	 * @param the word to be checked
+	 * @param a the word to be checked
 	 * @return true if valid word, false otherwise
 	 */
 	private boolean validWord(String a) {
@@ -252,8 +252,8 @@ public class WordRound extends Round{
 	/**
 	 * Award the user points based on the length of their answer
 	 * 
-	 * @param The Player to be awarded points
-	 * @param the number of points to be awarded
+	 * @param p The Player to be awarded points
+	 * @param points  the number of points to be awarded
 	 */
 	private void awardPoints(Player p, int points) {
 

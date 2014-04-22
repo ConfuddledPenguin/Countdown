@@ -51,7 +51,6 @@ public class NumberRound extends Round{
 	 * @param pOne Player one
 	 * @param pTwo Player two if they exist
 	 * @param board the leaderboard
-	 * @param timerActive if the timer is active
 	 */
 	public NumberRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board) {
 

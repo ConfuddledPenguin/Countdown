@@ -103,7 +103,7 @@ public class ConundrumRound extends Round {
 	
 	/**
 	 * Awards points to a Player
-	 * @param the Player to be awarded points
+	 * @param p the Player to be awarded points
 	 */
 	private void awardPoints(Player p){
 		
@@ -124,8 +124,8 @@ public class ConundrumRound extends Round {
 	 * 
 	 * Checks if a players answer is correct
 	 * 
-	 * @param the Player who's answer is to be checked
-	 * @param an ArrayList of all possible answers
+	 * @param p the Player who's answer is to be checked
+	 * @param ans ArrayList of all possible answers
 	 * @return returns true if answer is correct
 	 */
 	private boolean checkAnswer(Player p, ArrayList<String> ans) {
@@ -153,7 +153,7 @@ public class ConundrumRound extends Round {
 	/**
 	 * Get the players answer
 	 * 
-	 * @param the Player who's answer is to be collected
+	 * @param p the Player who's answer is to be collected
 	 */
 	private void getAnswer(Player p) {
 		

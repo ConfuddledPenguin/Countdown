@@ -35,8 +35,8 @@ public class GenerateSolution implements Runnable {
 
 	/**
 	 * Constructor for GenerateSolution
-	 * @param list of numbers
-	 * @param target number
+	 * @param n list of numbers
+	 * @param t target number
 	 */
 	public GenerateSolution(ArrayList<Integer> n, int t) {
 
@@ -142,7 +142,7 @@ public class GenerateSolution implements Runnable {
 	 * modifies c to next permutation or returns null if such permutation does not exist
 	 * 
 	 * @param c
-	 * @return
+	 * @return an array
 	 */
 	private int[] nextPermutation( int[] c ) {
 		// 1. finds the largest k, that c[k] < c[k+1]
@@ -166,7 +166,7 @@ public class GenerateSolution implements Runnable {
 	 * if no such k exists (there is not greater permutation), return -1
 	 * 
 	 * @param c
-	 * @return
+	 * @return int
 	 */
 	private int getFirst(int[] c) {
 		for (int i = c.length - 2; i >= 0; --i)

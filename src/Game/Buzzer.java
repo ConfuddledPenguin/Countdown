@@ -11,8 +11,8 @@ public class Buzzer implements Runnable {
 	/**
 	 * Constructor for Buzzer class
 	 * 
-	 * @param boolean to tell if the game is single or multi player
-	 * @param UserIO
+	 * @param twoPlayer to tell if the game is single or multi player
+	 * @param io
 	 */
 	public Buzzer(boolean twoPlayer, UserIO io) {
 
