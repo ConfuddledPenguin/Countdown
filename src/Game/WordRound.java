@@ -15,7 +15,7 @@ public class WordRound extends Round{
 	private String letters;
 
 	/**
-	 * Constructor for the number round
+	 * Constructor for the word round
 	 * @param dict the Dictionary file
 	 * @param pOne Player one
 	 * @param pTwo Player two
@@ -25,23 +25,22 @@ public class WordRound extends Round{
 	public WordRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board, boolean timerActive) {
 
 		super(dict, pOne, pTwo, board, LeaderBoard.WORDROUND, timerActive);
-		io = new UserIO();
+		//io = new UserIO();
 	}
 	
 	/**
-	 * Constructor for the number round
+	 * Constructor for the word round
 	 * @param dict the Dictionary file
 	 * @param pOne Player one
 	 * @param pTwo Player two
 	 */
 	public WordRound(Dictionary dict, Player pOne, Player pTwo, LeaderBoard board) {
 
-		super(dict, pOne, pTwo, board, LeaderBoard.WORDROUND, true);
-		io = new UserIO();
+		this(dict, pOne, pTwo, board, true);
 	}
 
 	/**
-	 * A constructor for the number round
+	 * A constructor for the word round
 	 * @param o A gameObjects object.
 	 * @param timerActive if the timer is active
 	 */
@@ -51,7 +50,7 @@ public class WordRound extends Round{
 	}
 	
 	/**
-	 * A constructor for the number round
+	 * A constructor for the word round
 	 * @param o A gameObjects object.
 	 */
 	public WordRound(GameObjects o) {
@@ -67,7 +66,7 @@ public class WordRound extends Round{
 		printWelcome("word");
 
 		letters = generateLetters();
-		ArrayList<String> bestAnswers = dict.getBestWords(letters);
+		ArrayList<String> bestAnswers = dict.getBestWords("penguinsz");
 
 		int pOneLen;
 		int pTwoLen;

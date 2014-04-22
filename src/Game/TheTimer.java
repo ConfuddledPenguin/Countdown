@@ -1,5 +1,8 @@
 package Game;
 
+/**
+ * The timer for the rounds
+ */
 public class TheTimer implements Runnable {
 
 	Monitor m;

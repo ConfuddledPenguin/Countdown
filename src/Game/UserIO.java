@@ -4,8 +4,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * An input handler
+ * An IO handler
  * 
+ * This class means all the user interaction is handled in the same place,
+ * meaning we can be sure that it works.
  */
 public class UserIO {
 	

@@ -5,12 +5,13 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * This abstract class is deigned to be used as a basis for the individual rounds of the game
+ * This abstract class is deigned to be used as a basis
+ * for the individual rounds of the game
  * 
- * @author Tom
  */
 abstract public class Round {
 
+	//All the data's
 	Dictionary dict;
 	Player pOne;
 	Player pTwo;
