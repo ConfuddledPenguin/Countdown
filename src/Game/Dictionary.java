@@ -17,7 +17,8 @@ public class Dictionary {
 	private ArrayList<String> words;
 	private ArrayList<String> nineLetterWords;
 	private ArrayList<ArrayList<Character>> nineLetterWordsChars = new ArrayList<ArrayList<Character>>();
-	private Tree wordtree = new Tree();
+	private ArrayList<String> eightLetterWords;
+	private ArrayList<ArrayList<Character>> eightLetterWordsChars = new ArrayList<ArrayList<Character>>();
 	
 	/**
 	 * Constructor for the Dictionary class
@@ -26,6 +27,7 @@ public class Dictionary {
 		
 		load();
 		getNineLetterWords();
+		getEightLetterWords();
 	}
 	
 	/**
@@ -36,15 +38,22 @@ public class Dictionary {
 	 */
 	public ArrayList<String> getBestWords(String letters){
 		
-		ArrayList<String> bestWords = getWords(letters);
+		//Get best nine letter words
+		ArrayList<String> bestWords = getWordsNine(letters);
 		
+		//if there is a nine letter word then return it
 		if (!bestWords.isEmpty()){
 			return bestWords;
 		}
 		
-		//TODO
-		//COMPUTE FOR EVERYTHING ELSE
+		//get best eight letter words
+		bestWords = getWordEight(letters);
 		
+		
+		/*
+		 * Return bestwords.
+		 * This doesn't do best words under a length of 8
+		 */
 		return bestWords;
 	}
 	
@@ -53,7 +62,7 @@ public class Dictionary {
 	 * @param letters
 	 * @return ArrayList<String> All matches
 	 */
-	public ArrayList<String> getWords(String letters){
+	public ArrayList<String> getWordsNine(String letters){
 		
 		ArrayList<Character> charList = new ArrayList<Character>();
 		ArrayList<String> possibleMatches = new ArrayList<String>();
@@ -76,6 +85,47 @@ public class Dictionary {
 		}
 		
 		return possibleMatches;
+	}
+	
+	/**
+	 * Gets all the best eight letter words
+	 * 
+	 * @param letters the letters
+	 * @return the matches
+	 */
+	public ArrayList<String> getWordEight(String letters){
+
+		ArrayList<String> bestWords = new ArrayList<String>();
+		
+		for (int i = 0; i < 9; i++){
+			
+			
+			ArrayList<Character> charList = new ArrayList<Character>();
+			charList.clear();
+			for (int j = 0; j < 9 ; j++){
+				
+				if ( i != j){
+					charList.add(letters.charAt(j));
+				}
+				
+			}
+		
+			Collections.sort(charList);
+			
+			for(ArrayList<Character> word: eightLetterWordsChars){
+				
+				Collections.sort(word);
+				
+				if (word.equals(charList)){
+
+					int index = eightLetterWordsChars.indexOf(word);
+					bestWords.add(eightLetterWords.get(index));
+				}
+			}
+			
+		}
+		
+		return bestWords;
 	}
 	
 	/**
@@ -154,7 +204,6 @@ public class Dictionary {
 				
 				if (CurrentLine.length() <= 9){
 					words.add(CurrentLine);
-					wordtree.addWord(CurrentLine);
 				}
 			}
  
@@ -194,8 +243,34 @@ public class Dictionary {
 				for (char ch : word.toCharArray()) {
 				  charList.add(ch);
 				}
-				
+				Collections.sort(charList);
 				nineLetterWordsChars.add(charList);
+			}
+		}
+	}
+	
+	/**
+	 * Fills an array with letters from the dictionary that are 8 letters long
+	 */
+	private void getEightLetterWords(){
+		
+		eightLetterWords = new ArrayList<String>();
+		
+		for(String word: words){
+			
+			if (word.length() == 8){
+				
+				//Add to list of nine letter words
+				eightLetterWords.add(word);
+				
+				//break into chars and add to list
+				ArrayList<Character> charList = new ArrayList<Character>();
+
+				for (char ch : word.toCharArray()) {
+				  charList.add(ch);
+				}
+				Collections.sort(charList);
+				eightLetterWordsChars.add(charList);
 			}
 		}
 	}
